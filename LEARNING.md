@@ -2,17 +2,44 @@
 
 Goal: Build a polished Next.js portfolio while learning fundamentals. Follow small daily tasks + longer weekend sessions.
 
-## Daily template (weekdays — 1–2 hrs)
-- [ ] 10m review previous notes
-- [ ] 45–75m focused lesson / coding
-- [ ] 10–15m apply change to portfolio
-- [ ] 5–10m git commit (small message) and short journal line
+## 🌅 Morning Learning Routine (Weekdays — 1.5–2 hrs)
+- [ ] **10m Warm-up & Recall**
+  - Review yesterday's key concepts using active recall
+  - Test yourself on important code snippets
+  - Set specific goals for today's session
 
-## Weekend template (3–5 hrs)
-- [ ] 15m review weekly progress
-- [ ] 2–3h implement larger feature or polish
-- [ ] 30–60m test, document, deploy or push
+- [ ] **45–75m Deep Work Block**
+  - Focus on one concept or small project
+  - Use Pomodoro technique (25/5)
+  - Code along with tutorials or build small exercises
 
+- [ ] **15m Portfolio Integration**
+  - Apply one new concept to your portfolio
+  - Write a brief note explaining your implementation
+  - Plan tomorrow's learning objectives
+
+- [ ] **5m Reflection & Commit**
+  - Commit your changes with a clear message
+  - Jot down one key takeaway
+  - Note any questions for future research
+
+## 🏆 Weekend Learning Sprint (3–5 hrs)
+- [ ] **30m Weekly Review**
+  - Consolidate notes from the week
+  - Create a "cheat sheet" of key concepts
+  - Identify knowledge gaps to address
+
+- [ ] **2–2.5h Project Work**
+  - Work on a larger portfolio feature
+  - Implement something challenging
+  - Focus on quality over quantity
+
+- [ ] **1h Polish & Deploy**
+  - Test your work thoroughly
+  - Document your process
+  - Deploy updates to your live portfolio
+  - Share your progress with others
+    
 ---
 
 ## Week 1 — HTML & CSS
