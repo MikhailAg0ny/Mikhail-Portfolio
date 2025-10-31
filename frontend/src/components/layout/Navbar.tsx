@@ -23,12 +23,12 @@ export default function Navbar({ activeSection = "hero" }: NavbarProps) {
       className={`fixed top-0 z-[100] w-full border-b transition-all duration-300 ${
         isHeroSection
           ? "border-transparent bg-transparent backdrop-blur-none"
-          : "border-slate-700/50 bg-slate-950/65 backdrop-blur-xl shadow-[0_8px_32px_rgba(15,23,42,0.55)]"
+          : "border-[#9AA5B1]/20 bg-[#2A2F35]/85 backdrop-blur-xl shadow-[0_8px_32px_rgba(26,29,33,0.55)]"
       }`}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 sm:px-10">
         <a href="#hero" className="flex items-center gap-3">
-          <div className="h-10 w-10 overflow-hidden rounded-full border-2 border-teal-400">
+          <div className="h-10 w-10 overflow-hidden rounded-full border-2 border-[#00CFE8]">
             <ImageWithFallback
               src="/images/profile.jpg"
               alt="Mikhail James P. Navarro"
@@ -37,7 +37,7 @@ export default function Navbar({ activeSection = "hero" }: NavbarProps) {
               className="h-full w-full object-cover"
             />
           </div>
-          <span className="text-lg font-semibold text-teal-400">Mikhail Navarro</span>
+          <span className="text-lg font-semibold text-[#00CFE8]">Mikhail Navarro</span>
         </a>
         <ul id="navbar-menu" className="hidden gap-6 md:flex">
           {navLinks.map((link) => {
@@ -47,8 +47,8 @@ export default function Navbar({ activeSection = "hero" }: NavbarProps) {
                 <a
                   className={`text-sm font-medium transition ${
                     isActive
-                      ? "text-teal-400"
-                      : "text-slate-300 hover:text-teal-400"
+                      ? "text-[#00CFE8]"
+                      : "text-[#9AA5B1] hover:text-[#00CFE8]"
                   }`}
                   href={link.href}
                   data-menuanchor={link.href.substring(1)}

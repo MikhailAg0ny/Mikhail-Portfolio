@@ -2,15 +2,15 @@ import { achievements } from "@/lib/data";
 
 export default function AchievementsSection() {
   return (
-    <section className="h-full w-full bg-slate-950/50">
+    <section className="h-full w-full bg-[#2A2F35]/30">
       <div className="h-full px-6 pb-16 pt-28 sm:px-10">
         <div className="mx-auto w-full max-w-6xl">
           <header className="space-y-6">
-            <p className="text-sm uppercase tracking-[0.45em] text-teal-500">Achievements</p>
-            <h2 className="text-3xl font-semibold text-slate-100 md:text-4xl">
+            <p className="text-sm uppercase tracking-[0.45em] text-[#00CFE8]">Achievements</p>
+            <h2 className="text-3xl font-semibold text-[#F0F2F5] md:text-4xl">
               Recognitions that capture impact and craft.
             </h2>
-            <p className="text-base text-slate-300 md:text-lg">
+            <p className="text-base text-[#9AA5B1] md:text-lg">
               Milestones across game jams, community events, and product teams that highlight leadership, experimentation, and
               measurable outcomes.
             </p>
@@ -20,13 +20,22 @@ export default function AchievementsSection() {
             {achievements.map((achievement) => (
               <article
                 key={achievement.title}
-                className="rounded-3xl border border-slate-800 bg-slate-900/60 p-6"
+                className="group rounded-3xl border border-[#9AA5B1]/20 bg-[#2A2F35]/60 p-6 transition-all hover:border-transparent hover:shadow-lg hover:shadow-[#00CFE8]/10"
+                style={{
+                  transition: 'all 0.3s ease',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.borderImage = 'linear-gradient(to right, #1A1D21, #2A2F35, #1A1D21) 1';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.borderImage = '';
+                }}
               >
                 <div className="flex flex-col gap-2">
-                  <p className="text-xs uppercase tracking-[0.35em] text-slate-500">{achievement.year}</p>
-                  <h3 className="text-2xl font-semibold text-slate-100">{achievement.title}</h3>
-                  <p className="text-sm text-teal-300">{achievement.event}</p>
-                  <p className="text-sm text-slate-300">{achievement.highlight}</p>
+                  <p className="text-xs uppercase tracking-[0.35em] text-[#9AA5B1]/60">{achievement.year}</p>
+                  <h3 className="text-2xl font-semibold text-[#F0F2F5]">{achievement.title}</h3>
+                  <p className="text-sm text-[#00CFE8]">{achievement.event}</p>
+                  <p className="text-sm text-[#9AA5B1]">{achievement.highlight}</p>
                 </div>
               </article>
             ))}

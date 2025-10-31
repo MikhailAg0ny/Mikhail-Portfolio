@@ -6,23 +6,23 @@ export default function Footer({ isVisible = false }: FooterProps) {
   return (
     <footer
       id="footer-bar"
-      className={`fixed bottom-0 left-0 right-0 z-40 border-t border-slate-800/70 bg-slate-950/85 backdrop-blur-lg transition-all duration-300 ease-out ${
+      className={`fixed bottom-0 left-0 right-0 z-40 border-t border-[#9AA5B1]/20 bg-[#2A2F35]/90 backdrop-blur-lg transition-all duration-300 ease-out ${
         isVisible ? "translate-y-0 opacity-100 pointer-events-auto" : "translate-y-full opacity-0 pointer-events-none"
       }`}
     >
       <div className="mx-auto flex max-w-6xl flex-col gap-4 px-6 py-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="text-center sm:text-left">
-          <p className="text-sm font-semibold text-slate-100">
+          <p className="text-sm font-semibold text-[#F0F2F5]">
             Mikhail James P. Navarro
           </p>
-          <p className="text-xs text-slate-400">
+          <p className="text-xs text-[#9AA5B1]">
             Web Developer | Game Designer | Creative Technologist
           </p>
         </div>
         <div className="flex items-center justify-center gap-6">
           <a
             href="https://github.com/MikhailAg0ny"
-            className="text-slate-400 transition hover:text-teal-400"
+            className="text-[#9AA5B1] transition hover:text-[#00CFE8]"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -37,7 +37,7 @@ export default function Footer({ isVisible = false }: FooterProps) {
           </a>
           <a
             href="https://linkedin.com/in/mikhail-navarro"
-            className="text-slate-400 transition hover:text-teal-400"
+            className="text-[#9AA5B1] transition hover:text-[#00CFE8]"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -47,7 +47,7 @@ export default function Footer({ isVisible = false }: FooterProps) {
             </svg>
           </a>
         </div>
-        <p className="text-center text-xs text-slate-500 sm:text-right">
+        <p className="text-center text-xs text-[#9AA5B1]/60 sm:text-right">
           © {new Date().getFullYear()} Mikhail James P. Navarro. Built with Next.js & Tailwind CSS.
         </p>
       </div>

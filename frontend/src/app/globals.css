@@ -1,22 +1,37 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Mica Silver Palette - Inspired by Victus Laptop */
+  
+  /* Backgrounds (The Laptop Body) */
+  --mica-dark: #1A1D21;      /* Main Background (Dark Mica) */
+  --mica-light: #2A2F35;     /* Card Background (Light Mica) */
+  
+  /* Text (The Keyboard) */
+  --text-primary: #F0F2F5;   /* Backlight White */
+  --text-secondary: #9AA5B1; /* Silver Key */
+  
+  /* Accent (The "Victus" Brand) */
+  --victus-blue: #00CFE8;    /* Primary Accent */
+  
+  /* Legacy variables for compatibility */
+  --background: var(--mica-dark);
+  --foreground: var(--text-primary);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  /* Mica Silver Custom Colors */
+  --color-mica-dark: #1A1D21;
+  --color-mica-light: #2A2F35;
+  --color-text-primary: #F0F2F5;
+  --color-text-secondary: #9AA5B1;
+  --color-victus-blue: #00CFE8;
+  
+  /* Base theme colors */
+  --color-background: var(--mica-dark);
+  --color-foreground: var(--text-primary);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 html {
@@ -24,8 +39,8 @@ html {
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--mica-dark);
+  color: var(--text-primary);
   font-family: Arial, Helvetica, sans-serif;
   margin: 0;
   padding: 0;
@@ -38,14 +53,19 @@ body {
 
 /* FullPage.js Customization */
 #fullpage {
-  background: linear-gradient(to bottom, #020617, #0f172a, #020617);
+  background: #1A1D21;
 }
 
 #fullpage .section {
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #f1f5f9;
+  color: var(--text-primary);
+}
+
+/* Hero Section - Subtle Aurora Gradient */
+#fullpage .section:first-child {
+  background-image: radial-gradient(ellipse at top center, rgba(0, 207, 232, 0.1), #1A1D21 70%);
 }
 
 /* Custom navigation dots styling */
@@ -69,8 +89,8 @@ body {
 }
 
 #fp-nav ul li a span {
-  background: rgba(255, 255, 255, 0.25);
-  border: 2px solid rgba(255, 255, 255, 0.4);
+  background: rgba(154, 165, 177, 0.25);
+  border: 2px solid rgba(154, 165, 177, 0.4);
   width: 10px;
   height: 10px;
   display: block;
@@ -79,22 +99,22 @@ body {
 }
 
 #fp-nav ul li a.active span {
-  background: rgba(20, 184, 166, 0.95);
-  border: 2px solid rgb(20, 184, 166);
+  background: rgba(0, 207, 232, 0.95);
+  border: 2px solid rgb(0, 207, 232);
   width: 14px;
   height: 14px;
-  box-shadow: 0 0 12px rgba(20, 184, 166, 0.5);
+  box-shadow: 0 0 12px rgba(0, 207, 232, 0.5);
 }
 
 #fp-nav ul li a:hover span {
-  background: rgba(20, 184, 166, 0.6);
-  border-color: rgba(20, 184, 166, 0.8);
+  background: rgba(0, 207, 232, 0.6);
+  border-color: rgba(0, 207, 232, 0.8);
   transform: scale(1.2);
 }
 
 #fp-nav ul li a.active:hover span {
-  background: rgba(20, 184, 166, 1);
-  border-color: rgb(20, 184, 166);
+  background: rgba(0, 207, 232, 1);
+  border-color: rgb(0, 207, 232);
   transform: scale(1.1);
 }
 
@@ -103,12 +123,12 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 13px;
   font-weight: 500;
-  color: #f1f5f9;
-  background: rgba(15, 23, 42, 0.95);
+  color: var(--text-primary);
+  background: rgba(42, 47, 53, 0.95);
   backdrop-filter: blur(12px);
   padding: 6px 14px;
   border-radius: 8px;
-  border: 1px solid rgba(100, 116, 139, 0.3);
+  border: 1px solid rgba(154, 165, 177, 0.3);
   white-space: nowrap;
   max-width: 220px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
@@ -120,8 +140,8 @@ body {
 }
 
 #fp-nav ul li:hover .fp-tooltip {
-  background: rgba(15, 23, 42, 1);
-  border-color: rgba(20, 184, 166, 0.4);
+  background: rgba(42, 47, 53, 1);
+  border-color: rgba(0, 207, 232, 0.4);
 }
 
 /* Navbar styling */
