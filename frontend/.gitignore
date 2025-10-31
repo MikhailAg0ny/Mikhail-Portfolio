@@ -52,4 +52,5 @@ desktop.ini
 .turbo/
 
 #Markdown file Task list
-project-folder-task.md
+project-folder-structure.md
+project-boilerplate.md
