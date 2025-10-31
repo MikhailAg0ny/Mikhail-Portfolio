@@ -45,7 +45,7 @@ export default function HomePage() {
           </div>
         ))}
       </PagePilingWrapper>
-      <Footer />
+  <Footer isVisible={activeIndex === sections.length - 1} />
     </>
   );
 }

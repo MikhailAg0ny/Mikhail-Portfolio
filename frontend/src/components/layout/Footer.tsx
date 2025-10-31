@@ -1,8 +1,14 @@
-export default function Footer() {
+type FooterProps = {
+  isVisible?: boolean;
+};
+
+export default function Footer({ isVisible = false }: FooterProps) {
   return (
     <footer
       id="footer-bar"
-      className="fixed bottom-0 left-0 right-0 z-50 border-t border-slate-800 bg-slate-950/95 backdrop-blur"
+      className={`fixed bottom-0 left-0 right-0 z-40 border-t border-slate-800/70 bg-slate-950/85 backdrop-blur-lg transition-all duration-300 ease-out ${
+        isVisible ? "translate-y-0 opacity-100 pointer-events-auto" : "translate-y-full opacity-0 pointer-events-none"
+      }`}
     >
       <div className="mx-auto flex max-w-6xl flex-col gap-4 px-6 py-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="text-center sm:text-left">

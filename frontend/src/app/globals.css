@@ -49,23 +49,79 @@ body {
 }
 
 /* Custom navigation dots styling */
-#fp-nav ul li a span,
-.fp-slidesNav ul li a span {
-  background: rgba(255, 255, 255, 0.5);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+#fp-nav {
+  position: fixed;
+  z-index: 100;
 }
 
-#fp-nav ul li a.active span,
-.fp-slidesNav ul li a.active span,
-#fp-nav ul li:hover a.active span,
-.fp-slidesNav ul li:hover a.active span {
-  background: rgb(20, 184, 166); /* teal-500 */
-  border: 1px solid rgb(20, 184, 166);
+#fp-nav ul {
+  margin: 0;
+  padding: 0;
 }
 
-#fp-nav ul li:hover a span,
-.fp-slidesNav ul li:hover a span {
-  background: rgba(20, 184, 166, 0.7);
+#fp-nav ul li {
+  margin: 12px 0;
+}
+
+#fp-nav ul li a {
+  display: block;
+  position: relative;
+}
+
+#fp-nav ul li a span {
+  background: rgba(255, 255, 255, 0.25);
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  width: 10px;
+  height: 10px;
+  display: block;
+  margin: 0;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#fp-nav ul li a.active span {
+  background: rgba(20, 184, 166, 0.95);
+  border: 2px solid rgb(20, 184, 166);
+  width: 14px;
+  height: 14px;
+  box-shadow: 0 0 12px rgba(20, 184, 166, 0.5);
+}
+
+#fp-nav ul li a:hover span {
+  background: rgba(20, 184, 166, 0.6);
+  border-color: rgba(20, 184, 166, 0.8);
+  transform: scale(1.2);
+}
+
+#fp-nav ul li a.active:hover span {
+  background: rgba(20, 184, 166, 1);
+  border-color: rgb(20, 184, 166);
+  transform: scale(1.1);
+}
+
+/* Tooltip styling */
+.fp-tooltip {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: #f1f5f9;
+  background: rgba(15, 23, 42, 0.95);
+  backdrop-filter: blur(12px);
+  padding: 6px 14px;
+  border-radius: 8px;
+  border: 1px solid rgba(100, 116, 139, 0.3);
+  white-space: nowrap;
+  max-width: 220px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  transition: all 0.2s ease;
+}
+
+.fp-tooltip.fp-right {
+  margin-right: 8px;
+}
+
+#fp-nav ul li:hover .fp-tooltip {
+  background: rgba(15, 23, 42, 1);
+  border-color: rgba(20, 184, 166, 0.4);
 }
 
 /* Navbar styling */
@@ -75,21 +131,4 @@ body {
   left: 0;
   right: 0;
   z-index: 9999 !important;
-}
-
-#footer-bar {
-  transform: translateY(100%);
-  opacity: 0;
-  transition: transform 0.35s ease, opacity 0.35s ease;
-  pointer-events: none;
-}
-
-/* This is a bit of a hack, but we'll use the :has selector when it's more widely supported */
-/* For now, we'll just show the footer all the time on larger screens */
-@media (min-width: 768px) {
-  #footer-bar {
-    transform: translateY(0);
-    opacity: 1;
-    pointer-events: auto;
-  }
 }

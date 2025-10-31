@@ -15,8 +15,17 @@ type NavbarProps = {
 };
 
 export default function Navbar({ activeSection = "hero" }: NavbarProps) {
+  const isHeroSection = activeSection === "hero";
+  
   return (
-    <nav id="navbar" className="fixed top-0 z-[100] w-full border-b border-slate-800 bg-slate-950/95 backdrop-blur-sm">
+    <nav
+      id="navbar"
+      className={`fixed top-0 z-[100] w-full border-b transition-all duration-300 ${
+        isHeroSection
+          ? "border-transparent bg-transparent backdrop-blur-none"
+          : "border-slate-700/50 bg-slate-950/65 backdrop-blur-xl shadow-[0_8px_32px_rgba(15,23,42,0.55)]"
+      }`}
+    >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 sm:px-10">
         <a href="#hero" className="flex items-center gap-3">
           <div className="h-10 w-10 overflow-hidden rounded-full border-2 border-teal-400">
