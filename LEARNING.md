@@ -43,7 +43,7 @@ Goal: Build a polished Next.js portfolio while learning fundamentals. Follow sma
 ---
 
 ## Week 1 — HTML & CSS
-- [ ] Day 1: semantic HTML, page structure (header, main, footer)
+- [ check ] Day 1: semantic HTML, page structure (header, main, footer)
 - [ ] Day 2: responsive layout basics (meta viewport, container)
 - [ ] Day 3: Flexbox — build header/nav
 - [ ] Day 4: Grid — build projects grid
