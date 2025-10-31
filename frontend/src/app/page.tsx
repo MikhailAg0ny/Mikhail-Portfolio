@@ -1,5 +1,5 @@
 ﻿"use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Navbar from "@/components/layout/Navbar";
 import HeroSection from "@/components/sections/HeroSection";
 import AboutSection from "@/components/sections/AboutSection";
@@ -25,21 +25,27 @@ export default function HomePage() {
 
   const handleSectionChange = (index: number) => {
     setActiveIndex(index);
-    const sectionId = sections[index].anchor;
-    window.location.hash = sectionId;
   };
 
+  useEffect(() => {
+    const hash = window.location.hash.replace("#", "") || "hero";
+    const sectionIndex = sections.findIndex((s) => s.anchor === hash);
+    if (sectionIndex !== -1) {
+      setActiveIndex(sectionIndex);
+    }
+  }, []);
+
   return (
-    <div className="relative flex h-screen flex-col bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-slate-100">
+    <>
       <Navbar activeSection={sections[activeIndex].anchor} />
       <PagePilingWrapper onSectionChange={handleSectionChange}>
         {sections.map((section) => (
-          <div key={section.anchor} id={section.anchor} className="section">
+          <div key={section.anchor}>
             {section.component}
           </div>
         ))}
       </PagePilingWrapper>
       <Footer />
-    </div>
+    </>
   );
 }

@@ -27,63 +27,54 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
 }
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-.page-piling-wrapper {
-  position: relative;
-  height: 100vh;
-  width: 100vw;
-  overflow: hidden;
+/* FullPage.js Customization */
+#fullpage {
+  background: linear-gradient(to bottom, #020617, #0f172a, #020617);
 }
 
-.pp-section {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  transition: transform 1s ease-in-out, opacity 1s ease-in-out;
-  opacity: 0;
-}
-
-.pp-section.active {
-  opacity: 1;
-}
-
-.pp-nav {
-  position: fixed;
-  right: 20px;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 100;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.pp-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.5);
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.pp-dot.active {
-  background-color: white;
-}
-
-.section {
+#fullpage .section {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  width: 100vw;
+  color: #f1f5f9;
+}
+
+/* Custom navigation dots styling */
+#fp-nav ul li a span,
+.fp-slidesNav ul li a span {
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+#fp-nav ul li a.active span,
+.fp-slidesNav ul li a.active span,
+#fp-nav ul li:hover a.active span,
+.fp-slidesNav ul li:hover a.active span {
+  background: rgb(20, 184, 166); /* teal-500 */
+  border: 1px solid rgb(20, 184, 166);
+}
+
+#fp-nav ul li:hover a span,
+.fp-slidesNav ul li:hover a span {
+  background: rgba(20, 184, 166, 0.7);
+}
+
+/* Navbar styling */
+#navbar {
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999 !important;
 }
 
 #footer-bar {

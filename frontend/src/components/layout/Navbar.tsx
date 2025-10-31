@@ -10,9 +10,13 @@ const navLinks = [
   { label: "Contact", href: "#contact" },
 ];
 
-export default function Navbar() {
+type NavbarProps = {
+  activeSection?: string;
+};
+
+export default function Navbar({ activeSection = "hero" }: NavbarProps) {
   return (
-    <nav id="navbar" className="fixed top-0 z-50 w-full border-b border-slate-800 bg-slate-950">
+    <nav id="navbar" className="fixed top-0 z-[100] w-full border-b border-slate-800 bg-slate-950/95 backdrop-blur-sm">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 sm:px-10">
         <a href="#hero" className="flex items-center gap-3">
           <div className="h-10 w-10 overflow-hidden rounded-full border-2 border-teal-400">
@@ -26,18 +30,25 @@ export default function Navbar() {
           </div>
           <span className="text-lg font-semibold text-teal-400">Mikhail Navarro</span>
         </a>
-  <ul id="navbar-menu" className="hidden gap-6 md:flex">
-          {navLinks.map((link) => (
-            <li key={link.label}>
-              <a
-                className="text-sm font-medium text-slate-300 transition hover:text-teal-400"
-                href={link.href}
-                data-menuanchor={link.href.substring(1)}
-              >
-                {link.label}
-              </a>
-            </li>
-          ))}
+        <ul id="navbar-menu" className="hidden gap-6 md:flex">
+          {navLinks.map((link) => {
+            const isActive = activeSection === link.href.substring(1);
+            return (
+              <li key={link.label}>
+                <a
+                  className={`text-sm font-medium transition ${
+                    isActive
+                      ? "text-teal-400"
+                      : "text-slate-300 hover:text-teal-400"
+                  }`}
+                  href={link.href}
+                  data-menuanchor={link.href.substring(1)}
+                >
+                  {link.label}
+                </a>
+              </li>
+            );
+          })}
         </ul>
       </div>
     </nav>
