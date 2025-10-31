@@ -1,19 +1,20 @@
-import Image from "next/image";
 import ImageWithFallback from "@/components/ui/ImageWithFallback";
 
 const navLinks = [
-  { label: "Home", href: "/" },
-  { label: "About", href: "/(main)/about" },
-  { label: "Projects", href: "/(main)/projects" },
+  { label: "Home", href: "#hero" },
+  { label: "About", href: "#about" },
   { label: "Skills", href: "#skills" },
-  { label: "Contact", href: "/(main)/contact" },
+  { label: "Projects", href: "#projects" },
+  { label: "Achievements", href: "#achievements" },
+  { label: "Certifications", href: "#certifications" },
+  { label: "Contact", href: "#contact" },
 ];
 
 export default function Navbar() {
   return (
-    <nav className="fixed top-0 z-50 w-full border-b border-slate-800 bg-slate-950/90 backdrop-blur-sm">
+    <nav id="navbar" className="fixed top-0 z-50 w-full border-b border-slate-800 bg-slate-950">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 sm:px-10">
-        <div className="flex items-center gap-3">
+        <a href="#hero" className="flex items-center gap-3">
           <div className="h-10 w-10 overflow-hidden rounded-full border-2 border-teal-400">
             <ImageWithFallback
               src="/images/profile.jpg"
@@ -24,13 +25,14 @@ export default function Navbar() {
             />
           </div>
           <span className="text-lg font-semibold text-teal-400">Mikhail Navarro</span>
-        </div>
-        <ul className="hidden gap-6 md:flex">
+        </a>
+  <ul id="navbar-menu" className="hidden gap-6 md:flex">
           {navLinks.map((link) => (
             <li key={link.label}>
               <a
                 className="text-sm font-medium text-slate-300 transition hover:text-teal-400"
                 href={link.href}
+                data-menuanchor={link.href.substring(1)}
               >
                 {link.label}
               </a>

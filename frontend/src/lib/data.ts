@@ -1,47 +1,53 @@
-import type { Project, ProgrammingLanguage, Highlight, NavLink } from "@/types";
+import type {
+  Achievement,
+  Certificate,
+  ContactChannel,
+  Experience,
+  Highlight,
+  ProgrammingLanguage,
+  ProjectCaseStudy,
+} from "@/types";
 
-export const navLinks: NavLink[] = [
-  { label: "Home", href: "/" },
-  { label: "About", href: "/(main)/about" },
-  { label: "Projects", href: "/(main)/projects" },
-  { label: "Skills", href: "#skills" },
-  { label: "Contact", href: "/(main)/contact" },
+export const highlights: Highlight[] = [
+  { label: "Years Experience", value: "1+" },
+  { label: "Hackathon Wins", value: "3" },
+  { label: "Projects Built", value: "5+" },
 ];
 
-export const featuredProjects: Project[] = [
+export const experience: Experience[] = [
   {
-    title: "PromptQuest AI Hackathon Winner",
-    description:
-      "Shipped an AI-assisted puzzle narrative in 72 hours, owning gameplay systems, UX writing, and pitch-ready storytelling.",
-    link: "/(main)/projects#promptquest",
-    tags: ["Next.js", "OpenAI", "Game Design"],
+    role: "Full-Stack Developer",
+    company: "Indie Studio Collective",
+    period: "2023 — Present",
+    summary:
+      "Lead developer across web and game prototypes, owning discovery, UX, and front-end build pipelines.",
   },
   {
-    title: "UXPH 2025 Experience Hub",
-    description:
-      "Built an event microsite with speaker journeys, schedule personalization, and analytics-informed content strategy.",
-    link: "/(main)/projects#uxph",
-    tags: ["Content Design", "TailwindCSS", "Accessibility"],
+    role: "Associate Software Engineer",
+    company: "Tech Agency",
+    period: "2021 — 2023",
+    summary:
+      "Delivered marketing sites and internal tools with emphasis on accessibility, automation, and developer experience.",
   },
-  {
-    title: "Java OOP2 Game Showcase",
-    description:
-      "Crafted a lightweight arcade experience to demonstrate clean architecture, smooth animations, and controller support.",
-    link: "/(main)/projects#oop2",
-    tags: ["Java", "Game Loop", "Pixel Art"],
-  },
+];
+
+export const interests: string[] = [
+  "Gameplay prototyping",
+  "Interactive storytelling",
+  "Design systems",
+  "Developer tooling",
 ];
 
 export const programmingLanguages: ProgrammingLanguage[] = [
-  { name: "JavaScript", level: 90 },
-  { name: "TypeScript", level: 85 },
-  { name: "Java", level: 80 },
-  { name: "Python", level: 75 },
-  { name: "C#", level: 70 },
-  { name: "HTML/CSS", level: 95 },
+  { name: "JavaScript", level: "S" },
+  { name: "TypeScript", level: "S" },
+  { name: "Java", level: "A" },
+  { name: "Python", level: "A" },
+  { name: "C#", level: "B" },
+  { name: "HTML/CSS", level: "S" },
 ];
 
-export const frameworks = [
+export const frameworks: string[] = [
   "Next.js",
   "React",
   "TailwindCSS",
@@ -52,14 +58,98 @@ export const frameworks = [
   "Express",
 ];
 
-export const highlights: Highlight[] = [
-  { label: "Years Experience", value: "5+" },
-  { label: "Hackathon Wins", value: "3" },
-  { label: "Projects Built", value: "20+" },
+export const projectCaseStudies: ProjectCaseStudy[] = [
+  {
+    title: "Mythic Quest Companion",
+    role: "Product Designer & Front-End Developer",
+    timeframe: "2024",
+    problem:
+      "Increase player retention with a lore companion experience that works seamlessly on web and mobile.",
+    solution:
+      "Built a headless CMS driven site with in-browser mini games, accessibility-first navigation, and a React component library shared with in-game overlays.",
+    results: [
+      "+38% session duration",
+      "22% reduction in support tickets",
+      "Optimized TTI under 1.2s",
+    ],
+    caseStudyUrl: "#",
+    sourceUrl: "#",
+    stack: ["Next.js", "TypeScript", "TailwindCSS", "Storybook"],
+  },
+  {
+    title: "Indie Dev Portfolio Engine",
+    role: "Lead Developer",
+    timeframe: "2023",
+    problem:
+      "Ship customizable portfolio templates for game developers with minimal setup.",
+    solution:
+      "Architected a modular content model, delivered theming controls, and automated deployments through GitHub Actions.",
+    results: ["12+ live portfolios", "Average Lighthouse 95+", "2 week turnaround"],
+    caseStudyUrl: "#",
+    sourceUrl: "#",
+    stack: ["Next.js", "MDX", "Framer Motion", "Vercel"],
+  },
 ];
 
-export const principles = [
-  "Start with narrative clarity",
-  "Prototype quickly, iterate publicly",
-  "Document decisions and measure impact",
+export const achievements: Achievement[] = [
+  {
+    title: "Game Jam Grand Winner",
+    event: "PromptQuest Hackathon",
+    year: "2025",
+    highlight:
+      "Designed and programmed an AI-assisted puzzle game in 72 hours, earning top marks for storytelling and technical execution.",
+  },
+  {
+    title: "UXPH Spotlight Speaker",
+    event: "UXPH Conference",
+    year: "2024",
+    highlight:
+      "Presented a live case study on aligning player empathy with design systems for cross-platform experiences.",
+  },
+  {
+    title: "Design System Accelerator",
+    event: "Internal Agency Award",
+    year: "2023",
+    highlight:
+      "Led a cross-functional initiative that reduced component delivery time by 40% and improved accessibility scores across products.",
+  },
+];
+
+export const certifications: Certificate[] = [
+  {
+    name: "Google UX Design Professional Certificate",
+    issuer: "Google / Coursera",
+    date: "2024",
+    focus: "Human-centered research, low-to-high fidelity prototyping, usability testing.",
+  },
+  {
+    name: "Meta Front-End Developer Certificate",
+    issuer: "Meta / Coursera",
+    date: "2023",
+    focus: "React, design systems, accessibility-first component development, CI/CD pipelines.",
+  },
+  {
+    name: "Unity Certified Associate: Game Developer",
+    issuer: "Unity",
+    date: "2022",
+    focus: "Gameplay systems, performance optimization, and cross-platform deployment.",
+  },
+];
+
+export const contactChannels: ContactChannel[] = [
+  {
+    label: "Email",
+    value: "hello@example.com",
+    href: "mailto:hello@example.com",
+  },
+  {
+    label: "LinkedIn",
+    value: "linkedin.com/in/username",
+    href: "https://linkedin.com/in/username",
+  },
+  {
+    label: "GitHub",
+    value: "github.com/username",
+    href: "https://github.com/username",
+  },
 ];
