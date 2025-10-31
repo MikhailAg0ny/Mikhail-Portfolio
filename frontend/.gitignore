@@ -50,3 +50,6 @@ Thumbs.db
 desktop.ini
 .cache/
 .turbo/
+
+#Markdown file Task list
+project-folder-task.md
