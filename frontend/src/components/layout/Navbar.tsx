@@ -74,6 +74,7 @@ export default function Navbar({ activeSection = "hero", onNavigate }: NavbarPro
             );
           })}
         </ul>
+        {/* (no social icons in navbar) */}
       </div>
     </nav>
   );
