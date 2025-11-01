@@ -90,23 +90,23 @@ export default function SkillsSection() {
     <section className="flex h-full w-full items-center justify-center">
       <div className="flex h-full w-full max-w-6xl flex-col justify-center gap-10 px-6 pb-14 pt-24 sm:px-10">
         <header className="space-y-3 text-center">
-          <p className="text-sm uppercase tracking-[0.45em] text-[#00CFE8]">Technical Expertise</p>
-          <h2 className="text-3xl font-semibold text-[#F0F2F5] md:text-4xl">
+          <p className="text-sm uppercase tracking-[0.45em] text-victus-blue">Technical Expertise</p>
+          <h2 className="text-3xl font-semibold text-text-primary md:text-4xl">
             My Skills
           </h2>
-          <p className="text-base text-[#9AA5B1]">
+          <p className="text-base text-text-secondary">
             Technologies and tools I work with
           </p>
         </header>
 
-        <div className="mx-auto h-max w-full max-w-4xl rounded-3xl border border-[#9AA5B1]/20 bg-[#2A2F35]/60 p-2">
-          <div className="mb-6 flex h-11 justify-center rounded-full bg-[#1A1D21]/60">
+        <div className="mx-auto h-max w-full max-w-4xl rounded-3xl border border-text-secondary/20 bg-mica-light/60 p-2">
+          <div className="mb-6 flex h-11 justify-center rounded-full bg-mica-dark/60">
             <button
               onClick={() => handleTabChange("languages")}
               className={`w-1/3 rounded-full px-4 py-2 text-sm font-medium transition-all duration-300 ${
                 activeTab === "languages"
-                  ? "bg-gradient-to-r from-[#00CFE8] to-[#008C9E] text-white shadow-lg shadow-[#00CFE8]/30"
-                  : "text-[#9AA5B1] hover:text-white"
+                  ? "bg-gradient-to-r from-victus-blue to-victus-blue/80 text-white shadow-lg shadow-victus-blue/30"
+                  : "text-text-secondary hover:text-white"
               }`}
             >
               Languages
@@ -115,8 +115,8 @@ export default function SkillsSection() {
               onClick={() => handleTabChange("tools")}
               className={`w-1/3 rounded-full px-4 py-2 text-sm font-medium transition-all duration-300 ${
                 activeTab === "tools"
-                  ? "bg-gradient-to-r from-[#00CFE8] to-[#008C9E] text-white shadow-lg shadow-[#00CFE8]/30"
-                  : "text-[#9AA5B1] hover:text-white"
+                  ? "bg-gradient-to-r from-victus-blue to-victus-blue/80 text-white shadow-lg shadow-victus-blue/30"
+                  : "text-text-secondary hover:text-white"
               }`}
             >
               Tools
@@ -125,8 +125,8 @@ export default function SkillsSection() {
               onClick={() => handleTabChange("platforms")}
               className={`w-1/3 rounded-full px-4 py-2 text-sm font-medium transition-all duration-300 ${
                 activeTab === "platforms"
-                  ? "bg-gradient-to-r from-[#00CFE8] to-[#008C9E] text-white shadow-lg shadow-[#00CFE8]/30"
-                  : "text-[#9AA5B1] hover:text-white"
+                  ? "bg-gradient-to-r from-victus-blue to-victus-blue/80 text-white shadow-lg shadow-victus-blue/30"
+                  : "text-text-secondary hover:text-white"
               }`}
             >
               Platforms
@@ -140,15 +140,15 @@ export default function SkillsSection() {
                 <button
                   onClick={handlePrevPage}
                   disabled={currentPage === 0}
-                  className={`absolute left-0 top-1/2 z-10 -translate-y-1/2 rounded-full border border-[#9AA5B1]/20 bg-[#2A2F35]/90 p-3 backdrop-blur-sm transition-all duration-300 ${
+                  className={`absolute left-0 top-1/2 z-10 -translate-y-1/2 rounded-full border border-text-secondary/20 bg-mica-light/90 p-3 backdrop-blur-sm transition-all duration-300 ${
                     currentPage === 0
                       ? "cursor-not-allowed opacity-30"
-                      : "hover:border-[#00CFE8] hover:bg-[#00CFE8]/20 hover:shadow-lg hover:shadow-[#00CFE8]/30"
+                      : "hover:border-victus-blue hover:bg-victus-blue/20 hover:shadow-lg hover:shadow-victus-blue/30"
                   }`}
                   aria-label="Previous page"
                 >
                   <svg
-                    className="h-5 w-5 text-[#00CFE8]"
+                    className="h-5 w-5 text-victus-blue"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -160,15 +160,15 @@ export default function SkillsSection() {
                 <button
                   onClick={handleNextPage}
                   disabled={currentPage === totalPages - 1}
-                  className={`absolute right-0 top-1/2 z-10 -translate-y-1/2 rounded-full border border-[#9AA5B1]/20 bg-[#2A2F35]/90 p-3 backdrop-blur-sm transition-all duration-300 ${
+                  className={`absolute right-0 top-1/2 z-10 -translate-y-1/2 rounded-full border border-text-secondary/20 bg-mica-light/90 p-3 backdrop-blur-sm transition-all duration-300 ${
                     currentPage === totalPages - 1
                       ? "cursor-not-allowed opacity-30"
-                      : "hover:border-[#00CFE8] hover:bg-[#00CFE8]/20 hover:shadow-lg hover:shadow-[#00CFE8]/30"
+                      : "hover:border-victus-blue hover:bg-victus-blue/20 hover:shadow-lg hover:shadow-victus-blue/30"
                   }`}
                   aria-label="Next page"
                 >
                   <svg
-                    className="h-5 w-5 text-[#00CFE8]"
+                    className="h-5 w-5 text-victus-blue"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -185,7 +185,7 @@ export default function SkillsSection() {
                 {currentItems.map((item) => (
                   <li
                     key={item.name}
-                    className="group flex w-full flex-col items-center justify-center gap-2 rounded-xl border border-[#9AA5B1]/20 bg-[#1A1D21]/40 p-4 text-center transition-all hover:border-transparent hover:shadow-lg hover:shadow-[#00CFE8]/20"
+                    className="group flex w-full flex-col items-center justify-center gap-2 rounded-xl border border-text-secondary/20 bg-mica-dark/40 p-4 text-center transition-all hover:border-transparent hover:shadow-lg hover:shadow-victus-blue/20"
                     style={{ transition: 'all 0.3s ease', aspectRatio: '1/1' }}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.borderImage = 'linear-gradient(to right, #00CFE8, #008C9E) 1';
@@ -199,7 +199,7 @@ export default function SkillsSection() {
                       alt={item.name}
                       className="h-10 w-10 flex-shrink-0 drop-shadow-[0_0_10px_rgba(0,207,232,0.3)] transition-all duration-300 group-hover:drop-shadow-[0_0_20px_rgba(0,207,232,0.5)]"
                     />
-                    <span className="w-full truncate px-2 text-xs text-[#9AA5B1] group-hover:text-[#00CFE8]">{item.name}</span>
+                    <span className="w-full truncate px-2 text-xs text-text-secondary group-hover:text-victus-blue">{item.name}</span>
                   </li>
                 ))}
               </ul>
@@ -213,8 +213,8 @@ export default function SkillsSection() {
                       onClick={() => setCurrentPage(index)}
                       className={`h-2 rounded-full transition-all duration-300 ${
                         currentPage === index
-                          ? "w-8 bg-gradient-to-r from-[#00CFE8] to-[#008C9E]"
-                          : "w-2 bg-[#9AA5B1]/30 hover:bg-[#9AA5B1]/50"
+                          ? "w-8 bg-gradient-to-r from-victus-blue to-victus-blue/80"
+                          : "w-2 bg-text-secondary/30 hover:bg-text-secondary/50"
                       }`}
                       aria-label={`Go to page ${index + 1}`}
                     />
