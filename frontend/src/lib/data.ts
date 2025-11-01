@@ -80,7 +80,22 @@ export const projectCaseStudies: ProjectCaseStudy[] = [
     sourceUrl: "#",
     stack: ["Full-Stack Development", "Automation", "Deployment Pipeline"],
   },
+  {
+    title: "Roblox",
+    role: "Lead Developer",
+    timeframe: "2023",
+    problem:
+      "Ship customizable portfolio templates for game developers with minimal setup.",
+    solution:
+      "Architected a modular content model, delivered theming controls, and automated deployments.",
+    results: ["12+ live portfolios", "Average Lighthouse 95+", "2 week turnaround"],
+    caseStudyUrl: "#",
+    sourceUrl: "#",
+    stack: ["Full-Stack Development", "Automation", "Deployment Pipeline"],
+  },
 ];
+// Alias for general project listing usage
+export const projects: ProjectCaseStudy[] = projectCaseStudies;
 
 export const achievements: Achievement[] = [
   {

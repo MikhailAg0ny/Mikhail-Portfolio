@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { projectCaseStudies } from "@/lib/data";
+import { projects as myProjects } from "@/lib/data";
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, Keyboard } from 'swiper/modules';
+import { Navigation, Pagination, Keyboard, Autoplay } from 'swiper/modules';
 import type { Swiper as SwiperType } from 'swiper';
 
 // Import Swiper styles
@@ -12,33 +12,44 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
 export default function ProjectsSection() {
-  // Ensure we have at least 5 projects, repeat if needed
-  const baseProjects = projectCaseStudies;
-  const projects = [
-    ...baseProjects,
-    ...baseProjects.slice(0, Math.max(0, 5 - baseProjects.length))
-  ].slice(0, 5);
+  // Ensure we have at least 5 projects for looping, but never cap the total
+  const baseProjects = myProjects;
+  const minSlides = 5;
+  const projects = baseProjects.length >= minSlides
+    ? baseProjects
+    : [...baseProjects, ...baseProjects.slice(0, minSlides - baseProjects.length)];
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
 
   return (
-    <section className="w-full overflow-hidden">
-      <div className="flex h-full w-full flex-col justify-center px-6 pb-20 pt-28 sm:px-10">
+    <section className="flex h-full w-full items-center justify-center overflow-hidden">
+      <div className="flex h-full w-full max-h-[95vh] flex-col justify-center gap-6 px-6 py-8 sm:gap-8 sm:px-10">
         {/* Header */}
-        <div className="mb-12 text-center">
+        <div className="flex-shrink-0 space-y-2 text-center sm:space-y-3">
           <h2 className="text-3xl font-bold tracking-tight text-text-primary sm:text-4xl">Projects</h2>
-          <p className="mt-3 text-lg text-text-secondary">Featured case studies and recent work</p>
+          <p className="text-base text-text-secondary sm:text-lg">Featured projects and recent work</p>
         </div>
 
         {/* Swiper Carousel */}
-        <div className="relative mx-auto w-full max-w-6xl overflow-hidden px-4">
+        <div className="relative group mx-auto w-full max-w-7xl px-4">
           <Swiper
-            modules={[Navigation, Pagination, Keyboard]}
+            modules={[Navigation, Pagination, Keyboard, Autoplay]}
             grabCursor={true}
             centeredSlides={true}
             slidesPerView={3}
-            spaceBetween={30}
+            spaceBetween={40}
             loop={true}
+            loopAdditionalSlides={5}
+            autoHeight={true}
+            observer={true}
+            observeParents={true}
+            autoplay={{
+              delay: 3500,
+              disableOnInteraction: false,
+              pauseOnMouseEnter: true,
+            }}
+            speed={700}
+            slideToClickedSlide={true}
             keyboard={{
               enabled: true,
             }}
@@ -60,36 +71,48 @@ export default function ProjectsSection() {
               },
               768: {
                 slidesPerView: 2,
-                spaceBetween: 24,
+                spaceBetween: 30,
               },
               1024: {
                 slidesPerView: 3,
-                spaceBetween: 30,
+                spaceBetween: 40,
               },
             }}
+            style={{ minHeight: '420px' }}
           >
             {projects.map((project, idx) => (
-              <SwiperSlide key={idx} className="pb-10">
+              <SwiperSlide key={idx} className="pb-10 h-auto">
                 {({ isActive }) => (
                   <article
                     onClick={() => isActive && setIsModalOpen(true)}
-                    className={`group h-full overflow-hidden rounded-3xl border p-6 backdrop-blur-md transition-all duration-500 ${
+                    className={`group relative flex max-h-[75vh] min-h-0 flex-col overflow-hidden rounded-3xl border p-4 backdrop-blur-md transition-all duration-500 sm:p-6 ${
                       isActive
-                        ? 'cursor-pointer scale-105 border-victus-blue/30 bg-gradient-to-b from-mica-light/90 via-mica-dark/90 to-black/90 shadow-2xl shadow-victus-blue/20'
-                        : 'scale-95 border-text-secondary/10 bg-mica-dark/60 opacity-60'
+                        ? 'cursor-pointer scale-105 border-victus-blue/30 ring-1 ring-victus-blue/30 bg-gradient-to-b from-mica-light/90 via-mica-dark/90 to-black/90 shadow-2xl shadow-victus-blue/30 hover:-translate-y-0.5 before:content-[""] before:absolute before:inset-x-6 before:bottom-0 before:h-[2px] before:rounded-full before:bg-gradient-to-r before:from-victus-blue/50 before:via-cyan-400/40 before:to-transparent before:opacity-100 after:content-[""] after:pointer-events-none after:absolute after:inset-x-10 after:bottom-0 after:h-10 after:rounded-full after:bg-victus-blue/20 after:blur-2xl'
+                        : 'scale-95 border-text-secondary/10 bg-mica-dark/60 opacity-60 brightness-90 hover:opacity-80'
                     }`}
                   >
                     {/* Image Placeholder */}
-                    <div className={`mb-4 w-full overflow-hidden rounded-xl bg-gradient-to-br from-victus-blue/10 to-victus-blue/10 transition-all ${
-                      isActive ? 'h-48' : 'h-40'
-                    }`} />
+                    {project.image ? (
+                      <img
+                        src={project.image}
+                        alt={project.title}
+                        loading="lazy"
+                        className={`mb-3 w-full flex-shrink-0 rounded-xl object-cover shadow-inner transition-all sm:mb-4 ${
+                          isActive ? 'h-40 sm:h-48' : 'h-32 sm:h-36'
+                        }`}
+                      />
+                    ) : (
+                      <div className={`mb-3 w-full flex-shrink-0 overflow-hidden rounded-xl bg-gradient-to-br from-victus-blue/10 to-victus-blue/20 shadow-inner transition-all sm:mb-4 ${
+                        isActive ? 'h-40 sm:h-48' : 'h-32 sm:h-36'
+                      }`} />
+                    )}
 
 
                     {isActive ? (
                       <>
                         {/* Icon/Badge */}
-                        <div className="mb-4 flex items-center justify-between">
-                          <span className="inline-block rounded-full bg-victus-blue/10 px-3 py-1 text-xs font-medium text-victus-blue">
+                        <div className="mb-3 flex flex-shrink-0 items-center justify-between sm:mb-4">
+                          <span className="inline-block rounded-full bg-victus-blue/10 px-3 py-1 text-sm font-medium text-victus-blue">
                             {project.timeframe}
                           </span>
                           <svg
@@ -108,16 +131,16 @@ export default function ProjectsSection() {
                         </div>
 
                         {/* Title & Role */}
-                        <h3 className="text-xl font-bold text-white">{project.title}</h3>
-                        <p className="mt-1 text-sm text-victus-blue">{project.role}</p>
+                        <h3 className="text-lg font-bold text-white line-clamp-2">{project.title}</h3>
+                        <p className="mt-1 text-sm text-victus-blue line-clamp-1">{project.role}</p>
 
-                        {/* Problem Statement */}
-                        <p className="mt-4 line-clamp-3 text-sm text-text-secondary">
+                        {/* Problem Statement (limit to 4 lines) */}
+                        <p className="mt-2 line-clamp-4 text-sm text-text-secondary sm:mt-3">
                           <span className="font-semibold text-text-primary">Challenge:</span> {project.problem}
                         </p>
 
                         {/* Stack Tags */}
-                        <div className="mt-4 flex flex-wrap gap-1.5">
+                        <div className="mt-2 flex flex-shrink-0 flex-wrap gap-1.5 sm:mt-3">
                           {project.stack.slice(0, 2).map((tech, i) => (
                             <span
                               key={i}
@@ -128,12 +151,12 @@ export default function ProjectsSection() {
                           ))}
                         </div>
 
-                        {/* View Case Study Link */}
-                        <div className="mt-5 border-t border-text-secondary/10 pt-4">
+                        {/* View Project Link */}
+                        <div className="mt-3 flex-shrink-0 border-t border-text-secondary/10 pt-2 sm:mt-4 sm:pt-3">
                           <span className="inline-flex items-center text-xs font-semibold text-victus-blue transition-colors hover:text-victus-blue/80">
-                            View Case Study
+                            View Project
                             <svg
-                              className="ml-1.5 h-3 w-3"
+                              className="ml-1.5 h-3.5 w-3.5"
                               fill="none"
                               stroke="currentColor"
                               viewBox="0 0 24 24"
@@ -151,10 +174,10 @@ export default function ProjectsSection() {
                     ) : (
                       <>
                         {/* Side Card Content */}
-                        <h3 className="line-clamp-2 text-sm font-semibold text-text-primary">
+                        <h3 className="line-clamp-2 text-base font-semibold text-text-primary">
                           {project.title}
                         </h3>
-                        <p className="mt-2 line-clamp-1 text-xs text-text-secondary">
+                        <p className="mt-2 line-clamp-1 text-sm text-text-secondary">
                           {project.role}
                         </p>
                       </>
@@ -167,7 +190,7 @@ export default function ProjectsSection() {
 
           {/* Custom Navigation Buttons */}
           <button
-            className="swiper-button-prev-custom absolute left-2 top-1/2 z-30 -translate-y-1/2 rounded-full border border-text-secondary/30 bg-mica-light/90 p-2.5 text-victus-blue backdrop-blur-sm transition-all hover:border-victus-blue/60 hover:bg-victus-blue/10 hover:scale-110"
+            className="swiper-button-prev-custom absolute left-2 top-1/2 z-30 -translate-y-1/2 hidden rounded-full border border-text-secondary/30 bg-mica-light/90 p-2.5 text-victus-blue backdrop-blur-sm opacity-0 transition-all sm:flex group-hover:opacity-100 hover:border-victus-blue/60 hover:bg-victus-blue/10 hover:scale-110"
             aria-label="Previous project"
           >
             <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -176,7 +199,7 @@ export default function ProjectsSection() {
           </button>
 
           <button
-            className="swiper-button-next-custom absolute right-2 top-1/2 z-30 -translate-y-1/2 rounded-full border border-text-secondary/30 bg-mica-light/90 p-2.5 text-victus-blue backdrop-blur-sm transition-all hover:border-victus-blue/60 hover:bg-victus-blue/10 hover:scale-110"
+            className="swiper-button-next-custom absolute right-2 top-1/2 z-30 -translate-y-1/2 hidden rounded-full border border-text-secondary/30 bg-mica-light/90 p-2.5 text-victus-blue backdrop-blur-sm opacity-0 transition-all sm:flex group-hover:opacity-100 hover:border-victus-blue/60 hover:bg-victus-blue/10 hover:scale-110"
             aria-label="Next project"
           >
             <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -185,7 +208,7 @@ export default function ProjectsSection() {
           </button>
 
           {/* Custom Pagination */}
-          <div className="swiper-pagination-custom mt-10 flex items-center justify-center gap-3" />
+          <div className="swiper-pagination-custom mt-6 flex flex-shrink-0 items-center justify-center gap-3 sm:mt-10" />
         </div>
       </div>
 
@@ -196,13 +219,13 @@ export default function ProjectsSection() {
           onClick={() => setIsModalOpen(false)}
         >
           <div 
-            className="relative w-full max-w-4xl max-h-[90vh] overflow-hidden rounded-3xl border border-victus-blue/30 bg-gradient-to-b from-mica-light via-mica-dark to-black p-8 shadow-2xl"
+            className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-3xl border border-victus-blue/30 bg-gradient-to-b from-mica-light via-mica-dark to-black p-8 shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Close Button */}
             <button
               onClick={() => setIsModalOpen(false)}
-              className="absolute right-6 top-6 rounded-full border border-text-secondary/30 bg-mica-light/80 p-2 text-text-secondary transition-all hover:border-victus-blue/60 hover:bg-victus-blue/10 hover:text-victus-blue"
+              className="sticky right-6 top-6 z-10 ml-auto mb-4 flex rounded-full border border-text-secondary/30 bg-mica-light/80 p-2 text-text-secondary transition-all hover:border-victus-blue/60 hover:bg-victus-blue/10 hover:text-victus-blue"
               aria-label="Close modal"
             >
               <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -211,7 +234,7 @@ export default function ProjectsSection() {
             </button>
 
             {/* Modal Content */}
-            <div className="space-y-6">
+            <div className="space-y-6 pr-2">
               {/* Header */}
               <div className="space-y-3">
                 <div className="flex items-center gap-3">
@@ -271,7 +294,7 @@ export default function ProjectsSection() {
                   href={projects[activeIndex].caseStudyUrl}
                   className="inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-victus-blue to-victus-blue/80 px-5 py-2.5 text-sm font-semibold text-white transition-all hover:shadow-lg hover:shadow-victus-blue/30"
                 >
-                  View Full Case Study
+                  View Project
                   <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                   </svg>

@@ -23,6 +23,7 @@ export interface ProjectCaseStudy {
   caseStudyUrl: string;
   sourceUrl: string;
   stack: string[];
+  image?: string;
 }
 
 export interface Experience {

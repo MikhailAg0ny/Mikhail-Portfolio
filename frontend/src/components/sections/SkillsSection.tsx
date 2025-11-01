@@ -1,76 +1,30 @@
 "use client";
 
-import Image from "next/image";
-import { useState } from "react";
-// From the comment inside value, do not remove when prompting modifying here yet!!!!
-// Your actual tools
-const tools: { name: string; icon: string }[] = [
-  { name: "GitHub Copilot", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" },
-  { name: "VS Code", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" },
-  { name: "Godot Engine", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/godot/godot-original.svg" },
-  { name: "Roblox Studio", icon: "https://cdn-1.webcatalog.io/catalog/roblox-studio/roblox-studio-icon-filled-256.png?v=1684801410955" },
-  { name: "Postman", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postman/postman-original.svg" },
-  { name: "Figma", icon: "https://cdn.jim-nielsen.com/macos/1024/figma-2021-05-05.png" },
-  { name: "MySQL", icon: "https://www.nicepng.com/png/detail/14-143154_mysql-dolphin-square-mysql-dolphin-logo.png" },
-  { name: "Aseprite", icon: "https://images.seeklogo.com/logo-png/50/1/aseprite-logo-png_seeklogo-506592.png" },
-];
-
-// From the comment inside value, do not remove when prompting modifying here yet!!!!
-// Platforms
-const platforms: { name: string; icon: string }[] = [
-  { name: "Firebase", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-original.svg" },
-  { name: "AWS", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" },
-  { name: "Node.js", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" },
-];
-// From the comment inside value, do not remove when prompting modifying here yet!!!!
-// Your languages
-const languages: { name: string; icon: string }[] = [
-  { name: "C++", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" },
-  { name: "SQL", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azuresqldatabase/azuresqldatabase-original.svg" },
-  { name: "Lua", icon: "https://handwiki.org/wiki/images/thumb/c/cf/Lua-Logo.svg/128px-Lua-Logo.svg.png" },
-  { name: "HTML5", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" },
-  { name: "CSS", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" },
-  { name: "JavaScript", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" },
-  { name: "TypeScript", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" },
-  { name: "Tailwind CSS", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg" },
-  { name: "Node.js", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" },
-  { name: "Java", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" },
-  { name: "GDScript", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/godot/godot-original.svg" },
-  { name: "Nextscript.js", icon: "https://seekicon.com/free-icon-download/nextjs_2.png" },
-  { name: "React.js", icon: "https://www.svgrepo.com/show/355190/reactjs.svg" },
-  { name: "Kotlin", icon: "https://user-images.githubusercontent.com/103866722/177941491-1947c6b0-6e38-4880-8bd7-01dac36165df.png" }
-];
-// From the comment inside value, do not remove when prompting modifying here yet!!!!
-// Currently learning
-const currentlyLearning: { name: string; icon: string }[] = [
-  { name: "C++", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" },
-];
+import { useState, useMemo } from "react";
+import { getSkillsByCategory, ITEMS_PER_PAGE, SKILL_CATEGORIES } from "@/lib/skills";
+import type { SkillCategory } from "@/lib/skills";
+import SkillCard from "@/components/ui/SkillCard";
 
 export default function SkillsSection() {
-  const [activeTab, setActiveTab] = useState<"languages" | "tools" | "platforms">("languages");
+  const [activeTab, setActiveTab] = useState<SkillCategory>("languages");
   const [currentPage, setCurrentPage] = useState(0);
-  const itemsPerPage = 9;
 
-  const getCurrentItems = () => {
-    let items: { name: string; icon: string }[] = [];
-    if (activeTab === "languages") items = languages;
-    else if (activeTab === "tools") items = tools;
-    else if (activeTab === "platforms") items = platforms;
-    
-    const startIndex = currentPage * itemsPerPage;
-    return items.slice(startIndex, startIndex + itemsPerPage);
-  };
+  // Memoize current skills to avoid recalculation
+  const currentSkills = useMemo(() => getSkillsByCategory(activeTab), [activeTab]);
+  
+  // Memoize paginated items
+  const currentItems = useMemo(() => {
+    const startIndex = currentPage * ITEMS_PER_PAGE;
+    return currentSkills.slice(startIndex, startIndex + ITEMS_PER_PAGE);
+  }, [currentSkills, currentPage]);
 
-  const getTotalPages = () => {
-    let items: { name: string; icon: string }[] = [];
-    if (activeTab === "languages") items = languages;
-    else if (activeTab === "tools") items = tools;
-    else if (activeTab === "platforms") items = platforms;
-    
-    return Math.ceil(items.length / itemsPerPage);
-  };
+  // Memoize total pages
+  const totalPages = useMemo(() => 
+    Math.ceil(currentSkills.length / ITEMS_PER_PAGE),
+    [currentSkills.length]
+  );
 
-  const handleTabChange = (tab: "languages" | "tools" | "platforms") => {
+  const handleTabChange = (tab: SkillCategory) => {
     setActiveTab(tab);
     setCurrentPage(0);
   };
@@ -80,70 +34,52 @@ export default function SkillsSection() {
   };
 
   const handleNextPage = () => {
-    setCurrentPage((prev) => Math.min(getTotalPages() - 1, prev + 1));
+    setCurrentPage((prev) => Math.min(totalPages - 1, prev + 1));
   };
 
-  const totalPages = getTotalPages();
-  const currentItems = getCurrentItems();
 
   return (
-    <section className="flex h-full w-full items-center justify-center">
-      <div className="flex h-full w-full max-w-6xl flex-col justify-center gap-10 px-6 pb-14 pt-24 sm:px-10">
-        <header className="space-y-3 text-center">
-          <p className="text-sm uppercase tracking-[0.45em] text-victus-blue">Technical Expertise</p>
-          <h2 className="text-3xl font-semibold text-text-primary md:text-4xl">
+    <section className="flex h-full w-full items-center justify-center overflow-hidden">
+        <div className="flex h-full w-full max-w-6xl max-h-[95vh] flex-col justify-center gap-6 px-6 py-8 sm:gap-8 sm:px-10">
+        <header className="flex-shrink-0 space-y-2 text-center sm:space-y-3">
+          <p className="text-xs font-medium uppercase tracking-[0.45em] text-victus-blue sm:text-sm">Technical Expertise</p>
+          <h2 className="text-3xl font-bold tracking-tight text-text-primary sm:text-4xl md:text-5xl">
             My Skills
           </h2>
-          <p className="text-base text-text-secondary">
+          <p className="text-base text-text-secondary sm:text-lg">
             Technologies and tools I work with
           </p>
         </header>
 
-        <div className="mx-auto h-max w-full max-w-4xl rounded-3xl border border-text-secondary/20 bg-mica-light/60 p-2">
-          <div className="mb-6 flex h-11 justify-center rounded-full bg-mica-dark/60">
-            <button
-              onClick={() => handleTabChange("languages")}
-              className={`w-1/3 rounded-full px-4 py-2 text-sm font-medium transition-all duration-300 ${
-                activeTab === "languages"
-                  ? "bg-gradient-to-r from-victus-blue to-victus-blue/80 text-white shadow-lg shadow-victus-blue/30"
-                  : "text-text-secondary hover:text-white"
-              }`}
-            >
-              Languages
-            </button>
-            <button
-              onClick={() => handleTabChange("tools")}
-              className={`w-1/3 rounded-full px-4 py-2 text-sm font-medium transition-all duration-300 ${
-                activeTab === "tools"
-                  ? "bg-gradient-to-r from-victus-blue to-victus-blue/80 text-white shadow-lg shadow-victus-blue/30"
-                  : "text-text-secondary hover:text-white"
-              }`}
-            >
-              Tools
-            </button>
-            <button
-              onClick={() => handleTabChange("platforms")}
-              className={`w-1/3 rounded-full px-4 py-2 text-sm font-medium transition-all duration-300 ${
-                activeTab === "platforms"
-                  ? "bg-gradient-to-r from-victus-blue to-victus-blue/80 text-white shadow-lg shadow-victus-blue/30"
-                  : "text-text-secondary hover:text-white"
-              }`}
-            >
-              Platforms
-            </button>
+        <div className="mx-auto flex w-full max-w-5xl h-[520px] sm:h-[700px] lg:h-[760px] flex-col overflow-hidden rounded-3xl border border-text-secondary/20 bg-gradient-to-b from-mica-light/80 via-mica-dark/60 to-mica-dark/80 p-3 shadow-2xl backdrop-blur-sm">
+          <div className="mb-4 flex h-11 flex-shrink-0 justify-center gap-1 rounded-full bg-mica-dark/80 p-1 shadow-inner sm:mb-6 sm:h-12">
+            {SKILL_CATEGORIES.map((category) => (
+              <button
+                key={category.key}
+                onClick={() => handleTabChange(category.key)}
+                className={`relative w-1/3 rounded-full px-4 py-2 text-sm font-semibold transition-all duration-300 ${
+                  activeTab === category.key
+                    ? "bg-gradient-to-r from-victus-blue to-victus-blue/80 text-white shadow-lg shadow-victus-blue/40 scale-[1.02]"
+                    : "text-text-secondary hover:bg-mica-light/20 hover:text-white"
+                }`}
+                aria-pressed={activeTab === category.key}
+              >
+                {category.label}
+              </button>
+            ))}
           </div>
 
-          <div className="relative h-[520px] p-4">
+          <div className="relative flex flex-1 flex-col p-4 sm:p-6" style={{ transition: 'height 0.3s ease-in-out' }}>
             {/* Navigation Arrows */}
             {totalPages > 1 && (
               <>
                 <button
                   onClick={handlePrevPage}
                   disabled={currentPage === 0}
-                  className={`absolute left-0 top-1/2 z-10 -translate-y-1/2 rounded-full border border-text-secondary/20 bg-mica-light/90 p-3 backdrop-blur-sm transition-all duration-300 ${
+                  className={`absolute left-2 top-1/2 z-10 -translate-y-1/2 rounded-full border border-text-secondary/30 bg-mica-light/95 p-3 backdrop-blur-md transition-all duration-300 ${
                     currentPage === 0
-                      ? "cursor-not-allowed opacity-30"
-                      : "hover:border-victus-blue hover:bg-victus-blue/20 hover:shadow-lg hover:shadow-victus-blue/30"
+                      ? "cursor-not-allowed opacity-20"
+                      : "hover:border-victus-blue/60 hover:bg-victus-blue/20 hover:scale-110 hover:shadow-xl hover:shadow-victus-blue/40"
                   }`}
                   aria-label="Previous page"
                 >
@@ -160,10 +96,10 @@ export default function SkillsSection() {
                 <button
                   onClick={handleNextPage}
                   disabled={currentPage === totalPages - 1}
-                  className={`absolute right-0 top-1/2 z-10 -translate-y-1/2 rounded-full border border-text-secondary/20 bg-mica-light/90 p-3 backdrop-blur-sm transition-all duration-300 ${
+                  className={`absolute right-2 top-1/2 z-10 -translate-y-1/2 rounded-full border border-text-secondary/30 bg-mica-light/95 p-3 backdrop-blur-md transition-all duration-300 ${
                     currentPage === totalPages - 1
-                      ? "cursor-not-allowed opacity-30"
-                      : "hover:border-victus-blue hover:bg-victus-blue/20 hover:shadow-lg hover:shadow-victus-blue/30"
+                      ? "cursor-not-allowed opacity-20"
+                      : "hover:border-victus-blue/60 hover:bg-victus-blue/20 hover:scale-110 hover:shadow-xl hover:shadow-victus-blue/40"
                   }`}
                   aria-label="Next page"
                 >
@@ -180,41 +116,28 @@ export default function SkillsSection() {
             )}
 
             {/* Grid Content */}
-            <div className="mx-8">
-              <ul className="grid h-[400px] w-full auto-rows-fr grid-cols-3 content-start gap-4">
-                {currentItems.map((item) => (
-                  <li
-                    key={item.name}
-                    className="group flex w-full flex-col items-center justify-center gap-2 rounded-xl border border-text-secondary/20 bg-mica-dark/40 p-4 text-center transition-all hover:border-transparent hover:shadow-lg hover:shadow-victus-blue/20"
-                    style={{ transition: 'all 0.3s ease', aspectRatio: '1/1' }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.borderImage = 'linear-gradient(to right, #00CFE8, #008C9E) 1';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.borderImage = '';
-                    }}
-                  >
-                    <img
-                      src={item.icon}
-                      alt={item.name}
-                      className="h-10 w-10 flex-shrink-0 drop-shadow-[0_0_10px_rgba(0,207,232,0.3)] transition-all duration-300 group-hover:drop-shadow-[0_0_20px_rgba(0,207,232,0.5)]"
-                    />
-                    <span className="w-full truncate px-2 text-xs text-text-secondary group-hover:text-victus-blue">{item.name}</span>
-                  </li>
+            <div className="mx-4 flex flex-1 flex-col pb-2 sm:pb-4 sm:mx-10" style={{ transition: 'all 0.3s ease-in-out' }}>
+              <ul 
+                key={`${activeTab}-${currentPage}`}
+                className="skill-grid grid h-full w-full grid-cols-1 items-start content-start gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-5"
+                style={{ transition: 'height 0.3s ease-in-out' }}
+              >
+                {currentItems.map((skill, index) => (
+                  <SkillCard key={skill.name} skill={skill} index={index} />
                 ))}
               </ul>
 
               {/* Page Indicator */}
               {totalPages > 1 && (
-                <div className="mt-4 flex justify-center gap-2">
+                <div className="mt-6 flex flex-shrink-0 justify-center gap-2.5 sm:mt-8">
                   {Array.from({ length: totalPages }).map((_, index) => (
                     <button
                       key={index}
                       onClick={() => setCurrentPage(index)}
-                      className={`h-2 rounded-full transition-all duration-300 ${
+                      className={`h-2.5 rounded-full transition-all duration-300 ${
                         currentPage === index
-                          ? "w-8 bg-gradient-to-r from-victus-blue to-victus-blue/80"
-                          : "w-2 bg-text-secondary/30 hover:bg-text-secondary/50"
+                          ? "w-10 bg-gradient-to-r from-victus-blue to-cyan-400 shadow-md shadow-victus-blue/50"
+                          : "w-2.5 bg-text-secondary/40 hover:w-4 hover:bg-text-secondary/60"
                       }`}
                       aria-label={`Go to page ${index + 1}`}
                     />
