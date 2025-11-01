@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useRef, useState, useCallback, type ReactNode } from 'react';
+import dynamic from 'next/dynamic';
 import Navbar from '@/components/layout/Navbar';
 import HeroSection from '@/components/sections/HeroSection';
 import AboutSection from '@/components/sections/AboutSection';
@@ -9,8 +10,11 @@ import ProjectsSection from '@/components/sections/ProjectsSection';
 import AchievementsSection from '@/components/sections/AchievementsSection';
 import CertificationsSection from '@/components/sections/CertificationsSection';
 import ContactSection from '@/components/sections/ContactSection';
-import PagePilingWrapper from '@/components/layout/PagePilingWrapper';
 import Footer from '@/components/layout/Footer';
+
+const PagePilingWrapper = dynamic(() => import('@/components/layout/PagePilingWrapper'), {
+  ssr: false,
+});
 
 export const SECTION_ORDER = [
   'hero',
@@ -113,48 +117,40 @@ export default function HomePage({ initialSection = 'hero' }: HomePageProps) {
     setActiveIndex(index);
   }, []);
 
-  const handleNavigate = useCallback(
-    (section: string) => {
-      if (!SECTION_ORDER.includes(section as SectionKey)) return;
-      const typedSection = section as SectionKey;
+  const handleNavigate = useCallback((section: string) => {
+    if (!SECTION_ORDER.includes(section as SectionKey)) return;
+    const typedSection = section as SectionKey;
 
-      const targetPath = sectionToPath(typedSection);
-      const currentPath = window.location.pathname;
+    const targetPath = sectionToPath(typedSection);
+    const currentPath = window.location.pathname;
 
-      if (targetPath !== currentPath) {
-        window.history.pushState(null, '', targetPath);
-        navigationIntentRef.current = 'push';
-      } else {
-        navigationIntentRef.current = null;
+    if (targetPath !== currentPath) {
+      window.history.pushState(null, '', targetPath);
+      navigationIntentRef.current = 'push';
+    } else {
+      navigationIntentRef.current = null;
+    }
+
+    const instance = (window as any)?.fullpage_api;
+    if (instance && typeof instance.moveTo === 'function') {
+      instance.moveTo(typedSection);
+    } else {
+      const sectionIndex = SECTION_ORDER.indexOf(typedSection);
+      if (sectionIndex !== -1) {
+        setActiveIndex(sectionIndex);
       }
-
-      const instance = (window as any)?.fullpage_api;
-      if (instance && typeof instance.moveTo === 'function') {
-        instance.moveTo(typedSection);
-      } else {
-        const sectionIndex = SECTION_ORDER.indexOf(typedSection);
-        if (sectionIndex !== -1) {
-          setActiveIndex(sectionIndex);
-        }
-      }
-    },
-    [],
-  );
-
-  const sections = useMemo(
-    () => SECTION_ORDER.map((anchor) => ({ anchor, component: SECTION_COMPONENTS[anchor] })),
-    [],
-  );
+    }
+  }, []);
 
   return (
     <>
       <Navbar activeSection={SECTION_ORDER[activeIndex]} onNavigate={handleNavigate} />
       <PagePilingWrapper onSectionChange={handleSectionChange} initialAnchor={initialSection}>
-        {sections.map((section) => (
-          <div key={section.anchor}>{section.component}</div>
+        {SECTION_ORDER.map((anchor) => (
+          <div key={anchor}>{SECTION_COMPONENTS[anchor]}</div>
         ))}
       </PagePilingWrapper>
-      <Footer isVisible={activeIndex === sections.length - 1} />
+      <Footer isVisible={activeIndex === SECTION_ORDER.length - 1} />
     </>
   );
 }

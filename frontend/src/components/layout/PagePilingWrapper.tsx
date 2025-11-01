@@ -1,6 +1,5 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
-import "fullpage.js/dist/fullpage.css";
 
 type Props = {
   children: React.ReactNode;
@@ -49,7 +48,11 @@ export default function PagePilingWrapper({ children, onSectionChange, initialAn
     // Dynamically import fullpage.js
     const initFullPage = async () => {
       try {
-        const FullPageJS = (await import("fullpage.js")).default;
+        // Import CSS dynamically
+        await import("fullpage.js/dist/fullpage.css");
+        
+        const FullPageModule = await import("fullpage.js");
+        const FullPageJS = FullPageModule.default || FullPageModule;
 
         if (fullpageRef.current && !fullpageInstance.current) {
           fullpageInstance.current = new FullPageJS("#fullpage", {

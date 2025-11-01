@@ -53,8 +53,7 @@ body {
 
 /* FullPage.js Customization */
 #fullpage {
-  background: #1A1D21;
-  background-image: radial-gradient(ellipse at top center, rgba(0, 207, 232, 0.12), #1A1D21 60%);
+  background: transparent;
 }
 
 #fullpage .section {
