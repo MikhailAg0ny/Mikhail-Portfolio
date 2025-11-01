@@ -81,7 +81,6 @@ export default function Footer({ isVisible = false }: FooterProps) {
         {/* Bottom Section: Copyright & Links */}
         <div className="border-t border-[#9AA5B1]/10 pt-4 text-center text-xs text-[#9AA5B1]/60">
           <p>© {new Date().getFullYear()} Mikhail James P. Navarro. All rights reserved.</p>
-          <p className="mt-2">Built with <span className="text-[#00CFE8]">Next.js</span> &amp; <span className="text-[#00CFE8]">Tailwind CSS</span>.</p>
         </div>
       </div>
     </footer>

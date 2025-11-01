@@ -26,7 +26,7 @@ export default function HeroSection() {
                 Mikhail James P. Navarro
               </h1>
               <p className="text-xl font-semibold text-[#00CFE8] md:text-2xl">
-                Web Developer & Game Designer
+                Web Developer & AI Enthusiast
               </p>
               <p className="max-w-xl text-base text-[#9AA5B1] md:text-lg">
                 Crafting playful, human-centered digital experiences that merge game sensibilities with product delivery.

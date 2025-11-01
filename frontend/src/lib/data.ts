@@ -47,16 +47,7 @@ export const programmingLanguages: ProgrammingLanguage[] = [
   { name: "HTML/CSS", level: "S" },
 ];
 
-export const frameworks: string[] = [
-  "Next.js",
-  "React",
-  "TailwindCSS",
-  "Chakra UI",
-  "Three.js",
-  "Unity",
-  "Node.js",
-  "Express",
-];
+
 
 export const projectCaseStudies: ProjectCaseStudy[] = [
   {
@@ -66,7 +57,7 @@ export const projectCaseStudies: ProjectCaseStudy[] = [
     problem:
       "Increase player retention with a lore companion experience that works seamlessly on web and mobile.",
     solution:
-      "Built a headless CMS driven site with in-browser mini games, accessibility-first navigation, and a React component library shared with in-game overlays.",
+      "Built a headless CMS driven site with in-browser mini games, accessibility-first navigation, and a component library shared with in-game overlays.",
     results: [
       "+38% session duration",
       "22% reduction in support tickets",
@@ -74,7 +65,7 @@ export const projectCaseStudies: ProjectCaseStudy[] = [
     ],
     caseStudyUrl: "#",
     sourceUrl: "#",
-    stack: ["Next.js", "TypeScript", "TailwindCSS", "Storybook"],
+    stack: ["Frontend Development", "Component Architecture", "Performance Optimization"],
   },
   {
     title: "Indie Dev Portfolio Engine",
@@ -83,11 +74,11 @@ export const projectCaseStudies: ProjectCaseStudy[] = [
     problem:
       "Ship customizable portfolio templates for game developers with minimal setup.",
     solution:
-      "Architected a modular content model, delivered theming controls, and automated deployments through GitHub Actions.",
+      "Architected a modular content model, delivered theming controls, and automated deployments.",
     results: ["12+ live portfolios", "Average Lighthouse 95+", "2 week turnaround"],
     caseStudyUrl: "#",
     sourceUrl: "#",
-    stack: ["Next.js", "MDX", "Framer Motion", "Vercel"],
+    stack: ["Full-Stack Development", "Automation", "Deployment Pipeline"],
   },
 ];
 
@@ -126,7 +117,7 @@ export const certifications: Certificate[] = [
     name: "Meta Front-End Developer Certificate",
     issuer: "Meta / Coursera",
     date: "2023",
-    focus: "React, design systems, accessibility-first component development, CI/CD pipelines.",
+    focus: "Design systems, accessibility-first component development, CI/CD pipelines.",
   },
   {
     name: "Unity Certified Associate: Game Developer",
