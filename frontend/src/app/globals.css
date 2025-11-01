@@ -54,6 +54,7 @@ body {
 /* FullPage.js Customization */
 #fullpage {
   background: #1A1D21;
+  background-image: radial-gradient(ellipse at top center, rgba(0, 207, 232, 0.12), #1A1D21 60%);
 }
 
 #fullpage .section {
@@ -61,11 +62,6 @@ body {
   justify-content: center;
   align-items: center;
   color: var(--text-primary);
-}
-
-/* Hero Section - Subtle Aurora Gradient */
-#fullpage .section:first-child {
-  background-image: radial-gradient(ellipse at top center, rgba(0, 207, 232, 0.1), #1A1D21 70%);
 }
 
 /* Custom navigation dots styling */

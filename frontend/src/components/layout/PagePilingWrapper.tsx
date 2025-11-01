@@ -1,20 +1,46 @@
 "use client";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "fullpage.js/dist/fullpage.css";
 
 type Props = {
   children: React.ReactNode;
   onSectionChange: (index: number) => void;
+  initialAnchor?: string;
+  onReady?: () => void;
 };
 
-export default function PagePilingWrapper({ children, onSectionChange }: Props) {
+const ANCHORS = [
+  "hero",
+  "about",
+  "skills",
+  "projects",
+  "achievements",
+  "certifications",
+  "contact",
+];
+
+export default function PagePilingWrapper({ children, onSectionChange, initialAnchor = "hero", onReady }: Props) {
   const fullpageRef = useRef<HTMLDivElement>(null);
   const fullpageInstance = useRef<any>(null);
   const onSectionChangeRef = useRef(onSectionChange);
+  const initialAnchorRef = useRef(initialAnchor);
+  const onReadyRef = useRef(onReady);
+  const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
     onSectionChangeRef.current = onSectionChange;
   }, [onSectionChange]);
+
+  useEffect(() => {
+    onReadyRef.current = onReady;
+  }, [onReady]);
+
+  useEffect(() => {
+    initialAnchorRef.current = initialAnchor;
+    if (fullpageInstance.current && typeof fullpageInstance.current.silentMoveTo === "function") {
+      fullpageInstance.current.silentMoveTo(initialAnchor);
+    }
+  }, [initialAnchor]);
 
   useEffect(() => {
     // Only run on client side
@@ -40,15 +66,7 @@ export default function PagePilingWrapper({ children, onSectionChange }: Props) 
               "Certifications",
               "Contact",
             ],
-            anchors: [
-              "hero",
-              "about",
-              "skills",
-              "projects",
-              "achievements",
-              "certifications",
-              "contact",
-            ],
+            anchors: ANCHORS,
             menu: "#navbar-menu",
             scrollingSpeed: 700,
             autoScrolling: true,
@@ -58,13 +76,23 @@ export default function PagePilingWrapper({ children, onSectionChange }: Props) 
             loopBottom: false,
             loopTop: false,
             touchSensitivity: 15,
+            lockAnchors: true,
+            recordHistory: false,
+            animateAnchor: false,
             onLeave: function (origin: any, destination: any, direction: string) {
               onSectionChangeRef.current(destination.index);
             },
-            afterLoad: function (origin: any, destination: any, direction: string) {
-              // Callback after load
-            },
           });
+
+          const initial = initialAnchorRef.current;
+          const initialIndex = ANCHORS.indexOf(initial);
+          if (initialIndex >= 0 && fullpageInstance.current?.silentMoveTo) {
+            fullpageInstance.current.silentMoveTo(initial);
+            onSectionChangeRef.current(initialIndex);
+          }
+
+          setIsReady(true);
+          onReadyRef.current?.();
 
           // Expose instance globally for navbar navigation
           (window as any).fullpage_api = fullpageInstance.current;
@@ -87,11 +115,17 @@ export default function PagePilingWrapper({ children, onSectionChange }: Props) 
         }
         fullpageInstance.current = null;
       }
+      setIsReady(false);
     };
   }, []);
 
   return (
-    <div id="fullpage" ref={fullpageRef}>
+    <div
+      id="fullpage"
+      ref={fullpageRef}
+      style={{ visibility: isReady ? "visible" : "hidden" }}
+      aria-hidden={!isReady}
+    >
       {React.Children.map(children, (child) => (
         <div className="section">{child}</div>
       ))}

@@ -15,6 +15,9 @@ declare module 'fullpage.js' {
     loopTop?: boolean;
     normalScrollElements?: string;
     touchSensitivity?: number;
+    lockAnchors?: boolean;
+    recordHistory?: boolean;
+    animateAnchor?: boolean;
     onLeave?: (origin: any, destination: any, direction: string) => void;
     afterLoad?: (origin: any, destination: any, direction: string) => void;
     afterRender?: () => void;
