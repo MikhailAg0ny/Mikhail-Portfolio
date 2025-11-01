@@ -1,5 +1,6 @@
 import { redirect, notFound } from 'next/navigation';
-import HomePage, { SECTION_ORDER, type SectionKey } from '@/components/pages/HomePage';
+import HomePage from '@/components/pages/HomePage';
+import { SECTION_ORDER, type SectionKey } from '@/lib/sections';
 
 const VALID_SECTIONS = new Set<SectionKey>(SECTION_ORDER);
 

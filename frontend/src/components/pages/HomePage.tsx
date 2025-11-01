@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useRef, useState, useCallback, type ReactNode } from 'react';
+import { useEffect, useRef, useState, useCallback, type ReactNode } from 'react';
 import dynamic from 'next/dynamic';
 import Navbar from '@/components/layout/Navbar';
 import HeroSection from '@/components/sections/HeroSection';
@@ -11,22 +11,11 @@ import AchievementsSection from '@/components/sections/AchievementsSection';
 import CertificationsSection from '@/components/sections/CertificationsSection';
 import ContactSection from '@/components/sections/ContactSection';
 import Footer from '@/components/layout/Footer';
+import { SECTION_ORDER, type SectionKey } from '@/lib/sections';
 
 const PagePilingWrapper = dynamic(() => import('@/components/layout/PagePilingWrapper'), {
   ssr: false,
 });
-
-export const SECTION_ORDER = [
-  'hero',
-  'about',
-  'skills',
-  'projects',
-  'achievements',
-  'certifications',
-  'contact',
-] as const;
-
-export type SectionKey = (typeof SECTION_ORDER)[number];
 
 type HomePageProps = {
   initialSection?: SectionKey;
