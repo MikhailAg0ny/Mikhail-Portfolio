@@ -1,4 +1,4 @@
-import { certifications } from "@/lib/data";
+import { certifications } from "@/lib/certification";
 
 export default function CertificationsSection() {
   return (

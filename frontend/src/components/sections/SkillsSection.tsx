@@ -34,27 +34,27 @@ export default function SkillsSection() {
 
   return (
     <section className="flex h-full w-full items-center justify-center overflow-hidden">
-        <div className="flex h-full w-full max-w-6xl max-h-[95vh] flex-col justify-center gap-3 px-4 py-3 sm:gap-4 sm:px-8 sm:py-4">
-        <header className="flex-shrink-0 space-y-1 text-center sm:space-y-2">
-          <p className="text-xs font-medium uppercase tracking-[0.45em] text-victus-blue sm:text-sm">Technical Expertise</p>
-          <h2 className="text-3xl font-bold tracking-tight text-text-primary sm:text-4xl md:text-5xl">
+        <div className="flex h-full w-full max-w-6xl max-h-[95vh] flex-col justify-center gap-4 px-4 py-4 sm:gap-5 sm:px-8 sm:py-6">
+        <header className="flex-shrink-0 space-y-2 text-center sm:space-y-3 mx-auto max-w-3xl">
+          <p className="text-xs font-semibold uppercase tracking-[0.45em] text-victus-blue/80 sm:text-sm">Technical Expertise</p>
+          <h2 className="text-3xl font-bold tracking-tight text-white drop-shadow-[0_6px_18px_rgba(22,196,255,0.12)] sm:text-4xl md:text-5xl">
             My Skills
           </h2>
-          <p className="text-base text-text-secondary sm:text-lg">
+          <p className="text-sm text-text-secondary/80 sm:text-base">
             Technologies and tools I work with
           </p>
         </header>
 
-        <div className="mx-auto flex w-full max-w-5xl min-h-[520px] sm:min-h-[500px] lg:min-h-[450px] flex-col overflow-hidden rounded-3xl border border-text-secondary/20 bg-gradient-to-b from-mica-light/80 via-mica-dark/60 to-mica-dark/80 p-3 sm:p-4 shadow-2xl backdrop-blur-sm">
-          <div className="mb-3 flex h-11 flex-shrink-0 justify-center gap-1 rounded-full bg-mica-dark/80 p-1 shadow-inner sm:mb-4 sm:h-12">
+        <div className="mx-auto flex w-full max-w-5xl min-h-[520px] sm:min-h-[500px] lg:min-h-[450px] flex-col overflow-hidden rounded-3xl border border-victus-blue/15 bg-gradient-to-b from-[#10141f]/90 via-[#0f1a2b]/80 to-[#0d111c]/90 p-4 sm:p-6 shadow-[0_24px_60px_rgba(12,56,92,0.35)] backdrop-blur-xl">
+          <div className="mb-4 flex h-12 flex-shrink-0 justify-center gap-2 rounded-full bg-mica-dark/80 p-1.5 shadow-inner shadow-black/20 sm:mb-5 sm:h-12">
             {SKILL_CATEGORIES.map((category) => (
               <button
                 key={category.key}
                 onClick={() => handleTabChange(category.key)}
-                className={`relative w-1/3 rounded-full px-4 py-2 text-sm font-semibold transition-all duration-300 ${
+                className={`relative w-1/3 rounded-full px-4 py-2 text-sm font-semibold transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 ${
                   activeTab === category.key
-                    ? "bg-gradient-to-r from-victus-blue to-victus-blue/80 text-white shadow-lg shadow-victus-blue/40 scale-[1.02]"
-                    : "text-text-secondary hover:bg-mica-light/20 hover:text-white"
+                    ? "bg-gradient-to-r from-victus-blue to-cyan-400 text-white shadow-lg shadow-victus-blue/40 scale-[1.02]"
+                    : "bg-mica-light/20 text-text-secondary shadow-inner shadow-black/10 hover:bg-mica-light/30 hover:text-white"
                 }`}
                 aria-pressed={activeTab === category.key}
               >
@@ -63,7 +63,7 @@ export default function SkillsSection() {
             ))}
           </div>
 
-          <div className="relative flex flex-1 flex-col p-2 sm:p-4" style={{ transition: 'height 0.3s ease-in-out' }}>
+          <div className="relative flex flex-1 flex-col rounded-3xl border border-white/5 bg-black/10 p-3 sm:p-5" style={{ transition: 'height 0.3s ease-in-out' }}>
 
             {/* Grid Content */}
             <div className="mx-4 flex flex-1 flex-col pb-1 sm:pb-2 sm:mx-10" style={{ transition: 'all 0.3s ease-in-out' }}>

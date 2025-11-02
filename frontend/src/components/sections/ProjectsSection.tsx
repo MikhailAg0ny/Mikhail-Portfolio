@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { projects as myProjects } from "@/lib/data";
+import { myProjects } from "@/lib/projects";
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, Keyboard, Autoplay } from 'swiper/modules';
+import { Navigation, Pagination, Keyboard } from 'swiper/modules';
 import type { Swiper as SwiperType } from 'swiper';
 
 // Import Swiper styles
@@ -12,12 +12,8 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
 export default function ProjectsSection() {
-  // Ensure we have at least 5 projects for looping, but never cap the total
-  const baseProjects = myProjects;
-  const minSlides = 5;
-  const projects = baseProjects.length >= minSlides
-    ? baseProjects
-    : [...baseProjects, ...baseProjects.slice(0, minSlides - baseProjects.length)];
+  // Use the dataset as-is (no duplication or looping)
+  const projects = myProjects;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -33,22 +29,18 @@ export default function ProjectsSection() {
         {/* Swiper Carousel */}
         <div className="relative group mx-auto w-full max-w-7xl px-4 overflow-visible">
           <Swiper
-            modules={[Navigation, Pagination, Keyboard, Autoplay]}
+            modules={[Navigation, Pagination, Keyboard]}
             grabCursor={true}
             centeredSlides={true}
             slidesPerView={3}
-            spaceBetween={40}
-            loop={true}
-            loopAdditionalSlides={5}
+            spaceBetween={36}
+            loop={false}
             autoHeight={true}
             observer={true}
             observeParents={true}
-            autoplay={{
-              delay: 3500,
-              disableOnInteraction: false,
-              pauseOnMouseEnter: true,
-            }}
-            speed={700}
+            watchOverflow={true}
+            allowTouchMove={true}
+            speed={500}
             slideToClickedSlide={true}
             keyboard={{
               enabled: true,
@@ -67,15 +59,15 @@ export default function ProjectsSection() {
             breakpoints={{
               0: {
                 slidesPerView: 1,
-                spaceBetween: 20,
+                spaceBetween: 16,
               },
               768: {
                 slidesPerView: 2,
-                spaceBetween: 30,
+                spaceBetween: 24,
               },
               1024: {
                 slidesPerView: 3,
-                spaceBetween: 40,
+                spaceBetween: 36,
               },
             }}
             style={{ minHeight: '420px', overflow: 'visible', paddingBottom: '8px' }}
@@ -84,15 +76,20 @@ export default function ProjectsSection() {
               <SwiperSlide key={idx} className="pb-10 h-auto overflow-visible">
                 {({ isActive }) => (
                   <article
-                    onClick={() => isActive && setIsModalOpen(true)}
-                    className={`group relative flex max-h-[85vh] min-h-0 flex-col overflow-hidden rounded-3xl border p-4 backdrop-blur-md transition-all duration-500 sm:p-6 ${
+                    onClick={() => {
+                      if (isActive) {
+                        setActiveIndex(idx);
+                        setIsModalOpen(true);
+                      }
+                    }}
+                    className={`group relative flex max-h-[85vh] min-h-0 flex-col overflow-hidden rounded-3xl border p-4 backdrop-blur-md transition-all duration-300 sm:p-6 ${
                       isActive
-                        ? 'cursor-pointer scale-105 border-victus-blue/30 ring-1 ring-victus-blue/30 bg-gradient-to-b from-mica-light/90 via-mica-dark/90 to-black/90 shadow-2xl shadow-victus-blue/30 hover:-translate-y-0.5 before:content-[""] before:absolute before:inset-x-6 before:bottom-0 before:h-[2px] before:rounded-full before:bg-gradient-to-r before:from-victus-blue/50 before:via-cyan-400/40 before:to-transparent before:opacity-100 after:content-[""] after:pointer-events-none after:absolute after:inset-x-10 after:bottom-0 after:h-10 after:rounded-full after:bg-victus-blue/20 after:blur-2xl'
-                        : 'scale-95 border-text-secondary/10 bg-mica-dark/60 opacity-60 brightness-90 hover:opacity-80'
+                        ? 'cursor-pointer scale-[1.02] border-victus-blue/30 ring-1 ring-victus-blue/30 bg-gradient-to-b from-mica-light/90 via-mica-dark/90 to-black/90 shadow-xl shadow-victus-blue/25 hover:-translate-y-0.5 before:content-[""] before:absolute before:inset-x-6 before:bottom-0 before:h-[2px] before:rounded-full before:bg-gradient-to-r before:from-victus-blue/40 before:via-cyan-400/30 before:to-transparent before:opacity-100'
+                        : 'scale-95 border-text-secondary/10 bg-mica-dark/60 opacity-70 brightness-95 hover:opacity-85'
                     }`}
                   >
                     {/* Image Placeholder */}
-                    {project.image ? (
+                    {project.image && (
                       <img
                         src={project.image}
                         alt={project.title}
@@ -101,10 +98,6 @@ export default function ProjectsSection() {
                           isActive ? 'h-[clamp(9rem,22vh,12rem)]' : 'h-[clamp(7rem,18vh,9rem)]'
                         }`}
                       />
-                    ) : (
-                      <div className={`mb-3 w-full flex-shrink-0 overflow-hidden rounded-xl bg-gradient-to-br from-victus-blue/10 to-victus-blue/20 shadow-inner transition-all sm:mb-4 ${
-                        isActive ? 'h-[clamp(9rem,22vh,12rem)]' : 'h-[clamp(7rem,18vh,9rem)]'
-                      }`} />
                     )}
 
 

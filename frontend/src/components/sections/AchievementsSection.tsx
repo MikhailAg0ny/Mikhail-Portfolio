@@ -1,4 +1,4 @@
-import { achievements } from "@/lib/data";
+import { achievements } from "@/lib/achievements";
 
 export default function AchievementsSection() {
   return (
