@@ -17,15 +17,22 @@ export default function ProjectsSection() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
 
-  // Hide navbar and lock scroll when modal is open
+    // Handle modal state changes
   useEffect(() => {
+    const nav = document.querySelector('nav');
+    const handleWheel = () => {
+      setIsModalOpen(false);
+    };
+
     if (isModalOpen) {
       // Hide navbar
-      const nav = document.querySelector('nav');
       if (nav) {
         (nav as HTMLElement).style.display = 'none';
       }
-      // Lock body scroll and prevent scrolling to other sections
+      // Add wheel listener to close modal on scroll attempt
+      window.addEventListener('wheel', handleWheel, { passive: true });
+
+      // Lock body scroll to prevent background from moving while modal is open
       const scrollY = window.scrollY;
       document.body.style.position = 'fixed';
       document.body.style.top = `-${scrollY}px`;
@@ -37,6 +44,9 @@ export default function ProjectsSection() {
         if (nav) {
           (nav as HTMLElement).style.display = '';
         }
+        // Remove listener
+        window.removeEventListener('wheel', handleWheel);
+
         // Restore scroll position
         document.body.style.position = '';
         document.body.style.top = '';
@@ -103,10 +113,10 @@ export default function ProjectsSection() {
             style={{ minHeight: '420px', overflow: 'hidden', paddingBottom: '8px' }}
           >
             {projects.map((project, idx) => (
-              <SwiperSlide key={idx} className="pb-10 h-auto overflow-hidden">
+              <SwiperSlide key={idx} className="flex h-full items-center justify-center overflow-visible">
                 {({ isActive }) => (
                   <article
-                    className={`group relative flex max-h-[85vh] min-h-0 flex-col overflow-hidden rounded-3xl border p-4 backdrop-blur-md transition-all duration-300 sm:p-6 ${
+                    className={`group relative flex max-h-[85vh] min-h-[300px] flex-col overflow-hidden rounded-3xl border p-4 backdrop-blur-md transition-all duration-300 sm:p-6 ${
                       isActive
                         ? 'scale-[1.02] border-victus-blue/30 bg-gradient-to-b from-mica-light/90 via-mica-dark/90 to-black/90'
                         : 'scale-95 border-text-secondary/10 bg-mica-dark/60 opacity-70 brightness-95'
@@ -247,6 +257,7 @@ export default function ProjectsSection() {
           <div 
             className="relative w-full max-w-5xl max-h-[90vh] overflow-y-auto rounded-2xl bg-gradient-to-br from-[#0f1419]/95 via-[#0a0e14]/98 to-[#0f1419]/95 backdrop-blur-xl shadow-2xl shadow-victus-blue/20 ring-1 ring-white/10"
             onClick={(e) => e.stopPropagation()}
+            onWheel={(e) => e.stopPropagation()}
           >
             {/* Close Button */}
             <button
