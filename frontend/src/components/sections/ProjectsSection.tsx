@@ -110,7 +110,7 @@ export default function ProjectsSection() {
                 spaceBetween: 36,
               },
             }}
-            style={{ minHeight: '420px', overflow: 'hidden', paddingBottom: '8px' }}
+            style={{ minHeight: '420px', overflow: 'hidden', paddingBottom: '12px', paddingTop: '12px' }}
           >
             {projects.map((project, idx) => (
               <SwiperSlide key={idx} className="flex h-full items-center justify-center overflow-visible">
