@@ -22,8 +22,8 @@ export default function ProjectsSection() {
   const [activeIndex, setActiveIndex] = useState(0);
 
   return (
-    <section className="flex h-full w-full items-center justify-center overflow-hidden">
-      <div className="flex h-full w-full max-h-[95vh] flex-col justify-center gap-6 px-6 py-8 sm:gap-8 sm:px-10">
+    <section className="w-full overflow-visible">
+      <div className="flex w-full flex-col justify-center gap-6 px-6 pb-20 pt-28 sm:gap-8 sm:px-10">
         {/* Header */}
         <div className="flex-shrink-0 space-y-2 text-center sm:space-y-3">
           <h2 className="text-3xl font-bold tracking-tight text-text-primary sm:text-4xl">Projects</h2>
@@ -31,7 +31,7 @@ export default function ProjectsSection() {
         </div>
 
         {/* Swiper Carousel */}
-        <div className="relative group mx-auto w-full max-w-7xl px-4">
+        <div className="relative group mx-auto w-full max-w-7xl px-4 overflow-visible">
           <Swiper
             modules={[Navigation, Pagination, Keyboard, Autoplay]}
             grabCursor={true}
@@ -78,14 +78,14 @@ export default function ProjectsSection() {
                 spaceBetween: 40,
               },
             }}
-            style={{ minHeight: '420px' }}
+            style={{ minHeight: '420px', overflow: 'visible', paddingBottom: '8px' }}
           >
             {projects.map((project, idx) => (
-              <SwiperSlide key={idx} className="pb-10 h-auto">
+              <SwiperSlide key={idx} className="pb-10 h-auto overflow-visible">
                 {({ isActive }) => (
                   <article
                     onClick={() => isActive && setIsModalOpen(true)}
-                    className={`group relative flex max-h-[75vh] min-h-0 flex-col overflow-hidden rounded-3xl border p-4 backdrop-blur-md transition-all duration-500 sm:p-6 ${
+                    className={`group relative flex max-h-[85vh] min-h-0 flex-col overflow-hidden rounded-3xl border p-4 backdrop-blur-md transition-all duration-500 sm:p-6 ${
                       isActive
                         ? 'cursor-pointer scale-105 border-victus-blue/30 ring-1 ring-victus-blue/30 bg-gradient-to-b from-mica-light/90 via-mica-dark/90 to-black/90 shadow-2xl shadow-victus-blue/30 hover:-translate-y-0.5 before:content-[""] before:absolute before:inset-x-6 before:bottom-0 before:h-[2px] before:rounded-full before:bg-gradient-to-r before:from-victus-blue/50 before:via-cyan-400/40 before:to-transparent before:opacity-100 after:content-[""] after:pointer-events-none after:absolute after:inset-x-10 after:bottom-0 after:h-10 after:rounded-full after:bg-victus-blue/20 after:blur-2xl'
                         : 'scale-95 border-text-secondary/10 bg-mica-dark/60 opacity-60 brightness-90 hover:opacity-80'
@@ -98,12 +98,12 @@ export default function ProjectsSection() {
                         alt={project.title}
                         loading="lazy"
                         className={`mb-3 w-full flex-shrink-0 rounded-xl object-cover shadow-inner transition-all sm:mb-4 ${
-                          isActive ? 'h-40 sm:h-48' : 'h-32 sm:h-36'
+                          isActive ? 'h-[clamp(9rem,22vh,12rem)]' : 'h-[clamp(7rem,18vh,9rem)]'
                         }`}
                       />
                     ) : (
                       <div className={`mb-3 w-full flex-shrink-0 overflow-hidden rounded-xl bg-gradient-to-br from-victus-blue/10 to-victus-blue/20 shadow-inner transition-all sm:mb-4 ${
-                        isActive ? 'h-40 sm:h-48' : 'h-32 sm:h-36'
+                        isActive ? 'h-[clamp(9rem,22vh,12rem)]' : 'h-[clamp(7rem,18vh,9rem)]'
                       }`} />
                     )}
 
@@ -152,7 +152,7 @@ export default function ProjectsSection() {
                         </div>
 
                         {/* View Project Link */}
-                        <div className="mt-3 flex-shrink-0 border-t border-text-secondary/10 pt-2 sm:mt-4 sm:pt-3">
+                        <div className="mt-auto flex-shrink-0 border-t border-text-secondary/10 pt-3 sm:pt-4">
                           <span className="inline-flex items-center text-xs font-semibold text-victus-blue transition-colors hover:text-victus-blue/80">
                             View Project
                             <svg
