@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { myProjects } from "@/lib/projects";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Keyboard } from 'swiper/modules';
@@ -17,17 +17,47 @@ export default function ProjectsSection() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
 
+  // Hide navbar and lock scroll when modal is open
+  useEffect(() => {
+    if (isModalOpen) {
+      // Hide navbar
+      const nav = document.querySelector('nav');
+      if (nav) {
+        (nav as HTMLElement).style.display = 'none';
+      }
+      // Lock body scroll and prevent scrolling to other sections
+      const scrollY = window.scrollY;
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.width = '100%';
+      document.body.style.overflow = 'hidden';
+      
+      return () => {
+        // Restore navbar
+        if (nav) {
+          (nav as HTMLElement).style.display = '';
+        }
+        // Restore scroll position
+        document.body.style.position = '';
+        document.body.style.top = '';
+        document.body.style.width = '';
+        document.body.style.overflow = '';
+        window.scrollTo(0, scrollY);
+      };
+    }
+  }, [isModalOpen]);
+
   return (
-    <section className="w-full overflow-visible">
-      <div className="flex w-full flex-col justify-center gap-6 px-6 pb-20 pt-28 sm:gap-8 sm:px-10">
+    <section className="relative h-screen w-full overflow-hidden">
+      <div className="flex h-full w-full flex-col justify-center gap-6 px-6 pb-20 pt-28 sm:gap-8 sm:px-10">
         {/* Header */}
         <div className="flex-shrink-0 space-y-2 text-center sm:space-y-3">
-          <h2 className="text-3xl font-bold tracking-tight text-text-primary sm:text-4xl">Projects</h2>
-          <p className="text-base text-text-secondary sm:text-lg">Featured projects and recent work</p>
+          <h2 className="text-3xl font-bold tracking-tight text-text-primary sm:text-4xl">My Projects</h2>
+          <p className="text-base text-text-secondary sm:text-lg">A selection of my recent work</p>
         </div>
 
         {/* Swiper Carousel */}
-        <div className="relative group mx-auto w-full max-w-7xl px-4 overflow-visible">
+        <div className="relative group mx-auto w-full max-w-7xl px-4 overflow-hidden">
           <Swiper
             modules={[Navigation, Pagination, Keyboard]}
             grabCursor={true}
@@ -70,23 +100,17 @@ export default function ProjectsSection() {
                 spaceBetween: 36,
               },
             }}
-            style={{ minHeight: '420px', overflow: 'visible', paddingBottom: '8px' }}
+            style={{ minHeight: '420px', overflow: 'hidden', paddingBottom: '8px' }}
           >
             {projects.map((project, idx) => (
-              <SwiperSlide key={idx} className="pb-10 h-auto overflow-visible">
+              <SwiperSlide key={idx} className="pb-10 h-auto overflow-hidden">
                 {({ isActive }) => (
                   <article
-                    onClick={() => {
-                      if (isActive) {
-                        setActiveIndex(idx);
-                        setIsModalOpen(true);
-                      }
-                    }}
                     className={`group relative flex max-h-[85vh] min-h-0 flex-col overflow-hidden rounded-3xl border p-4 backdrop-blur-md transition-all duration-300 sm:p-6 ${
                       isActive
-                        ? 'cursor-pointer scale-[1.02] border-victus-blue/30 ring-1 ring-victus-blue/30 bg-gradient-to-b from-mica-light/90 via-mica-dark/90 to-black/90 shadow-xl shadow-victus-blue/25 hover:-translate-y-0.5 before:content-[""] before:absolute before:inset-x-6 before:bottom-0 before:h-[2px] before:rounded-full before:bg-gradient-to-r before:from-victus-blue/40 before:via-cyan-400/30 before:to-transparent before:opacity-100'
-                        : 'scale-95 border-text-secondary/10 bg-mica-dark/60 opacity-70 brightness-95 hover:opacity-85'
-                    }`}
+                        ? 'scale-[1.02] border-victus-blue/30 bg-gradient-to-b from-mica-light/90 via-mica-dark/90 to-black/90'
+                        : 'scale-95 border-text-secondary/10 bg-mica-dark/60 opacity-70 brightness-95'
+                    } hover:!opacity-100 hover:!brightness-100 hover:scale-[1.03] hover:border-victus-blue/50 hover:shadow-xl hover:shadow-victus-blue/25`}
                   >
                     {/* Image Placeholder */}
                     {project.image && (
@@ -137,7 +161,7 @@ export default function ProjectsSection() {
                           {project.stack.slice(0, 2).map((tech, i) => (
                             <span
                               key={i}
-                              className="rounded-lg bg-victus-blue/10 px-2.5 py-1 text-xs font-medium text-victus-blue"
+                              className="rounded-lg bg-[#2A2F35] px-2.5 py-1 text-xs font-medium text-text-primary"
                             >
                               {tech}
                             </span>
@@ -146,7 +170,16 @@ export default function ProjectsSection() {
 
                         {/* View Project Link */}
                         <div className="mt-auto flex-shrink-0 border-t border-text-secondary/10 pt-3 sm:pt-4">
-                          <span className="inline-flex items-center text-xs font-semibold text-victus-blue transition-colors hover:text-victus-blue/80">
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setActiveIndex(idx);
+                              setIsModalOpen(true);
+                            }}
+                            className="inline-flex items-center text-xs font-semibold text-victus-blue transition-colors hover:text-victus-blue/80"
+                            aria-label={`View ${project.title}`}
+                          >
                             View Project
                             <svg
                               className="ml-1.5 h-3.5 w-3.5"
@@ -161,7 +194,7 @@ export default function ProjectsSection() {
                                 d="M13 7l5 5m0 0l-5 5m5-5H6"
                               />
                             </svg>
-                          </span>
+                          </button>
                         </div>
                       </>
                     ) : (
@@ -208,17 +241,17 @@ export default function ProjectsSection() {
       {/* Modal */}
       {isModalOpen && (
         <div 
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 px-4 backdrop-blur-sm"
+          className="absolute inset-0 z-50 flex items-center justify-center bg-black/30 px-4 backdrop-blur-3xl overflow-hidden"
           onClick={() => setIsModalOpen(false)}
         >
           <div 
-            className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-3xl border border-victus-blue/30 bg-gradient-to-b from-mica-light via-mica-dark to-black p-8 shadow-2xl"
+            className="relative w-full max-w-5xl max-h-[90vh] overflow-y-auto rounded-2xl bg-gradient-to-br from-[#0f1419]/95 via-[#0a0e14]/98 to-[#0f1419]/95 backdrop-blur-xl shadow-2xl shadow-victus-blue/20 ring-1 ring-white/10"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Close Button */}
             <button
               onClick={() => setIsModalOpen(false)}
-              className="sticky right-6 top-6 z-10 ml-auto mb-4 flex rounded-full border border-text-secondary/30 bg-mica-light/80 p-2 text-text-secondary transition-all hover:border-victus-blue/60 hover:bg-victus-blue/10 hover:text-victus-blue"
+              className="absolute right-4 top-4 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-white/5 text-white/60 backdrop-blur-sm transition-all hover:bg-white/10 hover:text-white"
               aria-label="Close modal"
             >
               <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -227,53 +260,67 @@ export default function ProjectsSection() {
             </button>
 
             {/* Modal Content */}
-            <div className="space-y-6 pr-2">
+            <div className="space-y-0">
               {/* Header */}
-              <div className="space-y-3">
-                <div className="flex items-center gap-3">
-                  <span className="inline-block rounded-full bg-victus-blue/10 px-3 py-1 text-xs font-medium text-victus-blue">
+              <div className="bg-gradient-to-br from-victus-blue/10 to-cyan-400/5 p-8 pb-6">
+                <div className="flex items-center gap-3 mb-3">
+                  <span className="inline-block rounded-full bg-victus-blue/20 px-3 py-1.5 text-xs font-semibold uppercase tracking-wider text-victus-blue">
                     {projects[activeIndex].timeframe}
                   </span>
-                  <span className="text-sm text-text-secondary">{projects[activeIndex].role}</span>
+                  <span className="text-sm font-medium text-text-secondary">{projects[activeIndex].role}</span>
                 </div>
-                <h2 className="text-3xl font-bold text-white">{projects[activeIndex].title}</h2>
+                <h2 className="text-4xl font-bold text-white leading-tight">{projects[activeIndex].title}</h2>
               </div>
 
-              {/* Problem Section */}
-              <div className="space-y-2 rounded-2xl border border-text-secondary/10 bg-mica-light/40 p-6">
-                <h3 className="text-lg font-semibold text-victus-blue">Challenge</h3>
-                <p className="text-sm leading-relaxed text-text-secondary">{projects[activeIndex].problem}</p>
-              </div>
+              {/* Project Image */}
+              {projects[activeIndex].image && (
+                <div className="px-8 pt-6">
+                  <img
+                    src={projects[activeIndex].image as string}
+                    alt={projects[activeIndex].title}
+                    className="w-full max-h-[400px] rounded-xl object-cover ring-1 ring-white/10"
+                    loading="lazy"
+                  />
+                </div>
+              )}
 
-              {/* Solution Section */}
-              <div className="space-y-2 rounded-2xl border border-text-secondary/10 bg-mica-light/40 p-6">
-                <h3 className="text-lg font-semibold text-victus-blue">Solution</h3>
-                <p className="text-sm leading-relaxed text-text-secondary">{projects[activeIndex].solution}</p>
-              </div>
+              <div className="px-8 py-6 space-y-6">
+                {/* Problem Section */}
+                <div className="space-y-3">
+                  <h3 className="text-sm font-bold uppercase tracking-widest text-victus-blue">Challenge</h3>
+                  <p className="text-base leading-relaxed text-text-secondary/90">{projects[activeIndex].problem}</p>
+                </div>
 
-              {/* Results Section */}
-              <div className="space-y-2 rounded-2xl border border-text-secondary/10 bg-mica-light/40 p-6">
-                <h3 className="text-lg font-semibold text-victus-blue">Results</h3>
-                <ul className="space-y-2">
-                  {projects[activeIndex].results.map((result, i) => (
-                    <li key={i} className="flex items-start gap-2 text-sm text-text-secondary">
-                      <svg className="mt-0.5 h-4 w-4 flex-shrink-0 text-victus-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                      </svg>
-                      {result}
-                    </li>
-                  ))}
-                </ul>
+                {/* Description Section */}
+                <div className="space-y-3">
+                  <h3 className="text-sm font-bold uppercase tracking-widest text-victus-blue">Description</h3>
+                  <p className="text-base leading-relaxed text-text-secondary/90">{projects[activeIndex].solution}</p>
+                </div>
+
+                {/* Results Section */}
+                <div className="space-y-3">
+                  <h3 className="text-sm font-bold uppercase tracking-widest text-victus-blue">Results</h3>
+                  <ul className="space-y-2.5">
+                    {projects[activeIndex].results.map((result, i) => (
+                      <li key={i} className="flex items-start gap-3 text-base text-text-secondary/90">
+                        <svg className="mt-1 h-5 w-5 flex-shrink-0 text-victus-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                        {result}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
 
               {/* Tech Stack */}
-              <div className="space-y-3">
-                <h3 className="text-lg font-semibold text-victus-blue">Tech Stack</h3>
+              <div className="px-8 pb-6 space-y-4">
+                <h3 className="text-sm font-bold uppercase tracking-widest text-victus-blue">Tech Stack</h3>
                 <div className="flex flex-wrap gap-2">
                   {projects[activeIndex].stack.map((tech, i) => (
                     <span
                       key={i}
-                      className="rounded-lg border border-victus-blue/20 bg-victus-blue/10 px-3 py-1.5 text-sm font-medium text-victus-blue"
+                      className="rounded-lg bg-victus-blue/15 px-4 py-2 text-sm font-semibold text-victus-blue ring-1 ring-victus-blue/20"
                     >
                       {tech}
                     </span>
@@ -282,10 +329,10 @@ export default function ProjectsSection() {
               </div>
 
               {/* Action Buttons */}
-              <div className="flex flex-wrap gap-3 border-t border-text-secondary/10 pt-6">
+              <div className="bg-gradient-to-br from-white/5 to-transparent px-8 py-6 flex flex-wrap gap-3">
                 <a
                   href={projects[activeIndex].caseStudyUrl}
-                  className="inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-victus-blue to-victus-blue/80 px-5 py-2.5 text-sm font-semibold text-white transition-all hover:shadow-lg hover:shadow-victus-blue/30"
+                  className="inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-victus-blue to-cyan-400 px-6 py-3 text-sm font-bold text-white transition-all hover:shadow-lg hover:shadow-victus-blue/40 hover:scale-105"
                 >
                   View Project
                   <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -294,7 +341,7 @@ export default function ProjectsSection() {
                 </a>
                 <a
                   href={projects[activeIndex].sourceUrl}
-                  className="inline-flex items-center gap-2 rounded-lg border border-victus-blue/30 bg-victus-blue/5 px-5 py-2.5 text-sm font-semibold text-victus-blue transition-all hover:bg-victus-blue/10"
+                  className="inline-flex items-center gap-2 rounded-lg bg-white/5 px-6 py-3 text-sm font-bold text-white ring-1 ring-white/10 transition-all hover:bg-white/10 hover:scale-105"
                 >
                   View Source Code
                   <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
