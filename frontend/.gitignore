@@ -51,7 +51,5 @@ desktop.ini
 .cache/
 .turbo/
 
-#Markdown file Task list
-project-folder-structure.md
-project-boilerplate.md
-project-structure-detail.md
+#Markdown file Task list - Folder
+/md-for-projectportfolio

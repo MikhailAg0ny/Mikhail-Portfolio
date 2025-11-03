@@ -10,7 +10,7 @@ export default function Footer({ isVisible = false }: FooterProps) {
   return (
     <footer
       id="footer-bar"
-      className={`fixed bottom-0 left-0 right-0 z-40 border-t border-[#9AA5B1]/20 bg-[#2A2F35]/90 backdrop-blur-lg transition-all duration-300 ease-out ${
+      className={`fixed bottom-0 left-0 right-0 z-40 border-t border-text-secondary/20 bg-mica-light/90 backdrop-blur-lg transition-all duration-300 ease-out ${
         isVisible ? "translate-y-0 opacity-100 pointer-events-auto" : "translate-y-full opacity-0 pointer-events-none"
       }`}
     >
@@ -18,10 +18,10 @@ export default function Footer({ isVisible = false }: FooterProps) {
         {/* Top Section: Name & Social Icons */}
         <div className="flex flex-col items-center justify-between gap-4 sm:flex-row sm:items-start">
           <div className="text-center sm:text-left">
-            <p className="text-lg font-semibold text-[#F0F2F5]">
+            <p className="text-lg font-semibold text-text-primary">
               Mikhail James P. Navarro
             </p>
-            <p className="text-sm text-[#9AA5B1]">
+            <p className="text-sm text-text-secondary">
               Web Developer | Game Designer | AI Enthusiast
             </p>
           </div>
@@ -30,7 +30,7 @@ export default function Footer({ isVisible = false }: FooterProps) {
           <div className="flex items-center gap-4">
             <a
               href="https://github.com/MikhailAg0ny"
-              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#00CFE8]/20 text-[#9AA5B1] transition hover:bg-[#00CFE8]/10 hover:text-[#00CFE8]"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-victus-blue/20 text-text-secondary transition hover:bg-victus-blue/10 hover:text-victus-blue"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="GitHub"
@@ -45,7 +45,7 @@ export default function Footer({ isVisible = false }: FooterProps) {
             </a>
             <a
               href="https://www.linkedin.com/in/mikhail-james-navarro-030582356/"
-              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#00CFE8]/20 text-[#9AA5B1] transition hover:bg-[#00CFE8]/10 hover:text-[#00CFE8]"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-victus-blue/20 text-text-secondary transition hover:bg-victus-blue/10 hover:text-victus-blue"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="LinkedIn"
@@ -56,7 +56,7 @@ export default function Footer({ isVisible = false }: FooterProps) {
             </a>
             <a
               href={FACEBOOK_URL}
-              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#00CFE8]/20 text-[#9AA5B1] transition hover:bg-[#00CFE8]/10 hover:text-[#00CFE8]"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-victus-blue/20 text-text-secondary transition hover:bg-victus-blue/10 hover:text-victus-blue"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Facebook"
@@ -67,7 +67,7 @@ export default function Footer({ isVisible = false }: FooterProps) {
             </a>
             <a
               href={`mailto:${EMAIL_ADDRESS}`}
-              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#00CFE8]/20 text-[#9AA5B1] transition hover:bg-[#00CFE8]/10 hover:text-[#00CFE8]"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-victus-blue/20 text-text-secondary transition hover:bg-victus-blue/10 hover:text-victus-blue"
               rel="noopener noreferrer"
               aria-label="Email"
             >
@@ -79,8 +79,8 @@ export default function Footer({ isVisible = false }: FooterProps) {
         </div>
 
         {/* Bottom Section: Copyright & Links */}
-        <div className="border-t border-[#9AA5B1]/10 pt-4 text-center text-xs text-[#9AA5B1]/60">
-          <p>© {new Date().getFullYear()} Mikhail James P. Navarro. All rights reserved.</p>
+        <div className="border-t border-text-secondary/10 pt-4 text-center text-xs text-text-secondary/60">
+          <p> {new Date().getFullYear()} Mikhail James P. Navarro. All rights reserved.</p>
         </div>
       </div>
     </footer>

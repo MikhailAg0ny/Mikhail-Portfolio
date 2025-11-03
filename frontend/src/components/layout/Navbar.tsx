@@ -24,7 +24,7 @@ export default function Navbar({ activeSection = "hero", onNavigate }: NavbarPro
       className={`fixed top-0 z-[100] w-full border-b transition-all duration-300 ${
         isHeroSection
           ? "border-transparent bg-transparent backdrop-blur-none"
-          : "border-[#9AA5B1]/20 bg-[#2A2F35]/85 backdrop-blur-xl shadow-[0_8px_32px_rgba(26,29,33,0.55)]"
+          : "border-text-secondary/20 bg-mica-light/85 backdrop-blur-xl shadow-[0_8px_32px_rgba(26,29,33,0.55)]"
       }`}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 sm:px-10">
@@ -37,7 +37,7 @@ export default function Navbar({ activeSection = "hero", onNavigate }: NavbarPro
             onNavigate("hero");
           }}
         >
-          <div className="h-10 w-10 overflow-hidden rounded-full border-2 border-[#00CFE8]">
+          <div className="h-10 w-10 overflow-hidden rounded-full border-2 border-victus-blue">
             <ImageWithFallback
               src="/images/profile.jpg"
               alt="Mikhail James P. Navarro"
@@ -46,7 +46,7 @@ export default function Navbar({ activeSection = "hero", onNavigate }: NavbarPro
               className="h-full w-full object-cover"
             />
           </div>
-          <span className="text-lg font-semibold text-[#00CFE8]">Mikhail Navarro</span>
+          <span className="text-lg font-semibold text-victus-blue">Mikhail's Portfolio</span>
         </a>
         <ul id="navbar-menu" className="hidden gap-6 md:flex">
           {navLinks.map((link) => {
@@ -57,8 +57,8 @@ export default function Navbar({ activeSection = "hero", onNavigate }: NavbarPro
                 <a
                   className={`text-sm font-medium transition ${
                     isActive
-                      ? "text-[#00CFE8]"
-                      : "text-[#9AA5B1] hover:text-[#00CFE8]"
+                      ? "text-victus-blue"
+                      : "text-text-secondary hover:text-victus-blue"
                   }`}
                   href={path}
                   data-menuanchor={link.anchor}
