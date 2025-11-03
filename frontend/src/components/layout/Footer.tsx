@@ -2,6 +2,8 @@ type FooterProps = {
   isVisible?: boolean;
 };
 
+const CURRENT_YEAR = new Date().getUTCFullYear();
+
 export default function Footer({ isVisible = false }: FooterProps) {
   // Set your Facebook URL here or use NEXT_PUBLIC_FACEBOOK_URL env var
   const FACEBOOK_URL = process.env.NEXT_PUBLIC_FACEBOOK_URL || 'https://www.facebook.com/M1kh4ilAg0ny';
@@ -80,7 +82,7 @@ export default function Footer({ isVisible = false }: FooterProps) {
 
         {/* Bottom Section: Copyright & Links */}
         <div className="border-t border-text-secondary/10 pt-4 text-center text-xs text-text-secondary/60">
-          <p> {new Date().getFullYear()} Mikhail James P. Navarro. All rights reserved.</p>
+          <p>{CURRENT_YEAR} Mikhail James P. Navarro. All rights reserved.</p>
         </div>
       </div>
     </footer>

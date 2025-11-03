@@ -5,7 +5,6 @@ type Props = {
   children: React.ReactNode;
   onSectionChange: (index: number) => void;
   initialAnchor?: string;
-  onReady?: () => void;
 };
 
 const ANCHORS = [
@@ -18,12 +17,11 @@ const ANCHORS = [
   "contact",
 ];
 
-export default function PagePilingWrapper({ children, onSectionChange, initialAnchor = "hero", onReady }: Props) {
+export default function PagePilingWrapper({ children, onSectionChange, initialAnchor = "hero" }: Props) {
   const fullpageRef = useRef<HTMLDivElement>(null);
   const fullpageInstance = useRef<any>(null);
   const onSectionChangeRef = useRef(onSectionChange);
   const initialAnchorRef = useRef(initialAnchor);
-  const onReadyRef = useRef(onReady);
   const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
@@ -31,13 +29,9 @@ export default function PagePilingWrapper({ children, onSectionChange, initialAn
   }, [onSectionChange]);
 
   useEffect(() => {
-    onReadyRef.current = onReady;
-  }, [onReady]);
-
-  useEffect(() => {
     initialAnchorRef.current = initialAnchor;
-    if (fullpageInstance.current && typeof fullpageInstance.current.silentMoveTo === "function") {
-      fullpageInstance.current.silentMoveTo(initialAnchor);
+    if (fullpageInstance.current && typeof fullpageInstance.current.moveTo === "function") {
+      fullpageInstance.current.moveTo(initialAnchor);
     }
   }, [initialAnchor]);
 
@@ -89,13 +83,12 @@ export default function PagePilingWrapper({ children, onSectionChange, initialAn
 
           const initial = initialAnchorRef.current;
           const initialIndex = ANCHORS.indexOf(initial);
-          if (initialIndex >= 0 && fullpageInstance.current?.silentMoveTo) {
-            fullpageInstance.current.silentMoveTo(initial);
+          if (initialIndex >= 0 && fullpageInstance.current?.moveTo) {
+            fullpageInstance.current.moveTo(initial);
             onSectionChangeRef.current(initialIndex);
           }
 
           setIsReady(true);
-          onReadyRef.current?.();
 
           // Expose instance globally for navbar navigation
           (window as any).fullpage_api = fullpageInstance.current;
