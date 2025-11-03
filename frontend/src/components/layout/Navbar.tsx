@@ -1,5 +1,5 @@
 import ImageWithFallback from "@/components/ui/ImageWithFallback";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const navLinks = [
   { label: "Home", anchor: "hero" },
@@ -17,21 +17,39 @@ type NavbarProps = {
 };
 
 export default function Navbar({ activeSection = "hero", onNavigate }: NavbarProps) {
-  const isHeroSection = activeSection === "hero";
+  const [isHeroSection, setIsHeroSection] = useState(activeSection === "hero");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  
+  const [hasScrolled, setHasScrolled] = useState(false);
+
   const handleNavClick = (anchor: (typeof navLinks)[number]["anchor"]) => {
     setIsMobileMenuOpen(false);
     if (onNavigate) {
       onNavigate(anchor);
     }
   };
-  
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrolled = window.scrollY > 24;
+      setHasScrolled(scrolled);
+      if (window.innerHeight > 0) {
+        setIsHeroSection(window.scrollY < window.innerHeight * 0.2);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
     <nav
       id="navbar"
       className={`fixed top-0 z-[100] w-full border-b transition-all duration-300 ${
-        isHeroSection
+        isHeroSection && !hasScrolled
           ? "border-transparent bg-transparent backdrop-blur-none"
           : "border-text-secondary/20 bg-mica-light/85 backdrop-blur-xl shadow-[0_8px_32px_rgba(26,29,33,0.55)]"
       }`}

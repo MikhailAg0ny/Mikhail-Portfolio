@@ -164,3 +164,30 @@ body {
 .skill-grid > li {
   animation: fadeIn 0.5s ease-out both;
 }
+
+/* Swipe Hint Animations */
+@keyframes bounceHorizontalLeft {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(-8px);
+  }
+}
+
+@keyframes bounceHorizontalRight {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(8px);
+  }
+}
+
+.animate-bounce-horizontal-left {
+  animation: bounceHorizontalLeft 1.5s ease-in-out infinite;
+}
+
+.animate-bounce-horizontal-right {
+  animation: bounceHorizontalRight 1.5s ease-in-out infinite;
+}

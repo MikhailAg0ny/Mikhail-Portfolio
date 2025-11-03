@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import { myProjects } from "@/lib/projects";
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -16,9 +16,60 @@ export default function ProjectsSection() {
   // Use the dataset as-is (no duplication or looping)
   const projects = myProjects;
   const [activeIndex, setActiveIndex] = useState(0);
+  const [showSwipeHint, setShowSwipeHint] = useState(true);
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const hintTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const hideSwipeHint = useCallback(() => {
+    if (hintTimeoutRef.current) {
+      clearTimeout(hintTimeoutRef.current);
+      hintTimeoutRef.current = null;
+    }
+    setShowSwipeHint(false);
+  }, []);
+
+  const triggerSwipeHint = useCallback(() => {
+    if (hintTimeoutRef.current) {
+      clearTimeout(hintTimeoutRef.current);
+    }
+    setShowSwipeHint(true);
+    hintTimeoutRef.current = setTimeout(() => {
+      setShowSwipeHint(false);
+      hintTimeoutRef.current = null;
+    }, 4500);
+  }, []);
+
+  useEffect(() => {
+    const sectionEl = sectionRef.current;
+    if (!sectionEl) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            triggerSwipeHint();
+          }
+        });
+      },
+      {
+        threshold: 0.35,
+      }
+    );
+
+    observer.observe(sectionEl);
+    triggerSwipeHint();
+
+    return () => {
+      observer.disconnect();
+      if (hintTimeoutRef.current) {
+        clearTimeout(hintTimeoutRef.current);
+        hintTimeoutRef.current = null;
+      }
+    };
+  }, [triggerSwipeHint]);
 
   return (
-    <section className="relative min-h-screen w-full overflow-hidden sm:h-screen">
+    <section ref={sectionRef} className="relative min-h-screen w-full overflow-hidden sm:h-screen">
       <div className="flex min-h-screen w-full flex-col justify-start gap-6 px-4 pb-16 pt-24 sm:h-full sm:justify-center sm:gap-8 sm:px-10 sm:pb-20 sm:pt-28">
         {/* Header */}
         <div className="flex-shrink-0 space-y-2 text-center sm:space-y-3">
@@ -27,7 +78,22 @@ export default function ProjectsSection() {
         </div>
 
         {/* Mobile Swiper */}
-        <div className="sm:hidden">
+        <div className="sm:hidden relative">
+          {/* Mobile Swipe Hint */}
+          {showSwipeHint && (
+            <div className="pointer-events-none absolute inset-x-0 bottom-6 z-10 flex justify-center">
+              <div className="flex items-center gap-3 rounded-full border border-victus-blue/30 bg-mica-dark/90 px-4 py-2 text-xs font-semibold text-victus-blue shadow-lg backdrop-blur-sm animate-pulse">
+                <svg className="h-4 w-4 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+                <span>Swipe left / right</span>
+                <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </div>
+            </div>
+          )}
+          
           <Swiper
             modules={[Pagination, Keyboard]}
             className="projects-swiper-mobile"
@@ -37,7 +103,11 @@ export default function ProjectsSection() {
             grabCursor
             keyboard={{ enabled: true }}
             pagination={{ clickable: true, el: '.projects-swiper-mobile-pagination' }}
-            onSlideChange={(swiper: SwiperType) => setActiveIndex(swiper.realIndex)}
+            onSlideChange={(swiper: SwiperType) => {
+              setActiveIndex(swiper.realIndex);
+              hideSwipeHint();
+            }}
+            onTouchStart={hideSwipeHint}
           >
             {projects.map((project, idx) => {
               const primaryTech = project.primaryTech;
@@ -59,7 +129,7 @@ export default function ProjectsSection() {
                           src={project.image}
                           alt={project.title}
                           loading="lazy"
-                          className="h-full w-full object-cover"
+                          className="h-64 w-full object-cover"
                         />
                       </div>
                     )}
@@ -124,6 +194,23 @@ export default function ProjectsSection() {
 
         {/* Swiper Carousel */}
         <div className="relative group mx-auto hidden w-full max-w-7xl overflow-hidden px-2 sm:block sm:px-4">
+          {/* Desktop Hover Hint */}
+          <div
+            className={`pointer-events-none absolute inset-x-0 bottom-8 z-10 flex justify-center transition-opacity duration-300 ${
+              showSwipeHint ? 'opacity-100' : 'opacity-0'
+            }`}
+          >
+            <div className="flex items-center gap-4 rounded-full border border-victus-blue/40 bg-mica-dark/95 px-6 py-3 text-sm font-semibold text-victus-blue shadow-2xl backdrop-blur-md animate-pulse">
+              <svg className="h-5 w-5 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+              <span>Click, drag, or use arrows</span>
+              <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </div>
+          </div>
+          
           <Swiper
             modules={[Navigation, Pagination, Keyboard]}
             grabCursor={true}
@@ -150,7 +237,12 @@ export default function ProjectsSection() {
               el: '.swiper-pagination-custom',
               dynamicBullets: true,
             }}
-            onSlideChange={(swiper: SwiperType) => setActiveIndex(swiper.realIndex)}
+            onSlideChange={(swiper: SwiperType) => {
+              setActiveIndex(swiper.realIndex);
+              hideSwipeHint();
+            }}
+            onTouchStart={hideSwipeHint}
+            onSliderMove={hideSwipeHint}
             className="projects-swiper"
             breakpoints={{
               0: {

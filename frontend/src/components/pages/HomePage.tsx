@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, useCallback, type ReactNode } from 'react';
+import { useEffect, useState, useCallback, useRef, type ReactNode } from 'react';
 import dynamic from 'next/dynamic';
 import Navbar from '@/components/layout/Navbar';
 import HeroSection from '@/components/sections/HeroSection';
@@ -45,6 +45,7 @@ export default function HomePage({ initialSection = 'hero' }: HomePageProps) {
     return initialIndex >= 0 ? initialIndex : 0;
   });
   const [isPagePilingActive, setIsPagePilingActive] = useState(true);
+  const observerRef = useRef<IntersectionObserver | null>(null);
 
   useEffect(() => {
     const currentIndex = SECTION_ORDER.indexOf(initialSection);
@@ -56,6 +57,44 @@ export default function HomePage({ initialSection = 'hero' }: HomePageProps) {
   const handleSectionChange = useCallback((index: number) => {
     setActiveIndex(index);
   }, []);
+
+  useEffect(() => {
+    if (isPagePilingActive) {
+      if (observerRef.current) {
+        observerRef.current.disconnect();
+        observerRef.current = null;
+      }
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visibleEntry = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+
+        if (visibleEntry) {
+          const section = visibleEntry.target.getAttribute('data-section');
+          if (section && SECTION_ORDER.includes(section as SectionKey)) {
+            setActiveIndex(SECTION_ORDER.indexOf(section as SectionKey));
+          }
+        }
+      },
+      {
+        root: null,
+        threshold: [0.25, 0.5, 0.75],
+      }
+    );
+
+    const sectionElements = document.querySelectorAll('[data-section]');
+    sectionElements.forEach((el) => observer.observe(el));
+    observerRef.current = observer;
+
+    return () => {
+      observer.disconnect();
+      observerRef.current = null;
+    };
+  }, [isPagePilingActive]);
 
   const handleNavigate = useCallback((section: string) => {
     if (!SECTION_ORDER.includes(section as SectionKey)) return;

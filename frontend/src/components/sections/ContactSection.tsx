@@ -37,11 +37,11 @@ export default function ContactSection() {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
             <div className="space-y-1">
               <p className="text-xs sm:text-sm font-semibold text-victus-blue">Email</p>
-              <p className="text-xs sm:text-sm text-text-secondary/80 break-all">mikhail@example.com</p>
+              <p className="text-xs sm:text-sm text-text-secondary/80 break-all">mikhailjpn@gmail.com</p>
             </div>
             <div className="space-y-1">
               <p className="text-xs sm:text-sm font-semibold text-victus-blue">Phone</p>
-              <p className="text-xs sm:text-sm text-text-secondary/80">+1 (555) 123-4567</p>
+              <p className="text-xs sm:text-sm text-text-secondary/80">0927 720 4496</p>
             </div>
             <div className="space-y-1">
               <p className="text-xs sm:text-sm font-semibold text-victus-blue">Location</p>
