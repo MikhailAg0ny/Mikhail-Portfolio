@@ -1,4 +1,5 @@
 import ImageWithFallback from "@/components/ui/ImageWithFallback";
+import * as Tooltip from "@radix-ui/react-tooltip";
 
 export default function HeroSection() {
   return (
@@ -32,20 +33,49 @@ export default function HeroSection() {
                 Crafting playful, human-centered digital experiences that merge game sensibilities with product delivery.
                 I translate ideas into interactive stories, polished design systems, and measurable outcomes.
               </p>
-              <div className="flex flex-col gap-4 sm:flex-row sm:justify-center lg:justify-start">
-                <a
-                  className="group inline-flex items-center justify-center rounded-full bg-gradient-to-r from-victus-blue to-victus-blue/80 px-6 py-3 text-sm font-medium text-mica-dark transition-all hover:shadow-lg hover:shadow-victus-blue/30"
-                  href="#projects"
-                >
-                  View My Work
-                </a>
-                <a
-                  className="inline-flex items-center justify-center rounded-full border border-text-secondary/30 px-6 py-3 text-sm font-medium text-text-primary transition-all hover:border-victus-blue hover:text-victus-blue"
-                  href="#contact"
-                >
-                  Get In Touch
-                </a>
-              </div>
+              <Tooltip.Provider delayDuration={200} skipDelayDuration={400}>
+                <div className="flex flex-col gap-4 sm:flex-row sm:justify-center lg:justify-start">
+                  <Tooltip.Root>
+                    <Tooltip.Trigger asChild>
+                      <a
+                        className="group inline-flex items-center justify-center rounded-full bg-gradient-to-r from-victus-blue to-victus-blue/80 px-6 py-3 text-sm font-medium text-mica-dark transition-all hover:shadow-lg hover:shadow-victus-blue/30"
+                        href="#projects"
+                      >
+                        View My Work
+                      </a>
+                    </Tooltip.Trigger>
+                    <Tooltip.Portal>
+                      <Tooltip.Content
+                        sideOffset={10}
+                        className="rounded-xl border border-victus-blue/30 bg-mica-dark/95 px-3 py-2 text-xs font-medium text-text-secondary shadow-lg backdrop-blur-xl"
+                      >
+                        Jump to highlighted projects
+                        <Tooltip.Arrow className="fill-mica-dark/95" />
+                      </Tooltip.Content>
+                    </Tooltip.Portal>
+                  </Tooltip.Root>
+
+                  <Tooltip.Root>
+                    <Tooltip.Trigger asChild>
+                      <a
+                        className="inline-flex items-center justify-center rounded-full border border-text-secondary/30 px-6 py-3 text-sm font-medium text-text-primary transition-all hover:border-victus-blue hover:text-victus-blue"
+                        href="#contact"
+                      >
+                        Get In Touch
+                      </a>
+                    </Tooltip.Trigger>
+                    <Tooltip.Portal>
+                      <Tooltip.Content
+                        sideOffset={10}
+                        className="rounded-xl border border-victus-blue/30 bg-mica-dark/95 px-3 py-2 text-xs font-medium text-text-secondary shadow-lg backdrop-blur-xl"
+                      >
+                        Opens contact section with direct links
+                        <Tooltip.Arrow className="fill-mica-dark/95" />
+                      </Tooltip.Content>
+                    </Tooltip.Portal>
+                  </Tooltip.Root>
+                </div>
+              </Tooltip.Provider>
             </div>
           </div>
         </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import * as Tooltip from "@radix-ui/react-tooltip";
 
 import { myProjects } from "@/lib/projects";
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -78,6 +79,7 @@ export default function ProjectsSection() {
         </div>
 
         {/* Mobile Swiper */}
+        <Tooltip.Provider delayDuration={200} skipDelayDuration={400}>
         <div className="sm:hidden relative">
           {/* Mobile Swipe Hint */}
           {showSwipeHint && (
@@ -144,12 +146,24 @@ export default function ProjectsSection() {
                     {secondaryTechs.length > 0 && (
                       <div className="flex flex-wrap gap-2">
                         {secondaryTechs.map((tech, techIdx) => (
-                          <span
-                            key={techIdx}
-                            className="rounded-lg bg-[#2A2F35] px-3 py-1 text-xs font-medium text-text-primary"
-                          >
-                            {tech}
-                          </span>
+                          <Tooltip.Root key={techIdx}>
+                            <Tooltip.Trigger asChild>
+                              <span
+                                className="rounded-lg bg-[#2A2F35] px-3 py-1 text-xs font-medium text-text-primary"
+                              >
+                                {tech}
+                              </span>
+                            </Tooltip.Trigger>
+                            <Tooltip.Portal>
+                              <Tooltip.Content
+                                sideOffset={8}
+                                className="rounded-xl border border-victus-blue/30 bg-mica-dark/95 px-2.5 py-1.5 text-[10px] font-medium text-text-secondary shadow-lg backdrop-blur-xl"
+                              >
+                                Part of the {project.title} stack
+                                <Tooltip.Arrow className="fill-mica-dark/95" />
+                              </Tooltip.Content>
+                            </Tooltip.Portal>
+                          </Tooltip.Root>
                         ))}
                       </div>
                     )}
@@ -191,6 +205,7 @@ export default function ProjectsSection() {
           </Swiper>
           <div className="projects-swiper-mobile-pagination mt-4 flex justify-center"></div>
         </div>
+        </Tooltip.Provider>
 
         {/* Swiper Carousel */}
         <div className="relative group mx-auto hidden w-full max-w-7xl overflow-hidden px-2 sm:block sm:px-4">
@@ -265,7 +280,7 @@ export default function ProjectsSection() {
               const secondaryTechs =
                 project.featuredTechs && project.featuredTechs.length > 0
                   ? project.featuredTechs
-                  : project.stack.filter((tech) => tech !== primaryTech);
+                : project.stack.filter((tech) => tech !== primaryTech);
               const isActive = idx === activeIndex;
 
               return (

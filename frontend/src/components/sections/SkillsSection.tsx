@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
+import * as Tooltip from "@radix-ui/react-tooltip";
 import { getSkillsByCategory, ITEMS_PER_PAGE, SKILL_CATEGORIES } from "@/lib/skills";
 import type { SkillCategory } from "@/lib/skills";
 import SkillCard from "@/components/ui/SkillCard";
@@ -46,22 +47,37 @@ export default function SkillsSection() {
         </header>
 
         <div className="w-full flex-1 flex-col overflow-y-auto rounded-2xl border border-victus-blue/15 bg-gradient-to-b from-[#10141f]/90 via-[#0f1a2b]/80 to-[#0d111c]/90 p-3 sm:p-4 md:p-5 shadow-[0_24px_60px_rgba(12,56,92,0.35)] backdrop-blur-xl">
-          <div className="mb-3 flex h-9 flex-shrink-0 justify-center gap-1 rounded-full bg-mica-dark/80 p-1 shadow-inner shadow-black/20 sm:mb-4 sm:h-10 sm:gap-1.5">
-            {SKILL_CATEGORIES.map((category) => (
-              <button
-                key={category.key}
-                onClick={() => handleTabChange(category.key)}
-                className={`relative flex-1 rounded-full px-1.5 py-1 text-xs sm:px-2.5 sm:py-1.5 sm:text-xs md:text-sm font-semibold transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 ${
-                  activeTab === category.key
-                    ? "bg-gradient-to-r from-victus-blue to-cyan-400 text-white shadow-lg shadow-victus-blue/40 scale-105"
-                    : "bg-mica-light/20 text-text-secondary shadow-inner shadow-black/10 hover:bg-mica-light/30 hover:text-white"
-                }`}
-                aria-pressed={activeTab === category.key}
-              >
-                {category.label}
-              </button>
-            ))}
-          </div>
+          <Tooltip.Provider delayDuration={150} skipDelayDuration={400}>
+            <div className="mb-3 flex h-9 flex-shrink-0 justify-center gap-1 rounded-full bg-mica-dark/80 p-1 shadow-inner shadow-black/20 sm:mb-4 sm:h-10 sm:gap-1.5">
+              {SKILL_CATEGORIES.map((category) => (
+                <Tooltip.Root key={category.key}>
+                  <Tooltip.Trigger asChild>
+                    <button
+                      onClick={() => handleTabChange(category.key)}
+                      className={`relative flex-1 rounded-full px-1.5 py-1 text-xs sm:px-2.5 sm:py-1.5 sm:text-xs md:text-sm font-semibold transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 ${
+                        activeTab === category.key
+                          ? "bg-gradient-to-r from-victus-blue to-cyan-400 text-white shadow-lg shadow-victus-blue/40 scale-105"
+                          : "bg-mica-light/20 text-text-secondary shadow-inner shadow-black/10 hover:bg-mica-light/30 hover:text-white"
+                      }`}
+                      aria-pressed={activeTab === category.key}
+                      type="button"
+                    >
+                      {category.label}
+                    </button>
+                  </Tooltip.Trigger>
+                  <Tooltip.Portal>
+                    <Tooltip.Content
+                      sideOffset={8}
+                      className="rounded-lg border border-victus-blue/30 bg-mica-dark/95 px-3 py-1.5 text-xs font-medium text-text-secondary shadow-xl backdrop-blur-lg"
+                    >
+                      View {category.label.toLowerCase()} I rely on most
+                      <Tooltip.Arrow className="fill-mica-dark/95" />
+                    </Tooltip.Content>
+                  </Tooltip.Portal>
+                </Tooltip.Root>
+              ))}
+            </div>
+          </Tooltip.Provider>
 
           <div className="relative flex flex-col rounded-xl border border-white/5 bg-black/10 p-2 sm:p-3 md:p-4">
 

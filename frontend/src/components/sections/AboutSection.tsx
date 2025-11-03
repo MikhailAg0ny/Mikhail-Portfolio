@@ -1,3 +1,5 @@
+import * as Popover from "@radix-ui/react-popover";
+
 export default function AboutSection() {
   return (
     <section className="flex min-h-screen w-full items-center justify-center py-16 md:h-screen md:py-0">
@@ -7,7 +9,7 @@ export default function AboutSection() {
           <h2 className="text-3xl font-semibold text-text-primary md:text-4xl">About Me</h2>
         </header>
 
-        <div className="flex h-full w-full max-w-6xl items-center gap-8 lg:gap-12">
+        <div className="flex h-full w-full max-w-6xl flex-col gap-8 lg:flex-row lg:items-start lg:gap-12">
           {/* Left Side - Description */}
           <div className="hidden h-full max-h-[600px] w-full max-w-md flex-col justify-center lg:flex">
             <div className="space-y-6 rounded-3xl border border-text-secondary/20 bg-mica-light/60 p-8">
@@ -31,30 +33,108 @@ export default function AboutSection() {
           </div>
 
         {/* Right Side - Content Sections */}
-        <div className="flex h-full w-full flex-col justify-center gap-6">
-          {/* Content Box 1 */}
-          <div className="group rounded-2xl border border-text-secondary/20 bg-mica-light/60 p-6 transition-all hover:border-victus-blue/30 hover:shadow-lg hover:shadow-victus-blue/10">
-            <h3 className="mb-3 text-lg font-semibold text-victus-blue">Who I Am</h3>
-            <p className="text-sm leading-relaxed text-text-secondary">
-              Brief introduction about yourself. Share your passion, what drives you, and what makes you unique as a developer.
-            </p>
-          </div>
+        <div className="flex h-full w-full flex-col justify-center gap-5">
+          <Popover.Root>
+            <Popover.Trigger asChild>
+              <button
+                type="button"
+                className="group w-full rounded-2xl border border-text-secondary/20 bg-mica-light/60 p-6 text-left transition-all hover:border-victus-blue/30 hover:shadow-lg hover:shadow-victus-blue/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-victus-blue/60"
+              >
+                <h3 className="mb-3 text-lg font-semibold text-victus-blue">Who I Am</h3>
+                <p className="text-sm leading-relaxed text-text-secondary">
+                  Brief introduction about yourself. Share your passion, what drives you, and what makes you unique as a developer.
+                </p>
+                <span className="mt-4 inline-flex items-center gap-2 text-xs font-semibold text-victus-blue/70">
+                  Learn more
+                  <svg className="h-3 w-3 transition-transform group-data-[state=open]:rotate-90" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
+                  </svg>
+                </span>
+              </button>
+            </Popover.Trigger>
+            <Popover.Portal>
+              <Popover.Content
+                sideOffset={12}
+                align="start"
+                className="z-[90] w-[min(420px,90vw)] rounded-3xl border border-victus-blue/25 bg-mica-dark/95 p-5 text-sm leading-relaxed text-text-secondary shadow-2xl backdrop-blur-xl focus:outline-none"
+              >
+                <h4 className="mb-2 text-base font-semibold text-text-primary">Crafted storyteller</h4>
+                <p>
+                  I combine game design instincts with product thinking to turn ambiguous ideas into interactive narratives.
+                  Every project starts with empathy, playtesting, and clear success metrics so the end result feels intuitive and delightful.
+                </p>
+                <Popover.Arrow className="fill-mica-dark/95" />
+              </Popover.Content>
+            </Popover.Portal>
+          </Popover.Root>
 
-          {/* Content Box 2 */}
-          <div className="group rounded-2xl border border-text-secondary/20 bg-mica-light/60 p-6 transition-all hover:border-victus-blue/30 hover:shadow-lg hover:shadow-victus-blue/10">
-            <h3 className="mb-3 text-lg font-semibold text-victus-blue">What I Do</h3>
-            <p className="text-sm leading-relaxed text-text-secondary">
-              Describe your expertise, specializations, and the kind of work you love doing. Highlight your key skills and interests.
-            </p>
-          </div>
+          <Popover.Root>
+            <Popover.Trigger asChild>
+              <button
+                type="button"
+                className="group w-full rounded-2xl border border-text-secondary/20 bg-mica-light/60 p-6 text-left transition-all hover:border-victus-blue/30 hover:shadow-lg hover:shadow-victus-blue/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-victus-blue/60"
+              >
+                <h3 className="mb-3 text-lg font-semibold text-victus-blue">What I Do</h3>
+                <p className="text-sm leading-relaxed text-text-secondary">
+                  Describe your expertise, specializations, and the kind of work you love doing. Highlight your key skills and interests.
+                </p>
+                <span className="mt-4 inline-flex items-center gap-2 text-xs font-semibold text-victus-blue/70">
+                  Learn more
+                  <svg className="h-3 w-3 transition-transform group-data-[state=open]:rotate-90" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
+                  </svg>
+                </span>
+              </button>
+            </Popover.Trigger>
+            <Popover.Portal>
+              <Popover.Content
+                sideOffset={12}
+                align="start"
+                className="z-[90] w-[min(420px,90vw)] rounded-3xl border border-victus-blue/25 bg-mica-dark/95 p-5 text-sm leading-relaxed text-text-secondary shadow-2xl backdrop-blur-xl focus:outline-none"
+              >
+                <h4 className="mb-2 text-base font-semibold text-text-primary">Designing joyful systems</h4>
+                <ul className="list-disc space-y-1 pl-4">
+                  <li>UX audits and rapid prototyping for responsive web apps.</li>
+                  <li>Component libraries that bridge marketing sites and in-game UI.</li>
+                  <li>Automation pipelines that keep delivery fast and measurable.</li>
+                </ul>
+                <Popover.Arrow className="fill-mica-dark/95" />
+              </Popover.Content>
+            </Popover.Portal>
+          </Popover.Root>
 
-          {/* Content Box 3 */}
-          <div className="group rounded-2xl border border-text-secondary/20 bg-mica-light/60 p-6 transition-all hover:border-victus-blue/30 hover:shadow-lg hover:shadow-victus-blue/10">
-            <h3 className="mb-3 text-lg font-semibold text-victus-blue">Beyond Code</h3>
-            <p className="text-sm leading-relaxed text-text-secondary">
-              Share your hobbies, interests outside of programming, or what you do in your free time. Make it personal and engaging.
-            </p>
-          </div>
+          <Popover.Root>
+            <Popover.Trigger asChild>
+              <button
+                type="button"
+                className="group w-full rounded-2xl border border-text-secondary/20 bg-mica-light/60 p-6 text-left transition-all hover:border-victus-blue/30 hover:shadow-lg hover:shadow-victus-blue/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-victus-blue/60"
+              >
+                <h3 className="mb-3 text-lg font-semibold text-victus-blue">Beyond Code</h3>
+                <p className="text-sm leading-relaxed text-text-secondary">
+                  Share your hobbies, interests outside of programming, or what you do in your free time. Make it personal and engaging.
+                </p>
+                <span className="mt-4 inline-flex items-center gap-2 text-xs font-semibold text-victus-blue/70">
+                  Learn more
+                  <svg className="h-3 w-3 transition-transform group-data-[state=open]:rotate-90" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
+                  </svg>
+                </span>
+              </button>
+            </Popover.Trigger>
+            <Popover.Portal>
+              <Popover.Content
+                sideOffset={12}
+                align="start"
+                className="z-[90] w-[min(420px,90vw)] rounded-3xl border border-victus-blue/25 bg-mica-dark/95 p-5 text-sm leading-relaxed text-text-secondary shadow-2xl backdrop-blur-xl focus:outline-none"
+              >
+                <h4 className="mb-2 text-base font-semibold text-text-primary">Fuel outside the IDE</h4>
+                <p>
+                  When I’m not shipping features you’ll find me prototyping indie games, mentoring aspiring devs, or composing synthwave soundtracks for upcoming projects. These creative breaks keep my product instincts sharp.
+                </p>
+                <Popover.Arrow className="fill-mica-dark/95" />
+              </Popover.Content>
+            </Popover.Portal>
+          </Popover.Root>
         </div>
         </div>
       </div>
