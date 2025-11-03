@@ -33,27 +33,27 @@ export default function SkillsSection() {
 
 
   return (
-    <section className="flex h-full w-full items-center justify-center overflow-hidden">
-        <div className="flex h-full w-full max-w-6xl max-h-[95vh] flex-col justify-center gap-4 px-4 py-4 sm:gap-5 sm:px-8 sm:py-6">
-        <header className="flex-shrink-0 space-y-2 text-center sm:space-y-3 mx-auto max-w-3xl">
-          <p className="text-xs font-semibold uppercase tracking-[0.45em] text-victus-blue/80 sm:text-sm">Technical Expertise</p>
-          <h2 className="text-3xl font-bold tracking-tight text-white drop-shadow-[0_6px_18px_rgba(22,196,255,0.12)] sm:text-4xl md:text-5xl">
+    <section className="flex min-h-screen w-full items-center justify-center px-4 py-16 md:h-screen md:py-8">
+        <div className="flex w-full max-w-5xl flex-col justify-center gap-3 sm:gap-4 md:gap-6">
+        <header className="flex-shrink-0 space-y-1 text-center sm:space-y-2 md:space-y-3">
+          <p className="text-xs font-semibold uppercase tracking-[0.3em] text-victus-blue/80 sm:text-xs md:text-sm">Technical Expertise</p>
+          <h2 className="text-2xl font-bold tracking-tight text-white sm:text-3xl md:text-4xl">
             My Skills
           </h2>
-          <p className="text-sm text-text-secondary/80 sm:text-base">
+          <p className="text-xs text-text-secondary/80 sm:text-sm md:text-base">
             Technologies and tools I work with
           </p>
         </header>
 
-        <div className="mx-auto flex w-full max-w-5xl min-h-[520px] sm:min-h-[500px] lg:min-h-[450px] flex-col overflow-hidden rounded-3xl border border-victus-blue/15 bg-gradient-to-b from-[#10141f]/90 via-[#0f1a2b]/80 to-[#0d111c]/90 p-4 sm:p-6 shadow-[0_24px_60px_rgba(12,56,92,0.35)] backdrop-blur-xl">
-          <div className="mb-4 flex h-12 flex-shrink-0 justify-center gap-2 rounded-full bg-mica-dark/80 p-1.5 shadow-inner shadow-black/20 sm:mb-5 sm:h-12">
+        <div className="w-full flex-1 flex-col overflow-y-auto rounded-2xl border border-victus-blue/15 bg-gradient-to-b from-[#10141f]/90 via-[#0f1a2b]/80 to-[#0d111c]/90 p-3 sm:p-4 md:p-5 shadow-[0_24px_60px_rgba(12,56,92,0.35)] backdrop-blur-xl">
+          <div className="mb-3 flex h-9 flex-shrink-0 justify-center gap-1 rounded-full bg-mica-dark/80 p-1 shadow-inner shadow-black/20 sm:mb-4 sm:h-10 sm:gap-1.5">
             {SKILL_CATEGORIES.map((category) => (
               <button
                 key={category.key}
                 onClick={() => handleTabChange(category.key)}
-                className={`relative w-1/3 rounded-full px-4 py-2 text-sm font-semibold transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 ${
+                className={`relative flex-1 rounded-full px-1.5 py-1 text-xs sm:px-2.5 sm:py-1.5 sm:text-xs md:text-sm font-semibold transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 ${
                   activeTab === category.key
-                    ? "bg-gradient-to-r from-victus-blue to-cyan-400 text-white shadow-lg shadow-victus-blue/40 scale-[1.02]"
+                    ? "bg-gradient-to-r from-victus-blue to-cyan-400 text-white shadow-lg shadow-victus-blue/40 scale-105"
                     : "bg-mica-light/20 text-text-secondary shadow-inner shadow-black/10 hover:bg-mica-light/30 hover:text-white"
                 }`}
                 aria-pressed={activeTab === category.key}
@@ -63,13 +63,13 @@ export default function SkillsSection() {
             ))}
           </div>
 
-          <div className="relative flex flex-1 flex-col rounded-3xl border border-white/5 bg-black/10 p-3 sm:p-5" style={{ transition: 'height 0.3s ease-in-out' }}>
+          <div className="relative flex flex-col rounded-xl border border-white/5 bg-black/10 p-2 sm:p-3 md:p-4">
 
             {/* Grid Content */}
-            <div className="mx-4 flex flex-1 flex-col pb-1 sm:pb-2 sm:mx-10" style={{ transition: 'all 0.3s ease-in-out' }}>
+            <div className="flex flex-col" style={{ transition: 'all 0.3s ease-in-out' }}>
               <ul 
                 key={`${activeTab}-${currentPage}`}
-                className="skill-grid grid h-full w-full grid-cols-1 sm:grid-cols-2 md:grid-cols-3 items-start content-start gap-4 sm:gap-5"
+                className="skill-grid grid w-full grid-cols-3 items-start content-start gap-1.5 sm:gap-2 md:gap-3"
                 style={{ transition: 'height 0.3s ease-in-out' }}
               >
                 {currentItems.map((skill, index) => (
@@ -79,15 +79,15 @@ export default function SkillsSection() {
 
               {/* Page Indicator */}
               {totalPages > 1 && (
-                <div className="mt-3 flex flex-shrink-0 justify-center gap-2.5 sm:mt-4">
+                <div className="mt-2 flex flex-shrink-0 justify-center gap-1.5 sm:mt-3 md:gap-2">
                   {Array.from({ length: totalPages }).map((_, index) => (
                     <button
                       key={index}
                       onClick={() => setCurrentPage(index)}
-                      className={`h-2.5 rounded-full transition-all duration-300 ${
+                      className={`h-1.5 rounded-full transition-all duration-300 sm:h-2 ${
                         currentPage === index
-                          ? "w-10 bg-gradient-to-r from-victus-blue to-cyan-400 shadow-md shadow-victus-blue/50"
-                          : "w-2.5 bg-text-secondary/40 hover:w-4 hover:bg-text-secondary/60"
+                          ? "w-6 sm:w-8 md:w-10 bg-gradient-to-r from-victus-blue to-cyan-400 shadow-md shadow-victus-blue/50"
+                          : "w-1.5 sm:w-2 bg-text-secondary/40 hover:w-2.5 sm:hover:w-3 hover:bg-text-secondary/60"
                       }`}
                       aria-label={`Go to page ${index + 1}`}
                     />

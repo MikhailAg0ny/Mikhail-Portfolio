@@ -2,8 +2,8 @@ import { achievements } from "@/lib/achievements";
 
 export default function AchievementsSection() {
   return (
-    <section className="h-full w-full bg-mica-light/30">
-      <div className="h-full px-6 pb-16 pt-28 sm:px-10">
+    <section className="min-h-screen w-full bg-mica-light/30 py-16 md:h-screen md:py-0">
+      <div className="flex min-h-screen items-center px-6 sm:px-10 md:h-screen">
         <div className="mx-auto w-full max-w-6xl">
           <header className="space-y-6">
             <p className="text-sm uppercase tracking-[0.45em] text-victus-blue">Achievements</p>

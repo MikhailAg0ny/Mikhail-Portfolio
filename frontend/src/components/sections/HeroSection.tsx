@@ -2,8 +2,8 @@ import ImageWithFallback from "@/components/ui/ImageWithFallback";
 
 export default function HeroSection() {
   return (
-    <section className="h-full w-full">
-      <div className="flex h-full items-center justify-center px-6 pb-16 pt-28 sm:px-10">
+    <section className="min-h-screen w-full md:h-screen">
+      <div className="flex min-h-screen items-center justify-center px-6 pb-16 pt-28 sm:px-10 md:h-screen">
         <div className="mx-auto w-full max-w-6xl">
           <div className="grid gap-10 lg:grid-cols-[1fr_1.2fr] lg:items-center">
             <div className="flex justify-center lg:justify-start">

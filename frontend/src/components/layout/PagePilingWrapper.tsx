@@ -34,17 +34,25 @@ function cleanupFullpageArtifacts(container?: HTMLElement | null) {
     style.removeProperty("touch-action");
     style.removeProperty("-ms-touch-action");
   });
+  
+  // Explicitly enable vertical scrolling
   html.style.overflowY = "auto";
+  html.style.overflowX = "hidden";
   body.style.overflowY = "auto";
+  body.style.overflowX = "hidden";
+  body.style.height = "auto";
 
   if (container) {
     container.style.removeProperty("height");
     container.style.removeProperty("overflow");
+    container.style.removeProperty("position");
+    container.style.height = "auto";
     Array.from(container.children).forEach((child) => {
       if (child instanceof HTMLElement) {
         child.classList.remove("fp-section", "active");
         child.style.removeProperty("height");
         child.style.removeProperty("overflow");
+        child.style.removeProperty("position");
       }
     });
   }
@@ -75,6 +83,11 @@ export default function PagePilingWrapper({ children, onSectionChange, initialAn
     const shouldEnable = window.innerWidth >= enableAtWidth;
     setIsEnabled(shouldEnable);
     onModeChange?.(shouldEnable);
+    
+    // Force scroll enable on mobile
+    if (!shouldEnable) {
+      cleanupFullpageArtifacts(fullpageRef.current);
+    }
 
     const handleResize = () => {
       const nextShouldEnable = window.innerWidth >= enableAtWidth;

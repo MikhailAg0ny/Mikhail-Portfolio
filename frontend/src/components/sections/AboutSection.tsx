@@ -1,7 +1,7 @@
 export default function AboutSection() {
   return (
-    <section className="flex h-full w-full items-center justify-center">
-      <div className="flex h-full w-full max-w-6xl flex-col justify-center px-6 pb-14 pt-24 sm:px-10">
+    <section className="flex min-h-screen w-full items-center justify-center py-16 md:h-screen md:py-0">
+      <div className="flex w-full max-w-6xl flex-col justify-center px-6 sm:px-10">
         <header className="mb-12 space-y-3 text-center">
           <p className="text-sm uppercase tracking-[0.45em] text-victus-blue">Get to know me</p>
           <h2 className="text-3xl font-semibold text-text-primary md:text-4xl">About Me</h2>
