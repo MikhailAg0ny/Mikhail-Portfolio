@@ -22,7 +22,7 @@ export default function Footer({ isVisible = false }: FooterProps) {
               Mikhail James P. Navarro
             </p>
             <p className="text-sm text-[#9AA5B1]">
-              Web Developer | Game Designer | Creative Technologist
+              Web Developer | Game Designer | AI Enthusiast
             </p>
           </div>
 

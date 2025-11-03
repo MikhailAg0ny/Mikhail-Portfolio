@@ -112,74 +112,72 @@ export default function ProjectsSection() {
             }}
             style={{ minHeight: '420px', overflow: 'hidden', paddingBottom: '12px', paddingTop: '12px' }}
           >
-            {projects.map((project, idx) => (
-              <SwiperSlide key={idx} className="flex h-full items-center justify-center overflow-visible">
-                {({ isActive }) => (
+            {projects.map((project, idx) => {
+              const primaryTech = project.primaryTech;
+              const secondaryTechs =
+                project.featuredTechs && project.featuredTechs.length > 0
+                  ? project.featuredTechs
+                  : project.stack.filter((tech) => tech !== primaryTech);
+              const isActive = idx === activeIndex;
+
+              return (
+                <SwiperSlide key={idx} className="flex h-full items-center justify-center overflow-visible">
                   <article
                     className={`group relative flex max-h-[85vh] min-h-[300px] flex-col overflow-hidden rounded-3xl border p-4 backdrop-blur-md transition-all duration-300 sm:p-6 ${
                       isActive
                         ? 'scale-[1.02] border-victus-blue/30 bg-gradient-to-b from-mica-light/90 via-mica-dark/90 to-black/90'
-                        : 'scale-95 border-text-secondary/10 bg-mica-dark/60 opacity-70 brightness-95'
+                        : '!scale-95 border-text-secondary/10 bg-mica-dark/60 opacity-70 brightness-95'
                     } hover:!opacity-100 hover:!brightness-100 hover:scale-[1.03] hover:border-victus-blue/50 hover:shadow-xl hover:shadow-victus-blue/25`}
                   >
-                    {/* Image Placeholder */}
-                    {project.image && (
-                      <img
-                        src={project.image}
-                        alt={project.title}
-                        loading="lazy"
-                        className={`mb-3 w-full flex-shrink-0 rounded-xl object-cover shadow-inner transition-all sm:mb-4 ${
-                          isActive ? 'h-[clamp(9rem,22vh,12rem)]' : 'h-[clamp(7rem,18vh,9rem)]'
-                        }`}
-                      />
-                    )}
-
-
                     {isActive ? (
                       <>
-                        {/* Icon/Badge */}
-                        <div className="mb-3 flex flex-shrink-0 items-center justify-between sm:mb-4">
-                          <span className="inline-block rounded-full bg-victus-blue/10 px-3 py-1 text-sm font-medium text-victus-blue">
+                        <div className="flex flex-col gap-4">
+                          <span className="inline-block w-fit rounded-full bg-victus-blue/15 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-victus-blue">
                             {project.timeframe}
                           </span>
-                          <svg
-                            className="h-5 w-5 text-victus-blue/60 transition-transform group-hover:translate-x-1"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M9 5l7 7-7 7"
-                            />
-                          </svg>
-                        </div>
 
-                        {/* Title & Role */}
-                        <h3 className="text-lg font-bold text-white line-clamp-2">{project.title}</h3>
-                        <p className="mt-1 text-sm text-victus-blue line-clamp-1">{project.role}</p>
-
-                        {/* Problem Statement (limit to 4 lines) */}
-                        <p className="mt-2 line-clamp-4 text-sm text-text-secondary sm:mt-3">
-                          <span className="font-semibold text-text-primary">Challenge:</span> {project.problem}
-                        </p>
-
-                        {/* Stack Tags */}
-                        <div className="mt-2 flex flex-shrink-0 flex-wrap gap-1.5 sm:mt-3">
-                          {project.stack.slice(0, 2).map((tech, i) => (
-                            <span
-                              key={i}
-                              className="rounded-lg bg-[#2A2F35] px-2.5 py-1 text-xs font-medium text-text-primary"
+                          {project.image && (
+                            <div
+                              className="relative w-full overflow-hidden rounded-xl shadow-inner"
+                              style={{ aspectRatio: "4 / 3" }}
                             >
-                              {tech}
-                            </span>
-                          ))}
+                              <img
+                                src={project.image}
+                                alt={project.title}
+                                loading="lazy"
+                                className="h-full w-full object-cover"
+                              />
+                            </div>
+                          )}
+
+                          <div className="space-y-2 text-center sm:text-left">
+                            <h3 className="text-xl font-bold text-white leading-tight line-clamp-2">{project.title}</h3>
+                            {primaryTech && (
+                              <p className="text-sm font-semibold text-victus-blue/90 line-clamp-1">{primaryTech}</p>
+                            )}
+                          </div>
+
+                          <p className="line-clamp-4 text-sm text-text-secondary">
+                            {project.problem}
+                          </p>
+
+                          {secondaryTechs.length > 0 && (
+                            <div className="flex flex-wrap gap-2">
+                              {secondaryTechs.map((tech, techIdx) => (
+                                <span
+                                  key={techIdx}
+                                  className="rounded-lg bg-[#2A2F35] px-2.5 py-1 text-xs font-medium text-text-primary"
+                                >
+                                  {tech}
+                                </span>
+                              ))}
+                            </div>
+                          )}
+
+                          <p className="text-sm font-medium text-victus-blue/80">Role: {project.role}</p>
                         </div>
 
-                        {/* View Project Link */}
-                        <div className="mt-auto flex-shrink-0 border-t border-text-secondary/10 pt-3 sm:pt-4">
+                        <div className="mt-auto flex justify-center pt-4">
                           <button
                             type="button"
                             onClick={(e) => {
@@ -187,41 +185,46 @@ export default function ProjectsSection() {
                               setActiveIndex(idx);
                               setIsModalOpen(true);
                             }}
-                            className="inline-flex items-center text-xs font-semibold text-victus-blue transition-colors hover:text-victus-blue/80"
+                            className="inline-flex items-center gap-2 rounded-full bg-victus-blue/20 px-4 py-2 text-xs font-semibold text-victus-blue transition-colors hover:bg-victus-blue/30"
                             aria-label={`View ${project.title}`}
                           >
                             View Project
-                            <svg
-                              className="ml-1.5 h-3.5 w-3.5"
-                              fill="none"
-                              stroke="currentColor"
-                              viewBox="0 0 24 24"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M13 7l5 5m0 0l-5 5m5-5H6"
-                              />
+                            <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                             </svg>
                           </button>
                         </div>
                       </>
                     ) : (
-                      <>
-                        {/* Side Card Content */}
-                        <h3 className="line-clamp-2 text-base font-semibold text-text-primary">
-                          {project.title}
-                        </h3>
-                        <p className="mt-2 line-clamp-1 text-sm text-text-secondary">
-                          {project.role}
-                        </p>
-                      </>
+                      <div className="flex h-full flex-col justify-between gap-3 text-left">
+                        <div className="space-y-2">
+                          <h3 className="text-base font-semibold text-text-primary line-clamp-2">{project.title}</h3>
+                          {primaryTech && (
+                            <p className="text-xs font-semibold uppercase tracking-wide text-victus-blue/80 line-clamp-1">
+                              {primaryTech}
+                            </p>
+                          )}
+                        </div>
+
+                        {project.image && (
+                          <div
+                            className="relative w-full overflow-hidden rounded-xl opacity-80"
+                            style={{ aspectRatio: "4 / 3" }}
+                          >
+                            <img
+                              src={project.image}
+                              alt={project.title}
+                              loading="lazy"
+                              className="h-full w-full object-cover"
+                            />
+                          </div>
+                        )}
+                      </div>
                     )}
                   </article>
-                )}
-              </SwiperSlide>
-            ))}
+                </SwiperSlide>
+              );
+            })}
           </Swiper>
 
           {/* Custom Navigation Buttons */}
