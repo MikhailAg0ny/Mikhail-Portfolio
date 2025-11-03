@@ -5,6 +5,8 @@ type Props = {
   children: React.ReactNode;
   onSectionChange: (index: number) => void;
   initialAnchor?: string;
+  enableAtWidth?: number;
+  onModeChange?: (isPagePilingActive: boolean) => void;
 };
 
 const ANCHORS = [
@@ -17,12 +19,44 @@ const ANCHORS = [
   "contact",
 ];
 
-export default function PagePilingWrapper({ children, onSectionChange, initialAnchor = "hero" }: Props) {
+function cleanupFullpageArtifacts(container?: HTMLElement | null) {
+  if (typeof window === "undefined") return;
+  const html = document.documentElement;
+  const body = document.body;
+
+  html.classList.remove("fp-enabled", "fp-viewing", "fp-responsive");
+  body.classList.remove("fp-enabled", "fp-responsive");
+
+  [html.style, body.style].forEach((style) => {
+    style.removeProperty("overflow");
+    style.removeProperty("height");
+    style.removeProperty("position");
+    style.removeProperty("touch-action");
+    style.removeProperty("-ms-touch-action");
+  });
+  html.style.overflowY = "auto";
+  body.style.overflowY = "auto";
+
+  if (container) {
+    container.style.removeProperty("height");
+    container.style.removeProperty("overflow");
+    Array.from(container.children).forEach((child) => {
+      if (child instanceof HTMLElement) {
+        child.classList.remove("fp-section", "active");
+        child.style.removeProperty("height");
+        child.style.removeProperty("overflow");
+      }
+    });
+  }
+}
+
+export default function PagePilingWrapper({ children, onSectionChange, initialAnchor = "hero", enableAtWidth = 1024, onModeChange }: Props) {
   const fullpageRef = useRef<HTMLDivElement>(null);
   const fullpageInstance = useRef<any>(null);
   const onSectionChangeRef = useRef(onSectionChange);
   const initialAnchorRef = useRef(initialAnchor);
   const [isReady, setIsReady] = useState(false);
+  const [isEnabled, setIsEnabled] = useState(false);
 
   useEffect(() => {
     onSectionChangeRef.current = onSectionChange;
@@ -30,14 +64,52 @@ export default function PagePilingWrapper({ children, onSectionChange, initialAn
 
   useEffect(() => {
     initialAnchorRef.current = initialAnchor;
-    if (fullpageInstance.current && typeof fullpageInstance.current.moveTo === "function") {
+    if (isEnabled && fullpageInstance.current && typeof fullpageInstance.current.moveTo === "function") {
       fullpageInstance.current.moveTo(initialAnchor);
     }
-  }, [initialAnchor]);
+  }, [initialAnchor, isEnabled]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const shouldEnable = window.innerWidth >= enableAtWidth;
+    setIsEnabled(shouldEnable);
+    onModeChange?.(shouldEnable);
+
+    const handleResize = () => {
+      const nextShouldEnable = window.innerWidth >= enableAtWidth;
+
+      if (nextShouldEnable === isEnabled) return;
+
+      setIsEnabled(nextShouldEnable);
+      onModeChange?.(nextShouldEnable);
+
+      if (!nextShouldEnable) {
+        if (fullpageInstance.current) {
+          try {
+            fullpageInstance.current.destroy("all");
+          } catch (error) {
+            console.error("Error destroying fullpage.js during resize:", error);
+          }
+          fullpageInstance.current = null;
+          (window as any).fullpage_api = null;
+          setIsReady(false);
+          cleanupFullpageArtifacts(fullpageRef.current);
+        }
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [enableAtWidth, isEnabled]);
 
   useEffect(() => {
     // Only run on client side
-    if (typeof window === "undefined" || fullpageInstance.current) return;
+    if (typeof window === "undefined") return;
+    if (!isEnabled || fullpageInstance.current) return;
 
     // Dynamically import fullpage.js
     const initFullPage = async () => {
@@ -48,7 +120,7 @@ export default function PagePilingWrapper({ children, onSectionChange, initialAn
         const FullPageModule = await import("fullpage.js");
         const FullPageJS = FullPageModule.default || FullPageModule;
 
-        if (fullpageRef.current && !fullpageInstance.current) {
+        if (fullpageRef.current && !fullpageInstance.current && isEnabled) {
           fullpageInstance.current = new FullPageJS("#fullpage", {
             // License key for open-source/non-commercial use
             licenseKey: "gplv3-license",
@@ -105,25 +177,26 @@ export default function PagePilingWrapper({ children, onSectionChange, initialAn
       if (fullpageInstance.current) {
         try {
           fullpageInstance.current.destroy("all");
-          (window as any).fullpage_api = null;
         } catch (e) {
           console.error("Error destroying fullpage:", e);
         }
         fullpageInstance.current = null;
+        (window as any).fullpage_api = null;
+        cleanupFullpageArtifacts(fullpageRef.current);
       }
       setIsReady(false);
     };
-  }, []);
+  }, [isEnabled]);
 
   return (
     <div
       id="fullpage"
       ref={fullpageRef}
-      style={{ visibility: isReady ? "visible" : "hidden" }}
-      aria-hidden={!isReady}
+      style={{ visibility: isEnabled && !isReady ? "hidden" : "visible" }}
+      aria-hidden={isEnabled && !isReady}
     >
       {React.Children.map(children, (child) => (
-        <div className="section">{child}</div>
+        <div className={isEnabled ? "section" : "min-h-screen"}>{child}</div>
       ))}
     </div>
   );
