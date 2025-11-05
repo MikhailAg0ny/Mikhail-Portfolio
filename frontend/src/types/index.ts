@@ -42,11 +42,18 @@ export interface Certificate {
   focus: string;
 }
 
+export interface AchievementLink {
+  name: string;
+  url: string;
+  icon?: "facebook" | "newspaper" | "globe" | "video" | "trophy";
+}
+
 export interface Achievement {
   title: string;
   event: string;
   year: string;
   highlight: string;
+  links?: AchievementLink[];
 }
 
 export interface ContactChannel {

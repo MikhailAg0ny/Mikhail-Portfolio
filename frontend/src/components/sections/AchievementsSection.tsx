@@ -1,3 +1,5 @@
+import { Link as LinkIcon, Globe, Newspaper, Play, Trophy } from "lucide-react";
+
 import { achievements } from "@/lib/achievements";
 
 const collageImages = [
@@ -27,11 +29,28 @@ export default function AchievementsSection() {
   const [heroImage, ...supportImages] = collageImages;
   const primaryAchievement = achievements[0];
 
+  const renderLinkIcon = (icon?: "facebook" | "newspaper" | "globe" | "video" | "trophy") => {
+    switch (icon) {
+      case "facebook":
+        return <LinkIcon className="h-4 w-4 text-victus-blue" strokeWidth={2.5} />;
+      case "newspaper":
+        return <Newspaper className="h-4 w-4 text-victus-blue" strokeWidth={2.5} />;
+      case "globe":
+        return <Globe className="h-4 w-4 text-victus-blue" strokeWidth={2.5} />;
+      case "video":
+        return <Play className="h-4 w-4 text-victus-blue" strokeWidth={2.5} />;
+      case "trophy":
+        return <Trophy className="h-4 w-4 text-victus-blue" strokeWidth={2.5} />;
+      default:
+        return <LinkIcon className="h-4 w-4 text-victus-blue" strokeWidth={2.5} />;
+    }
+  };
+
   return (
-    <section className="flex w-full justify-center py-16 sm:py-20">
+    <section className="flex w-full justify-center pt-28 pb-16 sm:pt-32 sm:pb-20">
       <div className="w-full max-w-6xl px-6 sm:px-10">
         {/* Single achievement card constrained to 720x720 on desktop */}
-        <article className="mx-auto rounded-2xl border border-text-secondary/20 bg-mica-light/60 p-8 shadow-lg shadow-victus-blue/5 transition-colors hover:border-victus-blue/30 md:h-[720px] md:w-[1000px]">
+        <article className="mx-auto rounded-2xl border border-text-secondary/20 bg-mica-light/60 p-8 shadow-lg shadow-victus-blue/5 transition-colors hover:border-victus-blue/30 md:w-[1000px]">
           <header className="space-y-3 text-left md:text-center">
             <p className="text-sm uppercase tracking-[0.45em] text-victus-blue">Achievements</p>
             <h2 className="text-3xl font-semibold text-text-primary md:text-4xl">Recognitions that capture impact and craft.</h2>
@@ -73,7 +92,7 @@ export default function AchievementsSection() {
 
             {/* Right: achievement copy and metadata */}
             {primaryAchievement && (
-              <div className="flex flex-col justify-between gap-6 rounded-2xl border border-text-secondary/15 bg-mica-light/50 p-6 md:h-full">
+              <div className="flex flex-col gap-6 rounded-2xl border border-text-secondary/15 bg-mica-light/50 p-6 md:h-full">
                 <div className="space-y-4">
                   <div className="flex flex-col gap-2">
                     <span className="text-xs uppercase tracking-[0.35em] text-text-secondary/60">{primaryAchievement.year}</span>
@@ -83,11 +102,28 @@ export default function AchievementsSection() {
                   <p className="text-sm leading-relaxed text-text-secondary">{primaryAchievement.highlight}</p>
                 </div>
 
-                <div className="space-y-2 text-xs text-text-secondary/70">
-                  <p>Role: Lead Developer & Designer</p>
-                  <p>Focus: Rapid prototyping, narrative design, team orchestration</p>
-                  <p>Outcome: Delivered playable demo with award-winning presentation</p>
-                </div>
+                {primaryAchievement.links && primaryAchievement.links.length > 0 && (
+                  <div className="space-y-3">
+                    <h4 className="text-xs uppercase tracking-[0.35em] text-text-secondary/50">Featured coverage</h4>
+                    <ul className="space-y-2">
+                      {primaryAchievement.links.map((link) => (
+                        <li key={link.url}>
+                          <a
+                            href={link.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="group flex items-center gap-3 rounded-xl border border-text-secondary/10 bg-mica-light/40 px-3 py-2 text-sm text-text-secondary transition-colors hover:border-victus-blue/30 hover:text-text-primary"
+                          >
+                            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-victus-blue/10 text-victus-blue transition-colors group-hover:bg-victus-blue/20 group-hover:text-victus-blue">
+                              {renderLinkIcon(link.icon)}
+                            </span>
+                            <span className="font-medium text-text-primary transition-colors group-hover:text-victus-blue">{link.name}</span>
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
               </div>
             )}
           </div>

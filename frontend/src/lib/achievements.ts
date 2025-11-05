@@ -2,25 +2,23 @@ import type { Achievement } from "@/types";
 
 export const achievements: Achievement[] = [
   {
-    title: "Game Jam Grand Winner",
-    event: "PromptQuest Hackathon",
+    title: "Proweaver AI Hackathon Vibe Coding Champion",
+    event: "Proweaver AI Hackathon",
     year: "2025",
     highlight:
-      "Designed and programmed an AI-assisted puzzle game in 72 hours, earning top marks for storytelling and technical execution.",
-  },
-  {
-    title: "UXPH Spotlight Speaker",
-    event: "UXPH Conference",
-    year: "2024",
-    highlight:
-      "Presented a live case study on aligning player empathy with design systems for cross-platform experiences.",
-  },
-  {
-    title: "Design System Accelerator",
-    event: "Internal Agency Award",
-    year: "2023",
-    highlight:
-      "Led a cross-functional initiative that reduced component delivery time by 40% and improved accessibility scores across products.",
+      "Designed and implemented Horizontal Shoot Em Up game in just 4 hours using AI powered tools",
+    links: [
+      {
+        name: "CIT-U Official Page",
+        url: "https://www.facebook.com/CITUniversity/posts/pfbid0rG3uVVBLhPXXTDYhQWGjqaK2HJtT2Sr452UyqeBRKHHaaetzdMBm6hvBxxqo4dB1l",
+        icon: "facebook",
+      },
+      {
+        name: "Cebu Daily News Article",
+        url: "https://cebudailynews.inquirer.net/659355/reimagining-play-powering-the-future-proweavers-promptquest-showcases-cebuano-talent-in-tech",
+        icon: "newspaper",
+      },
+    ],
   },
 ];
 
