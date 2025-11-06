@@ -2,7 +2,7 @@ import * as Popover from "@radix-ui/react-popover";
 
 export default function AboutSection() {
   return (
-    <section className="flex min-h-screen w-full items-center justify-center py-16 md:h-screen md:py-0">
+    <section className="flex w-full min-h-screen items-center justify-center pt-28 pb-16 sm:pt-32 sm:pb-20">
       <div className="flex w-full max-w-6xl flex-col justify-center px-6 sm:px-10">
         <header className="mb-12 space-y-3 text-center">
           <p className="text-sm uppercase tracking-[0.45em] text-victus-blue">Get to know me</p>

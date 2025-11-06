@@ -70,8 +70,11 @@ export default function ProjectsSection() {
   }, [triggerSwipeHint]);
 
   return (
-    <section ref={sectionRef} className="relative min-h-screen w-full overflow-hidden sm:h-screen">
-      <div className="flex min-h-screen w-full flex-col justify-start gap-6 px-4 pb-16 pt-24 sm:h-full sm:justify-center sm:gap-8 sm:px-10 sm:pb-20 sm:pt-28">
+    <section
+      ref={sectionRef}
+      className="relative flex w-full min-h-screen items-center justify-center overflow-hidden pt-28 pb-16 sm:pt-32 sm:pb-20"
+    >
+      <div className="flex w-full max-w-7xl flex-col justify-start gap-6 px-4 sm:justify-center sm:gap-8 sm:px-10">
         {/* Header */}
         <div className="flex-shrink-0 space-y-2 text-center sm:space-y-3">
           <h2 className="text-3xl font-bold tracking-tight text-text-primary sm:text-4xl">My Projects</h2>

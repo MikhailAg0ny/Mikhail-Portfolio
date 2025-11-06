@@ -34,8 +34,8 @@ export default function SkillsSection() {
 
 
   return (
-    <section className="flex min-h-screen w-full items-center justify-center px-4 py-16 md:h-screen md:py-8">
-        <div className="flex w-full max-w-5xl flex-col justify-center gap-3 sm:gap-4 md:gap-6">
+    <section className="flex w-full min-h-screen items-center justify-center px-4 pt-28 pb-16 sm:pt-32 sm:pb-20">
+      <div className="flex w-full max-w-5xl flex-col justify-center gap-3 sm:gap-4 md:gap-6">
         <header className="flex-shrink-0 space-y-1 text-center sm:space-y-2 md:space-y-3">
           <p className="text-xs font-semibold uppercase tracking-[0.3em] text-victus-blue/80 sm:text-xs md:text-sm">Technical Expertise</p>
           <h2 className="text-2xl font-bold tracking-tight text-white sm:text-3xl md:text-4xl">
