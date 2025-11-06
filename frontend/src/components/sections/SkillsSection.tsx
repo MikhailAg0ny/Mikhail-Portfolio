@@ -5,10 +5,12 @@ import * as Tooltip from "@radix-ui/react-tooltip";
 import { getSkillsByCategory, ITEMS_PER_PAGE, SKILL_CATEGORIES } from "@/lib/skills";
 import type { SkillCategory } from "@/lib/skills";
 import SkillCard from "@/components/ui/SkillCard";
+import { useSectionPadding } from "@/hooks/useBreakpoints";
 
 export default function SkillsSection() {
   const [activeTab, setActiveTab] = useState<SkillCategory>("languages");
   const [currentPage, setCurrentPage] = useState(0);
+  const sectionPadding = useSectionPadding();
 
   // Memoize current skills to avoid recalculation
   const currentSkills = useMemo(() => getSkillsByCategory(activeTab), [activeTab]);
@@ -34,7 +36,7 @@ export default function SkillsSection() {
 
 
   return (
-    <section className="flex w-full min-h-screen items-center justify-center px-4 pt-28 pb-16 sm:pt-32 sm:pb-20">
+    <section className={`flex w-full min-h-[100svh] items-center justify-center px-4 ${sectionPadding}`}>
       <div className="flex w-full max-w-5xl flex-col justify-center gap-3 sm:gap-4 md:gap-6">
         <header className="flex-shrink-0 space-y-1 text-center sm:space-y-2 md:space-y-3">
           <p className="text-xs font-semibold uppercase tracking-[0.3em] text-victus-blue/80 sm:text-xs md:text-sm">Technical Expertise</p>
@@ -46,7 +48,7 @@ export default function SkillsSection() {
           </p>
         </header>
 
-        <div className="w-full flex-1 flex-col overflow-y-auto rounded-2xl border border-victus-blue/15 bg-gradient-to-b from-[#10141f]/90 via-[#0f1a2b]/80 to-[#0d111c]/90 p-3 sm:p-4 md:p-5 shadow-[0_24px_60px_rgba(12,56,92,0.35)] backdrop-blur-xl">
+        <div className="w-full rounded-2xl border border-victus-blue/15 bg-gradient-to-b from-[#10141f]/90 via-[#0f1a2b]/80 to-[#0d111c]/90 p-3 sm:p-4 md:p-5 shadow-[0_24px_60px_rgba(12,56,92,0.35)] backdrop-blur-xl">
           <Tooltip.Provider delayDuration={150} skipDelayDuration={400}>
             <div className="mb-3 flex h-9 flex-shrink-0 justify-center gap-1 rounded-full bg-mica-dark/80 p-1 shadow-inner shadow-black/20 sm:mb-4 sm:h-10 sm:gap-1.5">
               {SKILL_CATEGORIES.map((category) => (

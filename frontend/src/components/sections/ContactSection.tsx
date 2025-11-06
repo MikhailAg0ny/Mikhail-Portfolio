@@ -5,7 +5,7 @@ const EMAIL_ADDRESS = process.env.NEXT_PUBLIC_EMAIL || 'mikhailjpn@gmail.com';
 
 export default function ContactSection() {
   return (
-    <section className="flex w-full min-h-screen items-center justify-center overflow-hidden pt-28 pb-16 sm:pt-32 sm:pb-20">
+    <section className="flex w-full min-h-[100svh] items-center justify-center overflow-hidden pt-28 pb-16 sm:pt-32 sm:pb-20">
       <div className="flex w-full max-w-6xl flex-col items-center justify-center gap-6 px-4 sm:gap-8 sm:px-10">
         <div className="text-center space-y-2 sm:space-y-4 max-w-3xl">
           <p className="text-xs font-semibold uppercase tracking-[0.3em] text-victus-blue/80 sm:text-sm">Get In Touch</p>

@@ -7,6 +7,7 @@ import { myProjects } from "@/lib/projects";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Keyboard } from 'swiper/modules';
 import type { Swiper as SwiperType } from 'swiper';
+import { useSectionPadding } from "@/hooks/useBreakpoints";
 
 // Import Swiper styles
 import 'swiper/css';
@@ -20,6 +21,7 @@ export default function ProjectsSection() {
   const [showSwipeHint, setShowSwipeHint] = useState(true);
   const sectionRef = useRef<HTMLElement | null>(null);
   const hintTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const sectionPadding = useSectionPadding();
 
   const hideSwipeHint = useCallback(() => {
     if (hintTimeoutRef.current) {
@@ -72,7 +74,7 @@ export default function ProjectsSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative flex w-full min-h-screen items-center justify-center overflow-hidden pt-28 pb-16 sm:pt-32 sm:pb-20"
+      className={`relative flex w-full min-h-[100svh] items-center justify-center ${sectionPadding}`}
     >
       <div className="flex w-full max-w-7xl flex-col justify-start gap-6 px-4 sm:justify-center sm:gap-8 sm:px-10">
         {/* Header */}
@@ -123,6 +125,7 @@ export default function ProjectsSection() {
 
               return (
                 <SwiperSlide key={`mobile-${idx}`} className="flex h-full pb-6">
+                  {/* Mobile project card layout */}
                   <article className="flex w-full flex-col gap-4 rounded-3xl border border-white/10 bg-gradient-to-b from-mica-light/90 via-mica-dark/90 to-black/90 p-5 shadow-lg shadow-victus-blue/10 backdrop-blur-md">
                     <span className="inline-block w-fit rounded-full bg-victus-blue/15 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-victus-blue">
                       {project.timeframe}
@@ -289,7 +292,7 @@ export default function ProjectsSection() {
               return (
                 <SwiperSlide key={idx} className="flex h-full items-center justify-center overflow-visible px-3">
                   <article
-                    className={`group relative flex min-h-[300px] w-full max-w-md flex-col overflow-hidden rounded-3xl border p-5 backdrop-blur-md transition-all duration-300 lg:max-h-[85vh] lg:max-w-full lg:p-6 ${
+                    className={`group relative flex min-h-[300px] w-full max-w-md flex-col overflow-hidden rounded-3xl border p-5 backdrop-blur-md transition-all duration-300 lg:max-h-[80vh] lg:max-w-full lg:p-6 ${
                       isActive
                         ? 'scale-[1.02] border-victus-blue/30 bg-gradient-to-b from-mica-light/90 via-mica-dark/90 to-black/90'
                         : '!scale-95 border-text-secondary/10 bg-mica-dark/60 opacity-70 brightness-95'

@@ -1,6 +1,9 @@
+"use client";
+
 import { Link as LinkIcon, Globe, Newspaper, Play, Trophy } from "lucide-react";
 
 import { achievements } from "@/lib/achievements";
+import { useSectionPadding } from "@/hooks/useBreakpoints";
 
 const collageImages = [
   // Feature photo covering the main recognition moment
@@ -28,6 +31,7 @@ const collageImages = [
 export default function AchievementsSection() {
   const [heroImage, ...supportImages] = collageImages;
   const primaryAchievement = achievements[0];
+  const sectionPadding = useSectionPadding();
 
   const renderLinkIcon = (icon?: "facebook" | "newspaper" | "globe" | "video" | "trophy") => {
     switch (icon) {
@@ -47,7 +51,7 @@ export default function AchievementsSection() {
   };
 
   return (
-    <section className="flex w-full justify-center pt-28 pb-16 sm:pt-32 sm:pb-20">
+    <section className={`flex w-full justify-center ${sectionPadding}`}>
       <div className="w-full max-w-6xl px-6 sm:px-10">
         {/* Single achievement card constrained to 720x720 on desktop */}
         <article className="mx-auto rounded-2xl border border-text-secondary/20 bg-mica-light/60 p-8 shadow-lg shadow-victus-blue/5 transition-colors hover:border-victus-blue/30 md:w-[1000px]">
@@ -64,7 +68,7 @@ export default function AchievementsSection() {
             {/* Left: hero image with supporting thumbnails */}
             <div className="flex flex-col gap-4">
               {heroImage && (
-                <div className="group overflow-hidden rounded-2xl sm:h-[220px] md:h-[360px]">
+                <div className="group overflow-hidden rounded-2xl sm:h-[200px] md:h-[320px]">
                   <img
                     src={heroImage.src}
                     alt={heroImage.alt}
@@ -77,7 +81,7 @@ export default function AchievementsSection() {
               {supportImages.length > 0 && (
                 <div className="grid grid-cols-3 gap-3">
                   {supportImages.map((image) => (
-                    <div key={image.src} className="group overflow-hidden rounded-xl sm:h-[90px] md:h-[110px]">
+                    <div key={image.src} className="group overflow-hidden rounded-xl sm:h-[80px] md:h-[100px]">
                       <img
                         src={image.src}
                         alt={image.alt}

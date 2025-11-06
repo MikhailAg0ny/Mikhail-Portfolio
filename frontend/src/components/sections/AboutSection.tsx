@@ -1,8 +1,13 @@
+'use client';
+
 import * as Popover from "@radix-ui/react-popover";
+import { useSectionPadding } from "@/hooks/useBreakpoints";
 
 export default function AboutSection() {
+  const sectionPadding = useSectionPadding();
+
   return (
-    <section className="flex w-full min-h-screen items-center justify-center pt-28 pb-16 sm:pt-32 sm:pb-20">
+    <section className={`flex w-full min-h-[100svh] items-center justify-center ${sectionPadding}`}>
       <div className="flex w-full max-w-6xl flex-col justify-center px-6 sm:px-10">
         <header className="mb-12 space-y-3 text-center">
           <p className="text-sm uppercase tracking-[0.45em] text-victus-blue">Get to know me</p>
