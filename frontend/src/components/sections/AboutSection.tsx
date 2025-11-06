@@ -1,5 +1,6 @@
 'use client';
 
+import ImageWithFallback from "@/components/ui/ImageWithFallback";
 import * as Popover from "@radix-ui/react-popover";
 import { useSectionPadding } from "@/hooks/useBreakpoints";
 
@@ -17,31 +18,46 @@ export default function AboutSection() {
           <h2 className="text-3xl font-semibold text-text-primary md:text-4xl">About Me</h2>
         </header>
 
-        <div className="flex h-full w-full max-w-6xl flex-col gap-8 lg:flex-row lg:items-start lg:gap-12">
-          {/* Left Side - Description */}
-          <div className="hidden h-full max-h-[600px] w-full max-w-md flex-col justify-center lg:flex">
-            <div className="space-y-6 rounded-3xl border border-text-secondary/20 bg-mica-light/60 p-8">
-              <div className="space-y-4">
-                <h3 className="text-2xl font-semibold text-text-primary">Mikhail</h3>
-                <p className="text-sm leading-relaxed text-text-secondary">
-                  A passionate developer with a love for creating innovative solutions and exploring new technologies. 
-                  Focused on building scalable applications and delivering exceptional user experiences.
-                </p>
+        <div className="flex h-full w-full max-w-6xl flex-col gap-8 lg:flex-row lg:items-stretch lg:gap-12">
+          {/* Left Side - Profile Card */}
+          <div className="hidden w-full max-w-md flex-col lg:flex">
+            <div className="flex h-full flex-col gap-6 rounded-3xl border border-text-secondary/20 bg-mica-light/60 p-8 shadow-lg shadow-victus-blue/10">
+              <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:gap-10">
+                <div className="space-y-4 lg:flex-[0.7]">
+                  <h3 className="text-2xl font-semibold text-text-primary">Mikhail</h3>
+                  <p className="text-sm leading-relaxed text-text-secondary">
+                    A passionate developer with a love for creating innovative solutions and exploring new technologies.
+                    Focused on building scalable applications and delivering exceptional user experiences.
+                  </p>
+                </div>
+
+                <div className="mx-auto flex h-72 w-64 flex-shrink-0 items-center justify-center rounded-[36px] border border-white/10 bg-mica-dark/80 p-3 shadow-xl shadow-victus-blue/10 lg:flex-[0.7] lg:max-w-[15rem]">
+                  <div className="relative h-full w-full overflow-hidden rounded-2xl border border-white/10">
+                    <ImageWithFallback
+                      src="/images/jesus_christ_is_king.jpeg"
+                      alt="Portrait of Mikhail standing beside text declaring Jesus Christ is King"
+                      width={320}
+                      height={384}
+                      className="h-full w-full object-cover"
+                    />
+                  </div>
+                </div>
               </div>
-              
+
               <div className="space-y-3 border-t border-text-secondary/20 pt-6">
                 <p className="text-xs uppercase tracking-[0.2em] text-victus-blue">Interests</p>
                 <div className="flex flex-wrap gap-2">
-                  <span className="rounded-full border border-victus-blue/30 bg-mica-dark/40 px-3 py-1 text-xs text-victus-blue">Game Dev</span>
-                  <span className="rounded-full border border-victus-blue/30 bg-mica-dark/40 px-3 py-1 text-xs text-victus-blue">Web Dev</span>
-                  <span className="rounded-full border border-victus-blue/30 bg-mica-dark/40 px-3 py-1 text-xs text-victus-blue">UI/UX</span>
+                  <span className="rounded-full border border-victus-blue/30 bg-mica-dark/40 px-3 py-1 text-xs text-victus-blue">Game Development</span>
+                  <span className="rounded-full border border-victus-blue/30 bg-mica-dark/40 px-3 py-1 text-xs text-victus-blue">Mobile Development</span>
+                  <span className="rounded-full border border-victus-blue/30 bg-mica-dark/40 px-3 py-1 text-xs text-victus-blue">Frontend Web Development</span>
+                  <span className="rounded-full border border-victus-blue/30 bg-mica-dark/40 px-3 py-1 text-xs text-victus-blue">UI/UX Design</span>
                 </div>
               </div>
             </div>
           </div>
 
         {/* Right Side - Content Sections */}
-        <div className="flex h-full w-full flex-col justify-center gap-5">
+        <div className="flex h-full w-full flex-col justify-center gap-5 lg:justify-between">
           <Popover.Root>
             <Popover.Trigger asChild>
               <button

@@ -1,4 +1,3 @@
-import ImageWithFallback from "@/components/ui/ImageWithFallback";
 import { useEffect, useState } from "react";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import { animated, useSpring } from "@react-spring/web";
@@ -24,8 +23,8 @@ export default function Navbar({ activeSection = "hero", onNavigate }: NavbarPro
   const isTransparent = isHeroSection && !hasScrolled;
 
   const [navSpring, navApi] = useSpring(() => ({
-    backgroundColor: isTransparent ? "rgba(42, 47, 53, 0)" : "rgba(42, 47, 53, 0.9)",
-    boxShadow: isTransparent ? "0px 0px 0px rgba(26, 29, 33, 0)" : "0px 8px 28px rgba(26, 29, 33, 0.45)",
+    backgroundColor: isTransparent ? "rgba(42, 47, 53, 0)" : "rgba(42, 47, 53, 0.82)",
+    boxShadow: isTransparent ? "0px 0px 0px rgba(26, 29, 33, 0)" : "0px 8px 28px rgba(26, 29, 33, 0.35)",
     config: { tension: 240, friction: 26 },
   }));
 
@@ -56,8 +55,8 @@ export default function Navbar({ activeSection = "hero", onNavigate }: NavbarPro
   useEffect(() => {
     const transparent = isHeroSection && !hasScrolled;
     navApi.start({
-      backgroundColor: transparent ? "rgba(42, 47, 53, 0)" : "rgba(42, 47, 53, 0.9)",
-      boxShadow: transparent ? "0px 0px 0px rgba(26, 29, 33, 0)" : "0px 8px 28px rgba(26, 29, 33, 0.45)",
+      backgroundColor: transparent ? "rgba(42, 47, 53, 0)" : "rgba(42, 47, 53, 0.82)",
+      boxShadow: transparent ? "0px 0px 0px rgba(26, 29, 33, 0)" : "0px 8px 24px rgba(26, 29, 33, 0.35)",
     });
   }, [hasScrolled, isHeroSection, navApi]);
 
@@ -67,29 +66,27 @@ export default function Navbar({ activeSection = "hero", onNavigate }: NavbarPro
       className={`fixed top-0 z-[100] w-full border-b transition duration-300 ${
         isTransparent
           ? "border-transparent bg-transparent backdrop-blur-none"
-          : "border-text-secondary/20 bg-mica-light/90 backdrop-blur-lg"
+          : "border-text-secondary/20 bg-mica-light/80 backdrop-blur-lg"
       }`}
       style={navSpring}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 sm:px-10">
         <a
           href="/"
-          className="flex items-center gap-3"
+          className="group flex items-center gap-3"
           onClick={(event) => {
             if (!onNavigate) return;
             event.preventDefault();
             handleNavClick("hero");
           }}
         >
-          <div className="h-10 w-10 overflow-hidden rounded-full border-2 border-victus-blue">
-            <ImageWithFallback
-              src="/images/profile.jpg"
-              alt="Mikhail James P. Navarro"
-              width={40}
-              height={40}
-              className="h-full w-full object-cover"
-            />
-          </div>
+          <img
+            src="/images/bongo-catto.gif"
+            alt="Bongo cat drumming"
+            className="h-10 w-10 transition-transform duration-300 group-hover:-translate-y-1 group-hover:rotate-6"
+            width={40}
+            height={40}
+          />
           <span className="text-lg font-semibold text-victus-blue">Mikhail's Portfolio</span>
         </a>
         

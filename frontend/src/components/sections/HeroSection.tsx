@@ -1,11 +1,30 @@
 "use client";
 
+import { useCallback } from "react";
 import ImageWithFallback from "@/components/ui/ImageWithFallback";
 import * as Tooltip from "@radix-ui/react-tooltip";
 import { useSectionPadding } from "@/hooks/useBreakpoints";
 
 export default function HeroSection() {
   const { padding, minHeight } = useSectionPadding();
+  const handleNavigate = useCallback((section: string) => {
+    if (typeof window === "undefined") return;
+
+    const targetSection = section.toLowerCase();
+    const fullpage = (window as any)?.fullpage_api;
+
+    if (fullpage && typeof fullpage.moveTo === "function") {
+      fullpage.moveTo(targetSection);
+      return;
+    }
+
+    const element = document.querySelector(`[data-section="${targetSection}"]`);
+    if (element instanceof HTMLElement) {
+      element.scrollIntoView({ behavior: "smooth", block: "start" });
+    } else {
+      window.location.hash = targetSection;
+    }
+  }, []);
 
   return (
     <section
@@ -35,7 +54,7 @@ export default function HeroSection() {
               Mikhail James P. Navarro
             </h1>
             <p className="text-xl font-semibold text-victus-blue md:text-2xl">
-              Web Developer & AI Enthusiast
+              Frontend Web Developer & AI Enthusiast
             </p>
             <p className="max-w-xl text-base text-text-secondary md:text-lg">
               Crafting playful, human-centered digital experiences that merge game sensibilities with product delivery.
@@ -45,12 +64,13 @@ export default function HeroSection() {
               <div className="flex flex-col gap-4 sm:flex-row sm:justify-center lg:justify-start">
                 <Tooltip.Root>
                   <Tooltip.Trigger asChild>
-                    <a
-                      className="group inline-flex items-center justify-center rounded-full bg-gradient-to-r from-victus-blue to-victus-blue/80 px-6 py-3 text-sm font-medium text-mica-dark transition-all hover:shadow-lg hover:shadow-victus-blue/30"
-                      href="#projects"
+                    <button
+                      type="button"
+                      onClick={() => handleNavigate("projects")}
+                      className="inline-flex items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-victus-blue to-cyan-400 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-victus-blue/20 transition-transform duration-300 hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/80"
                     >
                       View My Work
-                    </a>
+                    </button>
                   </Tooltip.Trigger>
                   <Tooltip.Portal>
                     <Tooltip.Content
@@ -65,12 +85,13 @@ export default function HeroSection() {
 
                 <Tooltip.Root>
                   <Tooltip.Trigger asChild>
-                    <a
-                      className="inline-flex items-center justify-center rounded-full border border-text-secondary/30 px-6 py-3 text-sm font-medium text-text-primary transition-all hover:border-victus-blue hover:text-victus-blue"
-                      href="#contact"
+                    <button
+                      type="button"
+                      onClick={() => handleNavigate("contact")}
+                      className="inline-flex items-center justify-center gap-2 rounded-lg border border-white/10 bg-white/5 px-6 py-3 text-sm font-semibold text-white transition-transform duration-300 hover:scale-105 hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50"
                     >
                       Get In Touch
-                    </a>
+                    </button>
                   </Tooltip.Trigger>
                   <Tooltip.Portal>
                     <Tooltip.Content

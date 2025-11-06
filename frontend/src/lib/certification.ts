@@ -39,8 +39,8 @@ export const certifications: Certificate[] = [
     link: "/Certificates/pictures/cert_mjpn_ai_communities.png",
   },
   {
-    name: "Kadasig Trio Champion",
-    issuer: "Proweaver AI Hackathon",
+    name: "AI Hackathon Champion",
+    issuer: "Proweaver",
     date: "2025",
     image: "/Certificates/pictures/KADASIG TRIO CHAMPION - MIKHAIL.jpg",
     link: "/Certificates/pictures/KADASIG%20TRIO%20CHAMPION%20-%20MIKHAIL.jpg",
