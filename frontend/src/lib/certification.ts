@@ -7,7 +7,7 @@ export const certifications: Certificate[] = [
     name: "CodeChum SQL Certification",
     issuer: "CodeChum",
     date: "2024",
-    image: "/Certificates/pictures/CODECHUM_SQL_CERTIFICATION_MIKHAIL.png",
+    image: "/Certificates/pictures/codechum_sql_mjpn.png",
   },
   {
     name: "UXPH MINI 2025 Event Certificate",
@@ -25,7 +25,7 @@ export const certifications: Certificate[] = [
     name: "AWS Academy Graduate: Cloud Foundations",
     issuer: "Amazon Web Services",
     date: "2025",
-    image: "/Certificates/pictures/aws-academy-graduate-cloud-foundations-training-bad.png",
+    image: "/Certificates/pictures/aws_cloud_foundation_mjpn.png",
   },
   {
     name: "AI Empowerment for Communities",

@@ -1,10 +1,21 @@
 "use client";
 
+import { useMemo, useState } from "react";
+
 import { certifications } from "@/lib/certification";
 import { useSectionPadding } from "@/hooks/useBreakpoints";
 
 export default function CertificationsSection() {
   const { padding, minHeight } = useSectionPadding();
+  const [hoveredCertificate, setHoveredCertificate] = useState<(typeof certifications)[number] | null>(null);
+  const certificateImages = useMemo(
+    () =>
+      certifications.map((certificate) => ({
+        ...certificate,
+        image: encodeURI(certificate.image),
+      })),
+    []
+  );
 
   return (
     <section
@@ -24,11 +35,16 @@ export default function CertificationsSection() {
           </p>
         </header>
 
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {certifications.map((certificate) => (
+        <div
+          className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
+          onMouseLeave={() => setHoveredCertificate(null)}
+        >
+          {certificateImages.map((certificate) => (
             <article
               key={certificate.name}
-              className="group flex h-full flex-col items-center justify-between rounded-[28px] border border-white/10 bg-transparent p-5 text-center transition-transform duration-300 hover:-translate-y-1 hover:border-victus-blue/40 sm:p-6"
+              className="group relative flex h-full flex-col items-center justify-between rounded-[28px] border border-white/10 bg-transparent p-5 text-center transition-transform duration-300 hover:-translate-y-1 hover:border-victus-blue/40 sm:p-6"
+              onMouseEnter={() => setHoveredCertificate(certificate)}
+              onMouseLeave={() => setHoveredCertificate((current) => (current?.name === certificate.name ? null : current))}
             >
               <div className="relative h-32 w-32 overflow-hidden rounded-[24px] border border-white/15 shadow-inner shadow-black/30 sm:h-36 sm:w-36">
                 <img
@@ -47,6 +63,17 @@ export default function CertificationsSection() {
             </article>
           ))}
         </div>
+        {hoveredCertificate && (
+          <div className="pointer-events-none fixed inset-0 z-40 flex items-center justify-center bg-black/60 backdrop-blur-md">
+            <div className="pointer-events-none w-[min(88vw,720px)] max-h-[85vh] overflow-hidden rounded-3xl border border-white/15 shadow-2xl">
+              <img
+                src={hoveredCertificate.image}
+                alt={`${hoveredCertificate.name} enlarged preview`}
+                className="block h-full w-full object-contain"
+              />
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );
