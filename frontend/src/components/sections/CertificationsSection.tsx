@@ -1,13 +1,12 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 
 import { certifications } from "@/lib/certification";
 import { useSectionPadding } from "@/hooks/useBreakpoints";
 
 export default function CertificationsSection() {
   const { padding, minHeight } = useSectionPadding();
-  const [hoveredCertificate, setHoveredCertificate] = useState<(typeof certifications)[number] | null>(null);
   const certificateImages = useMemo(
     () =>
       certifications.map((certificate) => ({
@@ -37,16 +36,15 @@ export default function CertificationsSection() {
 
         <div
           className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
-          onMouseLeave={() => setHoveredCertificate(null)}
         >
           {certificateImages.map((certificate) => (
             <article
               key={certificate.name}
-              className="group relative flex h-full flex-col items-center justify-between rounded-[28px] border border-white/10 bg-transparent p-5 text-center transition-transform duration-300 hover:-translate-y-1 hover:border-victus-blue/40 sm:p-6"
-              onMouseEnter={() => setHoveredCertificate(certificate)}
-              onMouseLeave={() => setHoveredCertificate((current) => (current?.name === certificate.name ? null : current))}
+              className="group relative flex h-full flex-col items-center justify-between rounded-[28px] border border-text-secondary/20 bg-mica-light/60 p-6 text-center transition-all duration-300 hover:-translate-y-1 hover:border-victus-blue/30 hover:bg-mica-light/70"
             >
-              <div className="relative h-32 w-32 overflow-hidden rounded-[24px] border border-white/15 shadow-inner shadow-black/30 sm:h-36 sm:w-36">
+              <div
+                className="relative h-32 w-32 overflow-hidden rounded-[24px] border border-white/15 shadow-inner shadow-black/30 sm:h-36 sm:w-36"
+              >
                 <img
                   src={certificate.image}
                   alt={`${certificate.name} certificate preview`}
@@ -60,16 +58,19 @@ export default function CertificationsSection() {
                 <p className="text-[0.65rem] uppercase tracking-[0.35em] text-victus-blue/90 sm:text-xs">{certificate.issuer}</p>
                 <p className="text-[0.7rem] font-medium text-text-secondary/80 sm:text-xs">Issued {certificate.date}</p>
               </div>
-              {hoveredCertificate?.name === certificate.name && (
-                <div className="pointer-events-none fixed inset-0 z-40 flex items-center justify-center bg-black/80 backdrop-blur-md">
-                  <div className="pointer-events-none max-h-[85vh] w-[min(90vw,760px)] overflow-hidden rounded-3xl border border-white/20 shadow-2xl">
-                    <img
-                      src={certificate.image}
-                      alt={`${certificate.name} enlarged preview`}
-                      className="block h-full w-full object-contain"
-                    />
-                  </div>
-                </div>
+
+              {certificate.link && (
+                <a
+                  href={certificate.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-4 inline-flex items-center gap-2 rounded-full border border-victus-blue/30 bg-victus-blue/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.25em] text-victus-blue transition-colors hover:border-victus-blue/60 hover:bg-victus-blue/20"
+                >
+                  View Proof
+                  <svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                  </svg>
+                </a>
               )}
             </article>
           ))}

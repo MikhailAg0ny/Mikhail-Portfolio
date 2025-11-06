@@ -51,9 +51,9 @@ export default function SkillsSection() {
           </p>
         </header>
 
-        <div className="w-full rounded-2xl border border-victus-blue/15 bg-gradient-to-b from-[#10141f]/90 via-[#0f1a2b]/80 to-[#0d111c]/90 p-3 sm:p-4 md:p-5 shadow-[0_24px_60px_rgba(12,56,92,0.35)] backdrop-blur-xl">
+        <div className="w-full space-y-5 rounded-[28px] border border-text-secondary/20 bg-mica-light/60 p-5 sm:space-y-6 sm:p-6 md:space-y-7 md:p-7 shadow-lg shadow-victus-blue/10 backdrop-blur-xl">
           <Tooltip.Provider delayDuration={150} skipDelayDuration={400}>
-            <div className="mb-3 flex h-9 flex-shrink-0 justify-center gap-1 rounded-full bg-mica-dark/80 p-1 shadow-inner shadow-black/20 sm:mb-4 sm:h-10 sm:gap-1.5">
+            <div className="flex h-9 flex-shrink-0 justify-center gap-1 rounded-full bg-mica-dark/80 p-1 shadow-inner shadow-black/20 sm:h-10 sm:gap-1.5">
               {SKILL_CATEGORIES.map((category) => (
                 <Tooltip.Root key={category.key}>
                   <Tooltip.Trigger asChild>
@@ -84,38 +84,32 @@ export default function SkillsSection() {
             </div>
           </Tooltip.Provider>
 
-          <div className="relative flex flex-col rounded-xl border border-white/5 bg-black/10 p-2 sm:p-3 md:p-4">
+          <div className="rounded-2xl border border-white/8 bg-mica-dark/40 p-3 sm:p-4 md:p-5">
+            <ul
+              key={`${activeTab}-${currentPage}`}
+              className="skill-grid grid w-full grid-cols-1 items-start gap-2 sm:grid-cols-2 sm:gap-3 lg:grid-cols-3 lg:gap-4"
+            >
+              {currentItems.map((skill, index) => (
+                <SkillCard key={skill.name} skill={skill} index={index} />
+              ))}
+            </ul>
 
-            {/* Grid Content */}
-            <div className="flex flex-col" style={{ transition: 'all 0.3s ease-in-out' }}>
-              <ul 
-                key={`${activeTab}-${currentPage}`}
-                className="skill-grid grid w-full grid-cols-3 items-start content-start gap-1.5 sm:gap-2 md:gap-3"
-                style={{ transition: 'height 0.3s ease-in-out' }}
-              >
-                {currentItems.map((skill, index) => (
-                  <SkillCard key={skill.name} skill={skill} index={index} />
+            {totalPages > 1 && (
+              <div className="mt-4 flex justify-center gap-2 sm:mt-6">
+                {Array.from({ length: totalPages }).map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentPage(index)}
+                    className={`h-1.5 rounded-full transition-all duration-300 sm:h-2 ${
+                      currentPage === index
+                        ? "w-6 sm:w-8 md:w-10 bg-gradient-to-r from-victus-blue to-cyan-400 shadow-md shadow-victus-blue/50"
+                        : "w-1.5 sm:w-2 bg-text-secondary/40 hover:w-2.5 sm:hover:w-3 hover:bg-text-secondary/60"
+                    }`}
+                    aria-label={`Go to page ${index + 1}`}
+                  />
                 ))}
-              </ul>
-
-              {/* Page Indicator */}
-              {totalPages > 1 && (
-                <div className="mt-2 flex flex-shrink-0 justify-center gap-1.5 sm:mt-3 md:gap-2">
-                  {Array.from({ length: totalPages }).map((_, index) => (
-                    <button
-                      key={index}
-                      onClick={() => setCurrentPage(index)}
-                      className={`h-1.5 rounded-full transition-all duration-300 sm:h-2 ${
-                        currentPage === index
-                          ? "w-6 sm:w-8 md:w-10 bg-gradient-to-r from-victus-blue to-cyan-400 shadow-md shadow-victus-blue/50"
-                          : "w-1.5 sm:w-2 bg-text-secondary/40 hover:w-2.5 sm:hover:w-3 hover:bg-text-secondary/60"
-                      }`}
-                      aria-label={`Go to page ${index + 1}`}
-                    />
-                  ))}
-                </div>
-              )}
-            </div>
+              </div>
+            )}
           </div>
         </div>
       </div>

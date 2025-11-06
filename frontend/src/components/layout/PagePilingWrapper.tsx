@@ -136,7 +136,7 @@ export default function PagePilingWrapper({ children, onSectionChange, initialAn
         if (fullpageRef.current && !fullpageInstance.current && isEnabled) {
           fullpageInstance.current = new FullPageJS("#fullpage", {
             // License key for open-source/non-commercial use
-            licenseKey: "gplv3-license",
+            licenseKey: "OPEN-SOURCE-GPLV3-LICENSE",
             navigation: true,
             navigationPosition: "right",
             navigationTooltips: [

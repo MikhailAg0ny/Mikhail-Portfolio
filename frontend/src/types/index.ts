@@ -40,6 +40,7 @@ export interface Certificate {
   issuer: string;
   date: string;
   image: string;
+  link?: string;
 }
 
 export interface AchievementLink {
