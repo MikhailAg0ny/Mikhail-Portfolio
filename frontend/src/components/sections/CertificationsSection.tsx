@@ -60,20 +60,20 @@ export default function CertificationsSection() {
                 <p className="text-[0.65rem] uppercase tracking-[0.35em] text-victus-blue/90 sm:text-xs">{certificate.issuer}</p>
                 <p className="text-[0.7rem] font-medium text-text-secondary/80 sm:text-xs">Issued {certificate.date}</p>
               </div>
+              {hoveredCertificate?.name === certificate.name && (
+                <div className="pointer-events-none fixed inset-0 z-40 flex items-center justify-center bg-black/80 backdrop-blur-md">
+                  <div className="pointer-events-none max-h-[85vh] w-[min(90vw,760px)] overflow-hidden rounded-3xl border border-white/20 shadow-2xl">
+                    <img
+                      src={certificate.image}
+                      alt={`${certificate.name} enlarged preview`}
+                      className="block h-full w-full object-contain"
+                    />
+                  </div>
+                </div>
+              )}
             </article>
           ))}
         </div>
-        {hoveredCertificate && (
-          <div className="pointer-events-none fixed inset-0 z-40 flex items-center justify-center bg-black/60 backdrop-blur-md">
-            <div className="pointer-events-none w-[min(88vw,720px)] max-h-[85vh] overflow-hidden rounded-3xl border border-white/15 shadow-2xl">
-              <img
-                src={hoveredCertificate.image}
-                alt={`${hoveredCertificate.name} enlarged preview`}
-                className="block h-full w-full object-contain"
-              />
-            </div>
-          </div>
-        )}
       </div>
     </section>
   );
