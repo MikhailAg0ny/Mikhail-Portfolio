@@ -1,23 +1,43 @@
 import type { Certificate } from "@/types";
 
+//DO NOT TOUCH
+
 export const certifications: Certificate[] = [
   {
-    name: "Google UX Design Professional Certificate",
-    issuer: "Google / Coursera",
+    name: "CodeChum SQL Certification",
+    issuer: "CodeChum",
     date: "2024",
-    focus: "Human-centered research, low-to-high fidelity prototyping, usability testing.",
+    image: "/Certificates/pictures/CODECHUM_SQL_CERTIFICATION_MIKHAIL.png",
   },
   {
-    name: "Meta Front-End Developer Certificate",
-    issuer: "Meta / Coursera",
-    date: "2023",
-    focus: "Design systems, accessibility-first component development, CI/CD pipelines.",
+    name: "UXPH MINI 2025 Event Certificate",
+    issuer: "UXPH",
+    date: "2025",
+    image: "/Certificates/pictures/UXPH_PARTICIPATION EVENT_MIKHAIL.png",
   },
   {
-    name: "Unity Certified Associate: Game Developer",
-    issuer: "Unity",
-    date: "2022",
-    focus: "Gameplay systems, performance optimization, and cross-platform deployment.",
+    name: "Introduction to C++",
+    issuer: "Sololearn",
+    date: "2025",
+    image: "/Certificates/pictures/C++ MIKHAIL JAMES NAVARRO.jpg",
+  },
+  {
+    name: "AWS Academy Graduate: Cloud Foundations",
+    issuer: "Amazon Web Services",
+    date: "2025",
+    image: "/Certificates/pictures/aws-academy-graduate-cloud-foundations-training-bad.png",
+  },
+  {
+    name: "AI Empowerment for Communities",
+    issuer: "GoTeamLearning",
+    date: "2025",
+    image: "/Certificates/pictures/cert_mjpn_ai_communities.png",
+  },
+  {
+    name: "Kadasig Trio Champion",
+    issuer: "Proweaver AI Hackathon",
+    date: "2025",
+    image: "/Certificates/pictures/KADASIG TRIO CHAMPION - MIKHAIL.jpg",
   },
 ];
 

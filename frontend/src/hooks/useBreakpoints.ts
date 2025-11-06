@@ -16,16 +16,30 @@ export function useBreakpoints() {
   );
 }
 
-export function useSectionPadding() {
+type SectionSpacing = {
+  padding: string;
+  minHeight: string;
+};
+
+export function useSectionPadding(): SectionSpacing {
   const { isDesktop, isTablet } = useBreakpoints();
 
   if (isDesktop) {
-    return "pt-32 pb-20";
+    return {
+      padding: "pt-32 pb-20",
+      minHeight: "calc(100svh - 13rem)",
+    };
   }
 
   if (isTablet) {
-    return "pt-32 pb-20";
+    return {
+      padding: "pt-32 pb-20",
+      minHeight: "calc(100svh - 13rem)",
+    };
   }
 
-  return "pt-28 pb-16";
+  return {
+    padding: "pt-28 pb-16",
+    minHeight: "calc(100svh - 11rem)",
+  };
 }

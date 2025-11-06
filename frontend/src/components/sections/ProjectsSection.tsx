@@ -21,7 +21,7 @@ export default function ProjectsSection() {
   const [showSwipeHint, setShowSwipeHint] = useState(true);
   const sectionRef = useRef<HTMLElement | null>(null);
   const hintTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const sectionPadding = useSectionPadding();
+  const { padding, minHeight } = useSectionPadding();
 
   const hideSwipeHint = useCallback(() => {
     if (hintTimeoutRef.current) {
@@ -74,7 +74,8 @@ export default function ProjectsSection() {
   return (
     <section
       ref={sectionRef}
-      className={`relative flex w-full min-h-[100svh] items-center justify-center ${sectionPadding}`}
+      className={`relative flex w-full items-center justify-center overflow-visible ${padding}`}
+      style={{ minHeight }}
     >
       <div className="flex w-full max-w-7xl flex-col justify-start gap-6 px-4 sm:justify-center sm:gap-8 sm:px-10">
         {/* Header */}
@@ -214,7 +215,7 @@ export default function ProjectsSection() {
         </Tooltip.Provider>
 
         {/* Swiper Carousel */}
-        <div className="relative group mx-auto hidden w-full max-w-7xl overflow-hidden px-2 sm:block sm:px-4">
+        <div className="relative group mx-auto hidden w-full max-w-7xl overflow-visible px-2 sm:block sm:px-4">
           {/* Desktop Hover Hint */}
           <div
             className={`pointer-events-none absolute inset-x-0 bottom-8 z-10 flex justify-center transition-opacity duration-300 ${
@@ -279,7 +280,7 @@ export default function ProjectsSection() {
                 spaceBetween: 36,
               },
             }}
-            style={{ minHeight: '420px', overflow: 'hidden', paddingBottom: '12px', paddingTop: '12px' }}
+            style={{ minHeight: '420px', maxHeight: '520px', overflow: 'visible', paddingBottom: '12px', paddingTop: '12px' }}
           >
             {projects.map((project, idx) => {
               const primaryTech = project.primaryTech;
@@ -290,9 +291,9 @@ export default function ProjectsSection() {
               const isActive = idx === activeIndex;
 
               return (
-                <SwiperSlide key={idx} className="flex h-full items-center justify-center overflow-visible px-3">
+                <SwiperSlide key={idx} className="flex h-full items-center justify-center px-3">
                   <article
-                    className={`group relative flex min-h-[300px] w-full max-w-md flex-col overflow-hidden rounded-3xl border p-5 backdrop-blur-md transition-all duration-300 lg:max-h-[80vh] lg:max-w-full lg:p-6 ${
+                    className={`group relative flex h-[460px] w-full max-w-[420px] flex-col overflow-hidden rounded-3xl border p-5 backdrop-blur-md transition-all duration-300 lg:h-[460px] lg:max-w-[420px] lg:p-6 ${
                       isActive
                         ? 'scale-[1.02] border-victus-blue/30 bg-gradient-to-b from-mica-light/90 via-mica-dark/90 to-black/90'
                         : '!scale-95 border-text-secondary/10 bg-mica-dark/60 opacity-70 brightness-95'

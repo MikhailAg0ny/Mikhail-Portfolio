@@ -5,10 +5,13 @@ import * as Tooltip from "@radix-ui/react-tooltip";
 import { useSectionPadding } from "@/hooks/useBreakpoints";
 
 export default function HeroSection() {
-  const sectionPadding = useSectionPadding();
+  const { padding, minHeight } = useSectionPadding();
 
   return (
-    <section className={`flex w-full min-h-[100svh] items-center justify-center ${sectionPadding}`}>
+    <section
+      className={`flex w-full items-center justify-center ${padding}`}
+      style={{ minHeight }}
+    >
       <div className="w-full max-w-6xl px-6 sm:px-10">
         <div className="grid gap-10 lg:grid-cols-[1fr_1.2fr] lg:items-center">
           <div className="flex justify-center lg:justify-start">

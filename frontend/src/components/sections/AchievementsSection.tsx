@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { Link as LinkIcon, Globe, Newspaper, Play, Trophy } from "lucide-react";
 
 import { achievements } from "@/lib/achievements";
@@ -8,7 +9,7 @@ import { useSectionPadding } from "@/hooks/useBreakpoints";
 const collageImages = [
   // Feature photo covering the main recognition moment
   {
-    src: "/Pictures/PROMPTQUEST_AI_HACKATHON_2025/Proweaver AI HACKATHON CHAMPION.jpg",
+    src: "/Pictures/PROMPTQUEST_AI_HACKATHON_2025/Proweaver%20AI%20HACKATHON%20CHAMPION.jpg",
     alt: "PromptQuest Hackathon champion team photo",
   },
   // Supporting snapshot highlighting collaborative effort
@@ -31,7 +32,8 @@ const collageImages = [
 export default function AchievementsSection() {
   const [heroImage, ...supportImages] = collageImages;
   const primaryAchievement = achievements[0];
-  const sectionPadding = useSectionPadding();
+  const { padding, minHeight } = useSectionPadding();
+  const [hoveredImage, setHoveredImage] = useState<(typeof collageImages)[number] | null>(null);
 
   const renderLinkIcon = (icon?: "facebook" | "newspaper" | "globe" | "video" | "trophy") => {
     switch (icon) {
@@ -51,10 +53,13 @@ export default function AchievementsSection() {
   };
 
   return (
-    <section className={`flex w-full justify-center ${sectionPadding}`}>
+    <section
+      className={`flex w-full justify-center ${padding}`}
+      style={{ minHeight }}
+    >
       <div className="w-full max-w-6xl px-6 sm:px-10">
         {/* Single achievement card constrained to 720x720 on desktop */}
-        <article className="mx-auto rounded-2xl border border-text-secondary/20 bg-mica-light/60 p-8 shadow-lg shadow-victus-blue/5 transition-colors hover:border-victus-blue/30 md:w-[1000px]">
+        <article className="relative mx-auto rounded-2xl border border-text-secondary/20 bg-mica-light/60 p-8 shadow-lg shadow-victus-blue/5 transition-colors hover:border-victus-blue/30 md:w-[1000px]">
           <header className="space-y-3 text-left md:text-center">
             <p className="text-sm uppercase tracking-[0.45em] text-victus-blue">Achievements</p>
             <h2 className="text-3xl font-semibold text-text-primary md:text-4xl">Recognitions that capture impact and craft.</h2>
@@ -66,9 +71,15 @@ export default function AchievementsSection() {
 
           <div className="mt-10 flex flex-col gap-6 md:grid md:grid-cols-[minmax(0,1.25fr)_minmax(0,1fr)] md:gap-8">
             {/* Left: hero image with supporting thumbnails */}
-            <div className="flex flex-col gap-4">
+            <div
+              className="flex flex-col gap-4"
+              onMouseLeave={() => setHoveredImage(null)}
+            >
               {heroImage && (
-                <div className="group overflow-hidden rounded-2xl sm:h-[200px] md:h-[320px]">
+                <div
+                  className="group overflow-hidden rounded-2xl sm:h-[200px] md:h-[320px]"
+                  onMouseEnter={() => setHoveredImage(heroImage)}
+                >
                   <img
                     src={heroImage.src}
                     alt={heroImage.alt}
@@ -81,7 +92,11 @@ export default function AchievementsSection() {
               {supportImages.length > 0 && (
                 <div className="grid grid-cols-3 gap-3">
                   {supportImages.map((image) => (
-                    <div key={image.src} className="group overflow-hidden rounded-xl sm:h-[80px] md:h-[100px]">
+                    <div
+                      key={image.src}
+                      className="group overflow-hidden rounded-xl sm:h-[80px] md:h-[100px]"
+                      onMouseEnter={() => setHoveredImage(image)}
+                    >
                       <img
                         src={image.src}
                         alt={image.alt}
@@ -131,6 +146,17 @@ export default function AchievementsSection() {
               </div>
             )}
           </div>
+          {hoveredImage && (
+            <div className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center rounded-2xl bg-black/60 backdrop-blur-md transition-opacity duration-200">
+              <div className="pointer-events-none max-h-[80vh] max-w-[85%] overflow-hidden rounded-3xl border border-white/10 shadow-2xl">
+                <img
+                  src={hoveredImage.src}
+                  alt={hoveredImage.alt}
+                  className="block h-full w-full object-cover"
+                />
+              </div>
+            </div>
+          )}
         </article>
       </div>
 

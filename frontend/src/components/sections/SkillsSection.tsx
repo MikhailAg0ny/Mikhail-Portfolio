@@ -10,7 +10,7 @@ import { useSectionPadding } from "@/hooks/useBreakpoints";
 export default function SkillsSection() {
   const [activeTab, setActiveTab] = useState<SkillCategory>("languages");
   const [currentPage, setCurrentPage] = useState(0);
-  const sectionPadding = useSectionPadding();
+  const { padding, minHeight } = useSectionPadding();
 
   // Memoize current skills to avoid recalculation
   const currentSkills = useMemo(() => getSkillsByCategory(activeTab), [activeTab]);
@@ -36,7 +36,10 @@ export default function SkillsSection() {
 
 
   return (
-    <section className={`flex w-full min-h-[100svh] items-center justify-center px-4 ${sectionPadding}`}>
+    <section
+      className={`flex w-full items-center justify-center px-4 ${padding}`}
+      style={{ minHeight }}
+    >
       <div className="flex w-full max-w-5xl flex-col justify-center gap-3 sm:gap-4 md:gap-6">
         <header className="flex-shrink-0 space-y-1 text-center sm:space-y-2 md:space-y-3">
           <p className="text-xs font-semibold uppercase tracking-[0.3em] text-victus-blue/80 sm:text-xs md:text-sm">Technical Expertise</p>
