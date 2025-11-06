@@ -1,6 +1,7 @@
 import ImageWithFallback from "@/components/ui/ImageWithFallback";
 import { useEffect, useState } from "react";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
+import { animated, useSpring } from "@react-spring/web";
 
 const navLinks = [
   { label: "Home", anchor: "hero" },
@@ -20,6 +21,13 @@ type NavbarProps = {
 export default function Navbar({ activeSection = "hero", onNavigate }: NavbarProps) {
   const [isHeroSection, setIsHeroSection] = useState(activeSection === "hero");
   const [hasScrolled, setHasScrolled] = useState(false);
+  const isTransparent = isHeroSection && !hasScrolled;
+
+  const [navSpring, navApi] = useSpring(() => ({
+    backgroundColor: isTransparent ? "rgba(42, 47, 53, 0)" : "rgba(42, 47, 53, 0.9)",
+    boxShadow: isTransparent ? "0px 0px 0px rgba(26, 29, 33, 0)" : "0px 8px 28px rgba(26, 29, 33, 0.45)",
+    config: { tension: 240, friction: 26 },
+  }));
 
   const handleNavClick = (anchor: (typeof navLinks)[number]["anchor"]) => {
     if (onNavigate) {
@@ -45,14 +53,23 @@ export default function Navbar({ activeSection = "hero", onNavigate }: NavbarPro
     };
   }, []);
 
+  useEffect(() => {
+    const transparent = isHeroSection && !hasScrolled;
+    navApi.start({
+      backgroundColor: transparent ? "rgba(42, 47, 53, 0)" : "rgba(42, 47, 53, 0.9)",
+      boxShadow: transparent ? "0px 0px 0px rgba(26, 29, 33, 0)" : "0px 8px 28px rgba(26, 29, 33, 0.45)",
+    });
+  }, [hasScrolled, isHeroSection, navApi]);
+
   return (
-    <nav
+    <animated.nav
       id="navbar"
-      className={`fixed top-0 z-[100] w-full border-b transition-all duration-300 ${
-        isHeroSection && !hasScrolled
+      className={`fixed top-0 z-[100] w-full border-b transition duration-300 ${
+        isTransparent
           ? "border-transparent bg-transparent backdrop-blur-none"
-          : "border-text-secondary/20 bg-mica-light/85 backdrop-blur-xl shadow-[0_8px_32px_rgba(26,29,33,0.55)]"
+          : "border-text-secondary/20 bg-mica-light/90 backdrop-blur-lg"
       }`}
+      style={navSpring}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 sm:px-10">
         <a
@@ -151,6 +168,6 @@ export default function Navbar({ activeSection = "hero", onNavigate }: NavbarPro
           </DropdownMenu.Portal>
         </DropdownMenu.Root>
       </div>
-    </nav>
+    </animated.nav>
   );
 }

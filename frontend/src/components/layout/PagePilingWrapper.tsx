@@ -1,5 +1,7 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 type Props = {
   children: React.ReactNode;
@@ -65,6 +67,9 @@ export default function PagePilingWrapper({ children, onSectionChange, initialAn
   const initialAnchorRef = useRef(initialAnchor);
   const [isReady, setIsReady] = useState(false);
   const [isEnabled, setIsEnabled] = useState(false);
+  const navScrollPositionRef = useRef(0);
+  const navTriggersRef = useRef<ScrollTrigger[]>([]);
+  const scrollProxyInitializedRef = useRef(false);
 
   useEffect(() => {
     onSectionChangeRef.current = onSectionChange;
@@ -129,7 +134,7 @@ export default function PagePilingWrapper({ children, onSectionChange, initialAn
       try {
         // Import CSS dynamically
         await import("fullpage.js/dist/fullpage.css");
-        
+
         const FullPageModule = await import("fullpage.js");
         const FullPageJS = FullPageModule.default || FullPageModule;
 
@@ -164,7 +169,32 @@ export default function PagePilingWrapper({ children, onSectionChange, initialAn
             onLeave: function (origin: any, destination: any, direction: string) {
               onSectionChangeRef.current(destination.index);
             },
+            afterLoad: function (_origin: any, destination: any) {
+              navScrollPositionRef.current = destination.index * window.innerHeight;
+              ScrollTrigger.update();
+            },
           });
+
+          if (!scrollProxyInitializedRef.current && fullpageRef.current) {
+            gsap.registerPlugin(ScrollTrigger);
+            ScrollTrigger.scrollerProxy(fullpageRef.current, {
+              scrollTop(value?: number) {
+                if (typeof value === "number" && fullpageInstance.current) {
+                  const targetIndex = gsap.utils.clamp(0, ANCHORS.length - 1, Math.round(value / window.innerHeight));
+                  fullpageInstance.current.moveTo(ANCHORS[targetIndex]);
+                }
+                return navScrollPositionRef.current;
+              },
+              getBoundingClientRect: () => ({
+                top: 0,
+                left: 0,
+                width: window.innerWidth,
+                height: window.innerHeight,
+              }),
+              pinType: "transform",
+            });
+            scrollProxyInitializedRef.current = true;
+          }
 
           const initial = initialAnchorRef.current;
           const initialIndex = ANCHORS.indexOf(initial);
@@ -198,6 +228,83 @@ export default function PagePilingWrapper({ children, onSectionChange, initialAn
         cleanupFullpageArtifacts(fullpageRef.current);
       }
       setIsReady(false);
+    };
+  }, [isEnabled]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const killNavTriggers = () => {
+      navTriggersRef.current.forEach((trigger) => trigger.kill());
+      navTriggersRef.current = [];
+    };
+
+    if (!isEnabled) {
+      killNavTriggers();
+      return;
+    }
+
+    const navElement = document.querySelector("#fp-nav");
+    if (!navElement || !fullpageRef.current) return;
+
+    gsap.registerPlugin(ScrollTrigger);
+    gsap.set(navElement, { autoAlpha: 0, x: 40 });
+
+    killNavTriggers();
+
+    const showNav = () =>
+      gsap.to(navElement, {
+        autoAlpha: 1,
+        x: 0,
+        duration: 0.6,
+        ease: "power3.out",
+      });
+
+    const hideNav = () =>
+      gsap.to(navElement, {
+        autoAlpha: 0,
+        x: 40,
+        duration: 0.4,
+        ease: "power2.out",
+      });
+
+    navTriggersRef.current.push(
+      ScrollTrigger.create({
+        scroller: fullpageRef.current,
+        start: 0,
+        end: () => (ANCHORS.length - 1) * window.innerHeight,
+        onUpdate: (self) => {
+          if (self.progress > 0.05) {
+            showNav();
+          } else {
+            hideNav();
+          }
+        },
+      })
+    );
+
+    ANCHORS.forEach((anchor, index) => {
+      const dotSelector = `#fp-nav ul li:nth-child(${index + 1}) a span`;
+      navTriggersRef.current.push(
+        ScrollTrigger.create({
+          scroller: fullpageRef.current!,
+          start: index * window.innerHeight,
+          end: (index + 1) * window.innerHeight,
+          onToggle: ({ isActive }) => {
+            gsap.to(dotSelector, {
+              scale: isActive ? 1.25 : 1,
+              duration: 0.35,
+              ease: "power2.out",
+            });
+          },
+        })
+      );
+    });
+
+    ScrollTrigger.refresh();
+
+    return () => {
+      killNavTriggers();
     };
   }, [isEnabled]);
 

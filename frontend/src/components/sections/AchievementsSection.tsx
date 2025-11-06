@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { Link as LinkIcon, Globe, Newspaper, Play, Trophy } from "lucide-react";
 
 import { achievements } from "@/lib/achievements";
@@ -146,17 +147,32 @@ export default function AchievementsSection() {
               </div>
             )}
           </div>
-          {hoveredImage && (
-            <div className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center rounded-2xl bg-black/60 backdrop-blur-md transition-opacity duration-200">
-              <div className="pointer-events-none max-h-[80vh] max-w-[85%] overflow-hidden rounded-3xl border border-white/10 shadow-2xl">
-                <img
-                  src={hoveredImage.src}
-                  alt={hoveredImage.alt}
-                  className="block h-full w-full object-cover"
-                />
-              </div>
-            </div>
-          )}
+          <AnimatePresence>
+            {hoveredImage && (
+              <motion.div
+                key={hoveredImage.src}
+                className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center rounded-2xl bg-black/60 backdrop-blur-md"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.25, ease: "easeOut" }}
+              >
+                <motion.div
+                  className="pointer-events-none max-h-[80vh] max-w-[85%] overflow-hidden rounded-3xl border border-white/10 shadow-2xl"
+                  initial={{ scale: 0.95, opacity: 0.9 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  exit={{ scale: 0.95, opacity: 0.9 }}
+                  transition={{ duration: 0.25, ease: "easeOut" }}
+                >
+                  <img
+                    src={hoveredImage.src}
+                    alt={hoveredImage.alt}
+                    className="block h-full w-full object-cover"
+                  />
+                </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </article>
       </div>
 
