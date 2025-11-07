@@ -1,4 +1,4 @@
-import { Facebook, Github, Linkedin } from "lucide-react";
+import { FaFacebookF, FaGithub, FaLinkedinIn } from "react-icons/fa";
 
 type FooterProps = {
   isVisible?: boolean;
@@ -37,7 +37,7 @@ export default function Footer({ isVisible = false }: FooterProps) {
               rel="noopener noreferrer"
               aria-label="GitHub"
             >
-              <Github className="h-5 w-5" strokeWidth={2.1} />
+              <FaGithub className="h-5 w-5" />
             </a>
             <a
               href="https://www.linkedin.com/in/mikhail-james-navarro-030582356/"
@@ -46,7 +46,7 @@ export default function Footer({ isVisible = false }: FooterProps) {
               rel="noopener noreferrer"
               aria-label="LinkedIn"
             >
-              <Linkedin className="h-5 w-5" strokeWidth={2.1} />
+              <FaLinkedinIn className="h-5 w-5" />
             </a>
             <a
               href={FACEBOOK_URL}
@@ -55,7 +55,7 @@ export default function Footer({ isVisible = false }: FooterProps) {
               rel="noopener noreferrer"
               aria-label="Facebook"
             >
-              <Facebook className="h-5 w-5" strokeWidth={2.1} />
+              <FaFacebookF className="h-5 w-5" />
             </a>
           </div>
         </div>

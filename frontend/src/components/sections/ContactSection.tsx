@@ -1,7 +1,7 @@
 "use client";
 
 import * as Tooltip from "@radix-ui/react-tooltip";
-import { ArrowUpRight } from "lucide-react";
+import { FiArrowUpRight } from "react-icons/fi";
 import { useSectionPadding } from "@/hooks/useBreakpoints";
 
 const FACEBOOK_URL = process.env.NEXT_PUBLIC_FACEBOOK_URL || 'https://www.facebook.com/M1kh4ilAg0ny';
@@ -35,7 +35,7 @@ export default function ContactSection() {
                   className="inline-flex items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-victus-blue to-cyan-400 px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base font-bold text-white transition-all hover:shadow-lg hover:shadow-victus-blue/40 hover:scale-105"
                 >
                   Send Me An Email
-                  <ArrowUpRight className="h-4 w-4" strokeWidth={2.2} />
+                  <FiArrowUpRight className="h-4 w-4" />
                 </a>
               </Tooltip.Trigger>
               <Tooltip.Portal>
