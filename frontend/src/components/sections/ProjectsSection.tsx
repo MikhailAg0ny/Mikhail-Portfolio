@@ -78,24 +78,49 @@ export default function ProjectsSection() {
       opacity: 0,
       y: 24,
       scale: 0.96,
+      backgroundColor: "rgba(24, 31, 43, 0.34)",
+      borderColor: "rgba(59, 130, 246, 0.08)",
+      boxShadow: "0px 12px 26px rgba(8, 15, 26, 0.16)",
     },
     inactive: {
-      opacity: 0.85,
+      opacity: 0.88,
       y: 0,
       scale: 0.95,
+      backgroundColor: "rgba(27, 36, 52, 0.45)",
+      borderColor: "rgba(59, 130, 246, 0.12)",
+      boxShadow: "0px 18px 30px rgba(12, 20, 33, 0.18)",
       transition: {
         duration: 0.45,
         ease: [0.22, 0.61, 0.36, 1],
+        backgroundColor: { duration: 0.45 },
+        borderColor: { duration: 0.45 },
+        boxShadow: { duration: 0.45 },
       },
     },
     active: {
       opacity: 1,
       y: 0,
       scale: 1.02,
+      backgroundColor: "rgba(18, 24, 36, 0.74)",
+      borderColor: "rgba(56, 189, 248, 0.32)",
+      boxShadow: "0px 18px 32px rgba(37, 99, 235, 0.16)",
       transition: {
         type: "spring",
-        stiffness: 240,
+        stiffness: 260,
         damping: 24,
+        backgroundColor: { duration: 0.3, ease: "easeOut" },
+        borderColor: { duration: 0.3, ease: "easeOut" },
+        boxShadow: { duration: 0.3, ease: "easeOut" },
+      },
+    },
+    hover: {
+      scale: 1.03,
+      boxShadow: "0px 20px 44px rgba(56, 189, 248, 0.18)",
+      transition: {
+        type: "spring",
+        stiffness: 300,
+        damping: 22,
+        boxShadow: { duration: 0.25, ease: "easeOut" },
       },
     },
   };
@@ -106,16 +131,16 @@ export default function ProjectsSection() {
       className={`relative flex w-full items-center justify-center overflow-hidden ${padding}`}
       style={{ minHeight }}
     >
-      <div className="flex w-full max-w-7xl flex-col justify-start gap-6 px-4 sm:justify-center sm:gap-8 sm:px-10">
+      <div className="flex w-full max-w-7xl flex-col items-center justify-start gap-6 px-4 sm:gap-8 sm:px-10">
         {/* Header */}
-        <div className="flex-shrink-0 space-y-2 text-center sm:space-y-3">
+        <div className="flex-shrink-0 w-full space-y-2 text-center sm:space-y-3">
           <h2 className="text-3xl font-bold tracking-tight text-text-primary sm:text-4xl">My Projects</h2>
           <p className="text-base text-text-secondary sm:text-lg">A selection of my recent work</p>
         </div>
 
         {/* Mobile Swiper */}
         <Tooltip.Provider delayDuration={200} skipDelayDuration={400}>
-        <div className="sm:hidden relative">
+        <div className="relative w-full sm:hidden">
           {/* Mobile Swipe Hint */}
           {showSwipeHint && (
             <div className="pointer-events-none absolute inset-x-0 bottom-6 z-10 flex justify-center">
@@ -319,14 +344,13 @@ export default function ProjectsSection() {
               return (
                 <SwiperSlide key={idx} className="flex h-full items-center justify-center px-3">
                   <motion.article
-                    className={`projects-card group relative flex h-auto w-full max-w-[400px] flex-col overflow-hidden rounded-3xl border p-6 shadow-lg shadow-victus-blue/10 backdrop-blur-md transition-all duration-300 lg:max-w-[420px] lg:p-6 ${
-                      isActive
-                        ? 'min-h-[500px] lg:min-h-[520px] border-victus-blue/40 bg-mica-light/60 shadow-xl shadow-victus-blue/25'
-                        : 'min-h-[360px] border-text-secondary/15 bg-mica-light/45 text-text-secondary/90'
-                    } hover:!opacity-100 hover:scale-[1.03] hover:border-victus-blue/50 hover:shadow-xl hover:shadow-victus-blue/25`}
+                    className={`projects-card group relative flex h-auto w-full max-w-[400px] flex-col overflow-hidden rounded-3xl border bg-transparent p-6 shadow-lg backdrop-blur-md transition-all duration-300 lg:max-w-[420px] lg:p-6 ${
+                      isActive ? 'min-h-[500px] lg:min-h-[520px]' : 'min-h-[360px] text-text-secondary/90'
+                    }`}
                     variants={cardVariants}
                     initial="hidden"
                     animate={isActive ? "active" : "inactive"}
+                    whileHover="hover"
                     transition={{ delay: idx * 0.08 }}
                   >
                     {isActive ? (
