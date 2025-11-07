@@ -119,14 +119,10 @@ export default function ProjectsSection() {
           {/* Mobile Swipe Hint */}
           {showSwipeHint && (
             <div className="pointer-events-none absolute inset-x-0 bottom-6 z-10 flex justify-center">
-              <div className="flex items-center gap-3 rounded-full border border-victus-blue/30 bg-mica-dark/90 px-4 py-2 text-xs font-semibold text-victus-blue shadow-lg backdrop-blur-sm animate-pulse">
-                <svg className="h-4 w-4 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                </svg>
-                <span>Swipe left / right</span>
-                <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
+              <div className="flex items-center gap-3 rounded-full border border-text-secondary/25 bg-mica-light/60 px-4 py-2 text-xs font-semibold text-text-primary shadow-lg shadow-victus-blue/20 backdrop-blur-xl animate-pulse">
+                <ArrowLeftRight className="h-4 w-4 text-victus-blue" strokeWidth={2.2} />
+                <span className="tracking-wide text-text-secondary/90">Swipe or drag to explore</span>
+                <MousePointerClick className="h-4 w-4 text-victus-blue" strokeWidth={2.2} />
               </div>
             </div>
           )}

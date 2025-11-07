@@ -36,7 +36,7 @@ export default function CertificationsSection() {
         </header>
 
         <div
-          className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 [grid-auto-rows:minmax(0,1fr)]"
+          className="grid grid-cols-2 gap-4 sm:grid-cols-2 lg:grid-cols-3 [grid-auto-rows:minmax(0,1fr)]"
         >
           {certificateImages.map((certificate) => (
             <article

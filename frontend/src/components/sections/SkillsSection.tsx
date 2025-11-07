@@ -50,7 +50,7 @@ export default function SkillsSection() {
           </p>
         </header>
 
-        <div className="flex w-full max-w-5xl flex-col space-y-5 overflow-hidden rounded-[28px] border border-text-secondary/20 bg-mica-light/60 p-5 sm:space-y-5 sm:p-6 md:space-y-6 md:p-6 shadow-lg shadow-victus-blue/10 backdrop-blur-xl">
+        <div className="flex w-full min-h-[460px] max-w-5xl flex-col space-y-5 overflow-hidden rounded-[28px] border border-text-secondary/20 bg-mica-light/60 p-5 sm:min-h-[520px] sm:space-y-5 sm:p-6 md:min-h-[550px] md:space-y-6 md:p-6 lg:min-w-[700px] shadow-lg shadow-victus-blue/10 backdrop-blur-xl">
           <Tooltip.Provider delayDuration={150} skipDelayDuration={400}>
             <div className="flex h-9 flex-shrink-0 justify-center gap-1 overflow-hidden rounded-full bg-mica-dark/80 p-1 shadow-inner shadow-black/20 sm:h-10 sm:gap-1.5">
               {SKILL_CATEGORIES.map((category) => (
@@ -86,7 +86,7 @@ export default function SkillsSection() {
           <div className="flex-1 p-3 sm:p-4 md:p-5">
             <ul
               key={`${activeTab}-${currentPage}`}
-              className="grid w-full grid-cols-1 items-stretch gap-2 sm:grid-cols-2 sm:gap-3 lg:grid-cols-2 lg:gap-4 xl:grid-cols-3 xl:gap-5"
+              className="skill-grid grid w-full grid-cols-2 items-stretch gap-3 sm:grid-cols-2 sm:gap-3 lg:grid-cols-2 lg:gap-4 xl:grid-cols-3 xl:gap-5 [grid-auto-rows:minmax(0,1fr)]"
             >
               {currentItems.map((skill, index) => (
                 <SkillCard key={skill.name} skill={skill} index={index} />

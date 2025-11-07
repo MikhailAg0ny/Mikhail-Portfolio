@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import type { PointerEvent as ReactPointerEvent } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Link as LinkIcon, Globe, Newspaper, Play, Trophy } from "lucide-react";
+import { Link as LinkIcon, Globe, Newspaper, Play, Trophy, MousePointerClick } from "lucide-react";
 
 import { achievements } from "@/lib/achievements";
 import { useSectionPadding } from "@/hooks/useBreakpoints";
@@ -35,6 +36,79 @@ export default function AchievementsSection() {
   const primaryAchievement = achievements[0];
   const { padding, minHeight } = useSectionPadding();
   const [hoveredImage, setHoveredImage] = useState<(typeof collageImages)[number] | null>(null);
+  const holdTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const hintTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [showHoldHint, setShowHoldHint] = useState(true);
+
+  const clearTouchHold = () => {
+    if (holdTimeoutRef.current) {
+      clearTimeout(holdTimeoutRef.current);
+      holdTimeoutRef.current = null;
+    }
+  };
+
+  const hideHoldHint = useCallback(() => {
+    if (hintTimeoutRef.current) {
+      clearTimeout(hintTimeoutRef.current);
+      hintTimeoutRef.current = null;
+    }
+    setShowHoldHint(false);
+  }, []);
+
+  const triggerHoldHint = useCallback(() => {
+    hideHoldHint();
+    setShowHoldHint(true);
+    hintTimeoutRef.current = setTimeout(() => {
+      setShowHoldHint(false);
+      hintTimeoutRef.current = null;
+    }, 4000);
+  }, [hideHoldHint]);
+
+  const startTouchHold = (image: (typeof collageImages)[number]) => (event: ReactPointerEvent<HTMLDivElement>) => {
+    if (event.pointerType === "mouse") return;
+    clearTouchHold();
+    hideHoldHint();
+    holdTimeoutRef.current = setTimeout(() => {
+      setHoveredImage(image);
+    }, 250);
+  };
+
+  const endTouchHold = (event: ReactPointerEvent<HTMLDivElement>) => {
+    if (event.pointerType === "mouse") return;
+    clearTouchHold();
+    setHoveredImage(null);
+  };
+
+  useEffect(() => {
+    const sectionEl = sectionRef.current;
+    if (!sectionEl) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            triggerHoldHint();
+          }
+        });
+      },
+      { threshold: 0.35 }
+    );
+
+    observer.observe(sectionEl);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [triggerHoldHint]);
+
+  useEffect(
+    () => () => {
+      clearTouchHold();
+      hideHoldHint();
+    },
+    [hideHoldHint]
+  );
 
   const renderLinkIcon = (icon?: "facebook" | "newspaper" | "globe" | "video" | "trophy") => {
     switch (icon) {
@@ -55,6 +129,7 @@ export default function AchievementsSection() {
 
   return (
     <section
+      ref={sectionRef}
       className={`flex w-full justify-center ${padding}`}
       style={{ minHeight }}
     >
@@ -80,6 +155,10 @@ export default function AchievementsSection() {
                 <div
                   className="group overflow-hidden rounded-2xl sm:h-[200px] md:h-[320px]"
                   onMouseEnter={() => setHoveredImage(heroImage)}
+                  onPointerDown={startTouchHold(heroImage)}
+                  onPointerUp={endTouchHold}
+                  onPointerLeave={endTouchHold}
+                  onPointerCancel={endTouchHold}
                 >
                   <img
                     src={heroImage.src}
@@ -90,6 +169,16 @@ export default function AchievementsSection() {
                 </div>
               )}
 
+              {showHoldHint && (
+                <div className="pointer-events-none sm:hidden">
+                  <div className="flex items-center justify-center gap-3 rounded-full border border-text-secondary/25 bg-mica-light/60 px-4 py-2 text-xs font-semibold text-text-primary shadow-lg shadow-victus-blue/20 backdrop-blur-xl animate-pulse">
+                    <MousePointerClick className="h-4 w-4 text-victus-blue" strokeWidth={2.2} />
+                    <span className="tracking-wide text-text-secondary/90">Press & hold to preview</span>
+                    <MousePointerClick className="h-4 w-4 text-victus-blue" strokeWidth={2.2} />
+                  </div>
+                </div>
+              )}
+
               {supportImages.length > 0 && (
                 <div className="grid grid-cols-3 gap-3">
                   {supportImages.map((image) => (
@@ -97,6 +186,10 @@ export default function AchievementsSection() {
                       key={image.src}
                       className="group overflow-hidden rounded-xl sm:h-[80px] md:h-[100px]"
                       onMouseEnter={() => setHoveredImage(image)}
+                      onPointerDown={startTouchHold(image)}
+                      onPointerUp={endTouchHold}
+                      onPointerLeave={endTouchHold}
+                      onPointerCancel={endTouchHold}
                     >
                       <img
                         src={image.src}
