@@ -8,6 +8,8 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Keyboard } from 'swiper/modules';
 import type { Swiper as SwiperType } from 'swiper';
 import { useSectionPadding } from "@/hooks/useBreakpoints";
+import { ArrowLeftRight, MousePointerClick } from "lucide-react";
+import { motion, type Variants } from "framer-motion";
 
 // Import Swiper styles
 import 'swiper/css';
@@ -71,6 +73,33 @@ export default function ProjectsSection() {
     };
   }, [triggerSwipeHint]);
 
+  const cardVariants: Variants = {
+    hidden: {
+      opacity: 0,
+      y: 24,
+      scale: 0.96,
+    },
+    inactive: {
+      opacity: 0.85,
+      y: 0,
+      scale: 0.95,
+      transition: {
+        duration: 0.45,
+        ease: [0.22, 0.61, 0.36, 1],
+      },
+    },
+    active: {
+      opacity: 1,
+      y: 0,
+      scale: 1.02,
+      transition: {
+        type: "spring",
+        stiffness: 240,
+        damping: 24,
+      },
+    },
+  };
+
   return (
     <section
       ref={sectionRef}
@@ -125,9 +154,18 @@ export default function ProjectsSection() {
                   : project.stack.filter((tech) => tech !== primaryTech);
 
               return (
-                <SwiperSlide key={`mobile-${idx}`} className="flex h-full pb-6">
+                <SwiperSlide
+                  key={`mobile-${idx}`}
+                  className="flex h-full pb-6"
+                >
                   {/* Mobile project card layout */}
-                  <article className="flex w-full flex-col gap-4 rounded-3xl border border-white/10 bg-gradient-to-b from-mica-light/90 via-mica-dark/90 to-black/90 p-5 shadow-lg shadow-victus-blue/10 backdrop-blur-md">
+                  <motion.article
+                    className="projects-card flex w-full flex-col gap-4 rounded-3xl border border-text-secondary/20 bg-mica-light/60 p-6 shadow-lg shadow-victus-blue/10 backdrop-blur-md"
+                    variants={cardVariants}
+                    initial="hidden"
+                    animate="active"
+                    transition={{ delay: idx * 0.07 }}
+                  >
                     <span className="inline-block w-fit rounded-full bg-victus-blue/15 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-victus-blue">
                       {project.timeframe}
                     </span>
@@ -205,7 +243,7 @@ export default function ProjectsSection() {
                         </a>
                       )}
                     </div>
-                  </article>
+                  </motion.article>
                 </SwiperSlide>
               );
             })}
@@ -222,14 +260,10 @@ export default function ProjectsSection() {
               showSwipeHint ? 'opacity-100' : 'opacity-0'
             }`}
           >
-            <div className="flex items-center gap-4 rounded-full border border-victus-blue/40 bg-mica-dark/95 px-6 py-3 text-sm font-semibold text-victus-blue shadow-2xl backdrop-blur-md animate-pulse">
-              <svg className="h-5 w-5 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-              </svg>
-              <span>Click, drag, or use arrows</span>
-              <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
+            <div className="flex items-center gap-3 rounded-full border border-text-secondary/25 bg-mica-light/60 px-5 py-2.5 text-xs font-semibold text-text-primary shadow-lg shadow-victus-blue/20 backdrop-blur-xl animate-pulse">
+              <ArrowLeftRight className="h-4 w-4 text-victus-blue" strokeWidth={2.2} />
+              <span className="tracking-wide text-text-secondary/90">Click, drag, or use arrows</span>
+              <MousePointerClick className="h-4 w-4 text-victus-blue" strokeWidth={2.2} />
             </div>
           </div>
           
@@ -249,10 +283,6 @@ export default function ProjectsSection() {
             slideToClickedSlide={true}
             keyboard={{
               enabled: true,
-            }}
-            navigation={{
-              nextEl: '.swiper-button-next-custom',
-              prevEl: '.swiper-button-prev-custom',
             }}
             pagination={{
               clickable: true,
@@ -292,12 +322,16 @@ export default function ProjectsSection() {
 
               return (
                 <SwiperSlide key={idx} className="flex h-full items-center justify-center px-3">
-                  <article
-                    className={`group relative flex h-[460px] w-full max-w-[420px] flex-col overflow-hidden rounded-3xl border p-5 backdrop-blur-md transition-all duration-300 lg:h-[460px] lg:max-w-[420px] lg:p-6 ${
+                  <motion.article
+                    className={`projects-card group relative flex h-[460px] w-full max-w-[400px] flex-col overflow-hidden rounded-3xl border border-text-secondary/20 bg-mica-light/60 p-6 shadow-lg shadow-victus-blue/10 backdrop-blur-md transition-all duration-300 lg:h-[460px] lg:max-w-[420px] lg:p-6 ${
                       isActive
-                        ? 'scale-[1.02] border-victus-blue/30 bg-gradient-to-b from-mica-light/90 via-mica-dark/90 to-black/90'
-                        : '!scale-95 border-text-secondary/10 bg-mica-dark/60 opacity-70 brightness-95'
-                    } hover:!opacity-100 hover:!brightness-100 hover:scale-[1.03] hover:border-victus-blue/50 hover:shadow-xl hover:shadow-victus-blue/25`}
+                        ? 'border-victus-blue/40 shadow-xl shadow-victus-blue/25'
+                        : 'border-text-secondary/15 bg-mica-light/45 text-text-secondary/90'
+                    } hover:!opacity-100 hover:scale-[1.03] hover:border-victus-blue/50 hover:shadow-xl hover:shadow-victus-blue/25`}
+                    variants={cardVariants}
+                    initial="hidden"
+                    animate={isActive ? "active" : "inactive"}
+                    transition={{ delay: idx * 0.08 }}
                   >
                     {isActive ? (
                       <>
@@ -363,7 +397,23 @@ export default function ProjectsSection() {
                         </div>
                       </>
                     ) : (
-                      <div className="flex h-full flex-col justify-between gap-3 text-left">
+                      <div className="flex h-full flex-col gap-4 text-left">
+                        {project.image && (
+                          <div className="relative flex-1 overflow-hidden rounded-2xl border border-white/10 bg-mica-dark/20 shadow-md">
+                            {project.timeframe && (
+                              <span className="absolute left-3 top-3 inline-flex items-center rounded-full bg-victus-blue/20 px-3 py-1 text-[0.7rem] font-semibold uppercase tracking-wide text-victus-blue shadow-sm">
+                                {project.timeframe}
+                              </span>
+                            )}
+                            <img
+                              src={project.image}
+                              alt={project.title}
+                              loading="lazy"
+                              className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+                            />
+                          </div>
+                        )}
+
                         <div className="space-y-2">
                           <h3 className="text-base font-semibold text-text-primary line-clamp-2">{project.title}</h3>
                           {primaryTech && (
@@ -373,45 +423,18 @@ export default function ProjectsSection() {
                           )}
                         </div>
 
-                        {project.image && (
-                          <div
-                            className="relative w-full overflow-hidden rounded-xl opacity-80"
-                            style={{ aspectRatio: "4 / 3" }}
-                          >
-                            <img
-                              src={project.image}
-                              alt={project.title}
-                              loading="lazy"
-                              className="h-full w-full object-cover"
-                            />
-                          </div>
+                        {!project.image && project.timeframe && (
+                          <span className="inline-flex w-fit items-center rounded-full bg-victus-blue/20 px-3 py-1 text-[0.7rem] font-semibold uppercase tracking-wide text-victus-blue">
+                            {project.timeframe}
+                          </span>
                         )}
                       </div>
                     )}
-                  </article>
+                  </motion.article>
                 </SwiperSlide>
               );
             })}
           </Swiper>
-
-          {/* Custom Navigation Buttons */}
-          <button
-            className="swiper-button-prev-custom absolute left-2 top-1/2 z-30 -translate-y-1/2 hidden rounded-full border border-text-secondary/30 bg-mica-light/90 p-2.5 text-victus-blue backdrop-blur-sm opacity-0 transition-all sm:flex group-hover:opacity-100 hover:border-victus-blue/60 hover:bg-victus-blue/10 hover:scale-110"
-            aria-label="Previous project"
-          >
-            <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-            </svg>
-          </button>
-
-          <button
-            className="swiper-button-next-custom absolute right-2 top-1/2 z-30 -translate-y-1/2 hidden rounded-full border border-text-secondary/30 bg-mica-light/90 p-2.5 text-victus-blue backdrop-blur-sm opacity-0 transition-all sm:flex group-hover:opacity-100 hover:border-victus-blue/60 hover:bg-victus-blue/10 hover:scale-110"
-            aria-label="Next project"
-          >
-            <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
-          </button>
 
           {/* Custom Pagination */}
           <div className="swiper-pagination-custom mt-6 flex flex-shrink-0 items-center justify-center gap-3 sm:mt-10" />

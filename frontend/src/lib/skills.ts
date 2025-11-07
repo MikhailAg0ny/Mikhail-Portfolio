@@ -11,13 +11,14 @@ export const tools: Skill[] = [
   { name: "GitHub Copilot", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" },
   { name: "VS Code", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" },
   { name: "Godot Engine", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/godot/godot-original.svg" },
-  { name: "Roblox Studio", icon: "https://cdn-1.webcatalog.io/catalog/roblox-studio/roblox-studio-icon-filled-256.png?v=1684801410955" },
+  { name: "Roblox Studio", icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/Roblox_Studio_logo_-_2022.svg/477px-Roblox_Studio_logo_-_2022.svg.png?20230528063515" },
   { name: "Postman", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postman/postman-original.svg" },
   { name: "Figma", icon: "https://cdn.jim-nielsen.com/macos/1024/figma-2021-05-05.png" },
   { name: "MySQL", icon: "https://www.nicepng.com/png/detail/14-143154_mysql-dolphin-square-mysql-dolphin-logo.png" },
   { name: "Aseprite", icon: "https://images.seeklogo.com/logo-png/50/1/aseprite-logo-png_seeklogo-506592.png" },
   { name: "React.js", icon: "https://www.svgrepo.com/show/355190/reactjs.svg" },
-  { name: "Next.js", icon: "https://seekicon.com/free-icon-download/nextjs_2.png" },
+  { name: "Next.js", icon: "https://www.svgrepo.com/show/354113/nextjs-icon.svg" },
+  { name: "Windsurf", icon: "https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/windsurf-icon.png" },
   { name: "Tailwind CSS", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg" },
 ];
 

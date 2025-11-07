@@ -1,11 +1,22 @@
 'use client';
 
+import { useState } from "react";
+
 import ImageWithFallback from "@/components/ui/ImageWithFallback";
 import * as Popover from "@radix-ui/react-popover";
+import { AnimatePresence, motion } from "framer-motion";
 import { useSectionPadding } from "@/hooks/useBreakpoints";
 
 export default function AboutSection() {
   const { padding, minHeight } = useSectionPadding();
+  const [showPreview, setShowPreview] = useState(false);
+
+  const profileImage = {
+    src: "/images/jesus_christ_is_king.jpeg",
+    alt: "Portrait of Mikhail standing beside text declaring Jesus Christ is King",
+    width: 320,
+    height: 384,
+  };
 
   return (
     <section
@@ -21,7 +32,7 @@ export default function AboutSection() {
         <div className="flex h-full w-full max-w-6xl flex-col gap-8 lg:flex-row lg:items-stretch lg:gap-12">
           {/* Left Side - Profile Card */}
           <div className="hidden w-full max-w-md flex-col lg:flex">
-            <div className="flex h-full flex-col gap-6 rounded-3xl border border-text-secondary/20 bg-mica-light/60 p-8 shadow-lg shadow-victus-blue/10">
+            <div className="relative flex h-full flex-col gap-6 rounded-3xl border border-text-secondary/20 bg-mica-light/60 p-8 shadow-lg shadow-victus-blue/10">
               <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:gap-10">
                 <div className="space-y-4 lg:flex-[0.7]">
                   <h3 className="text-2xl font-semibold text-text-primary">Mikhail</h3>
@@ -31,13 +42,25 @@ export default function AboutSection() {
                   </p>
                 </div>
 
-                <div className="mx-auto flex h-72 w-64 flex-shrink-0 items-center justify-center rounded-[36px] border border-white/10 bg-mica-dark/80 p-3 shadow-xl shadow-victus-blue/10 lg:flex-[0.7] lg:max-w-[15rem]">
-                  <div className="relative h-full w-full overflow-hidden rounded-2xl border border-white/10">
+                <div
+                  className="mx-auto flex h-72 w-64 flex-shrink-0 items-center justify-center rounded-[36px] cursor-zoom-in lg:flex-[0.7] lg:max-w-[15rem] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-victus-blue/60"
+                  onMouseEnter={() => setShowPreview(true)}
+                  onMouseLeave={() => setShowPreview(false)}
+                  onFocus={() => setShowPreview(true)}
+                  onBlur={() => setShowPreview(false)}
+                  onTouchStart={() => setShowPreview(true)}
+                  onTouchEnd={() => setShowPreview(false)}
+                  onTouchCancel={() => setShowPreview(false)}
+                  role="button"
+                  tabIndex={0}
+                  aria-label="Preview profile portrait"
+                >
+                  <div className="relative h-full w-full overflow-hidden rounded-2xl shadow-[0_0_35px_rgba(33,150,243,0.35)]">
                     <ImageWithFallback
-                      src="/images/jesus_christ_is_king.jpeg"
-                      alt="Portrait of Mikhail standing beside text declaring Jesus Christ is King"
-                      width={320}
-                      height={384}
+                      src={profileImage.src}
+                      alt={profileImage.alt}
+                      width={profileImage.width}
+                      height={profileImage.height}
                       className="h-full w-full object-cover"
                     />
                   </div>
@@ -53,6 +76,34 @@ export default function AboutSection() {
                   <span className="rounded-full border border-victus-blue/30 bg-mica-dark/40 px-3 py-1 text-xs text-victus-blue">UI/UX Design</span>
                 </div>
               </div>
+
+              <AnimatePresence>
+                {showPreview && (
+                  <motion.div
+                    className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center rounded-3xl bg-black/60 backdrop-blur-md"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.25, ease: "easeOut" }}
+                  >
+                    <motion.div
+                      className="pointer-events-none max-h-[85%] max-w-[85%] overflow-hidden rounded-3xl border border-white/10 shadow-2xl"
+                      initial={{ scale: 0.94, opacity: 0.95 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      exit={{ scale: 0.94, opacity: 0.95 }}
+                      transition={{ duration: 0.25, ease: "easeOut" }}
+                    >
+                      <ImageWithFallback
+                        src={profileImage.src}
+                        alt={profileImage.alt}
+                        width={profileImage.width}
+                        height={profileImage.height}
+                        className="h-full w-full object-cover"
+                      />
+                    </motion.div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
           </div>
 

@@ -51,7 +51,7 @@ export default function SkillsSection() {
           </p>
         </header>
 
-        <div className="w-full space-y-5 rounded-[28px] border border-text-secondary/20 bg-mica-light/60 p-5 sm:space-y-6 sm:p-6 md:space-y-7 md:p-7 shadow-lg shadow-victus-blue/10 backdrop-blur-xl">
+        <div className="w-full min-h-[400px] space-y-5 rounded-[28px] border border-text-secondary/20 bg-mica-light/60 p-5 sm:min-h-[420px] sm:space-y-6 sm:p-6 md:min-h-[440px] md:space-y-7 md:p-7 shadow-lg shadow-victus-blue/10 backdrop-blur-xl">
           <Tooltip.Provider delayDuration={150} skipDelayDuration={400}>
             <div className="flex h-9 flex-shrink-0 justify-center gap-1 rounded-full bg-mica-dark/80 p-1 shadow-inner shadow-black/20 sm:h-10 sm:gap-1.5">
               {SKILL_CATEGORIES.map((category) => (
@@ -84,7 +84,7 @@ export default function SkillsSection() {
             </div>
           </Tooltip.Provider>
 
-          <div className="rounded-2xl border border-white/8 bg-mica-dark/40 p-3 sm:p-4 md:p-5">
+          <div className="p-3 sm:p-4 md:p-5">
             <ul
               key={`${activeTab}-${currentPage}`}
               className="skill-grid grid w-full grid-cols-1 items-start gap-2 sm:grid-cols-2 sm:gap-3 lg:grid-cols-3 lg:gap-4"

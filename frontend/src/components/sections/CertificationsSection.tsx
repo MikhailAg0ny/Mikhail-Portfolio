@@ -4,6 +4,7 @@ import { useMemo } from "react";
 
 import { certifications } from "@/lib/certification";
 import { useSectionPadding } from "@/hooks/useBreakpoints";
+import { ExternalLink } from "lucide-react";
 
 export default function CertificationsSection() {
   const { padding, minHeight } = useSectionPadding();
@@ -64,12 +65,10 @@ export default function CertificationsSection() {
                   href={certificate.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-4 inline-flex items-center gap-2 rounded-full border border-victus-blue/30 bg-victus-blue/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.25em] text-victus-blue transition-colors hover:border-victus-blue/60 hover:bg-victus-blue/20"
+                  className="mt-4 inline-flex items-center gap-2 rounded-full border border-victus-blue/40 bg-gradient-to-r from-victus-blue/15 via-victus-blue/5 to-transparent px-4 py-2 text-xs font-semibold uppercase tracking-[0.25em] text-victus-blue transition-all hover:-translate-y-0.5 hover:border-victus-blue/60 hover:shadow-lg hover:shadow-victus-blue/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-victus-blue/60"
                 >
                   View Proof
-                  <svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                  </svg>
+                  <ExternalLink className="h-3.5 w-3.5" strokeWidth={2.2} />
                 </a>
               )}
             </article>
