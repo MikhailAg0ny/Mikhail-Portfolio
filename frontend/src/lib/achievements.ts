@@ -18,6 +18,11 @@ export const achievements: Achievement[] = [
         url: "https://cebudailynews.inquirer.net/659355/reimagining-play-powering-the-future-proweavers-promptquest-showcases-cebuano-talent-in-tech",
         icon: "newspaper",
       },
+      {
+        name: "Game Link",
+        url: "https://projectchimera-hackaton.vercel.app/",
+        icon: "game",
+      },
     ],
   },
 ];

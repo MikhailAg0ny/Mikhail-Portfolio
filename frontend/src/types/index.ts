@@ -46,7 +46,7 @@ export interface Certificate {
 export interface AchievementLink {
   name: string;
   url: string;
-  icon?: "facebook" | "newspaper" | "globe" | "video" | "trophy";
+  icon?: "facebook" | "newspaper" | "globe" | "video" | "trophy" | "game";
 }
 
 export interface Achievement {

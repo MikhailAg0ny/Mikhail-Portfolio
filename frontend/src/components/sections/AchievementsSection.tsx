@@ -2,8 +2,9 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { PointerEvent as ReactPointerEvent } from "react";
+import { createPortal } from "react-dom";
 import { AnimatePresence, motion } from "framer-motion";
-import { Link as LinkIcon, Globe, Newspaper, Play, Trophy, MousePointerClick } from "lucide-react";
+import { Link as LinkIcon, Globe, Newspaper, Play, Trophy, MousePointerClick, Gamepad2 } from "lucide-react";
 
 import { achievements } from "@/lib/achievements";
 import { useSectionPadding } from "@/hooks/useBreakpoints";
@@ -40,6 +41,7 @@ export default function AchievementsSection() {
   const sectionRef = useRef<HTMLElement | null>(null);
   const hintTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [showHoldHint, setShowHoldHint] = useState(true);
+  const [canRenderPortal, setCanRenderPortal] = useState(false);
 
   const clearTouchHold = () => {
     if (holdTimeoutRef.current) {
@@ -110,7 +112,11 @@ export default function AchievementsSection() {
     [hideHoldHint]
   );
 
-  const renderLinkIcon = (icon?: "facebook" | "newspaper" | "globe" | "video" | "trophy") => {
+  useEffect(() => {
+    setCanRenderPortal(true);
+  }, []);
+
+  const renderLinkIcon = (icon?: "facebook" | "newspaper" | "globe" | "video" | "trophy" | "game") => {
     switch (icon) {
       case "facebook":
         return <LinkIcon className="h-4 w-4 text-victus-blue" strokeWidth={2.5} />;
@@ -122,6 +128,8 @@ export default function AchievementsSection() {
         return <Play className="h-4 w-4 text-victus-blue" strokeWidth={2.5} />;
       case "trophy":
         return <Trophy className="h-4 w-4 text-victus-blue" strokeWidth={2.5} />;
+      case "game":
+        return <Gamepad2 className="h-4 w-4 text-victus-blue" strokeWidth={2.5} />;
       default:
         return <LinkIcon className="h-4 w-4 text-victus-blue" strokeWidth={2.5} />;
     }
@@ -134,18 +142,18 @@ export default function AchievementsSection() {
       style={{ minHeight }}
     >
       <div className="w-full max-w-6xl px-6 sm:px-10">
-        {/* Single achievement card constrained to 720x720 on desktop */}
-        <article className="relative mx-auto rounded-2xl border border-text-secondary/20 bg-mica-light/60 p-8 shadow-lg shadow-victus-blue/5 transition-colors hover:border-victus-blue/30 md:w-[1000px]">
-          <header className="space-y-3 text-left md:text-center">
-            <p className="text-sm uppercase tracking-[0.45em] text-victus-blue">Achievements</p>
-            <h2 className="text-3xl font-semibold text-text-primary md:text-4xl">Recognitions that capture impact and craft.</h2>
-            <p className="text-base text-text-secondary md:text-lg">
-              Milestones across game jams, community events, and product teams that highlight leadership, experimentation, and measurable
-              outcomes.
-            </p>
-          </header>
+        <header className="space-y-3 text-left md:text-center">
+          <p className="text-sm uppercase tracking-[0.45em] text-victus-blue">Achievements</p>
+          <h2 className="text-3xl font-semibold text-text-primary md:text-4xl">Recognitions that capture impact and craft.</h2>
+          <p className="text-base text-text-secondary md:text-lg">
+            Milestones across game jams, community events, and product teams that highlight leadership, experimentation, and measurable
+            outcomes.
+          </p>
+        </header>
 
-          <div className="mt-10 flex flex-col gap-6 md:grid md:grid-cols-[minmax(0,1.25fr)_minmax(0,1fr)] md:gap-8">
+        {/* Single achievement card constrained to 720x720 on desktop */}
+        <article className="relative mx-auto mt-8 overflow-hidden rounded-2xl border border-text-secondary/20 bg-mica-light/60 p-8 shadow-lg shadow-victus-blue/5 transition-colors hover:border-victus-blue/30 md:mt-12 md:w-[1000px]">
+          <div className="flex flex-col gap-6 md:grid md:grid-cols-[minmax(0,1.25fr)_minmax(0,1fr)] md:gap-8">
             {/* Left: hero image with supporting thumbnails */}
             <div
               className="flex flex-col gap-4"
@@ -215,12 +223,16 @@ export default function AchievementsSection() {
                   <p className="text-sm leading-relaxed text-text-secondary">{primaryAchievement.highlight}</p>
                 </div>
 
-                {primaryAchievement.links && primaryAchievement.links.length > 0 && (
+                {(() => {
+                  const featuredLinks = primaryAchievement.links ?? [];
+                  if (featuredLinks.length === 0) return null;
+
+                  return (
                   <div className="space-y-3">
                     <h4 className="text-xs uppercase tracking-[0.35em] text-text-secondary/50">Featured coverage</h4>
                     <ul className="space-y-2">
-                      {primaryAchievement.links.map((link) => (
-                        <li key={link.url}>
+                      {featuredLinks.map((link) => (
+                        <li key={link.name}>
                           <a
                             href={link.url}
                             target="_blank"
@@ -236,22 +248,28 @@ export default function AchievementsSection() {
                       ))}
                     </ul>
                   </div>
-                )}
+                  );
+                })()}
               </div>
             )}
           </div>
+        </article>
+      </div>
+
+      {canRenderPortal &&
+        createPortal(
           <AnimatePresence>
             {hoveredImage && (
               <motion.div
                 key={hoveredImage.src}
-                className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center rounded-2xl bg-black/60 backdrop-blur-md"
+                className="pointer-events-none fixed inset-0 z-[200] flex items-center justify-center bg-black/70 backdrop-blur-[6px]"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.25, ease: "easeOut" }}
               >
                 <motion.div
-                  className="pointer-events-none max-h-[80vh] max-w-[85%] overflow-hidden rounded-3xl border border-white/10 shadow-2xl"
+                  className="pointer-events-none mx-4 max-h-[90vh] w-full max-w-5xl overflow-hidden rounded-3xl border border-white/10 shadow-2xl"
                   initial={{ scale: 0.95, opacity: 0.9 }}
                   animate={{ scale: 1, opacity: 1 }}
                   exit={{ scale: 0.95, opacity: 0.9 }}
@@ -260,15 +278,14 @@ export default function AchievementsSection() {
                   <img
                     src={hoveredImage.src}
                     alt={hoveredImage.alt}
-                    className="block h-full w-full object-cover"
+                    className="block h-full w-full object-contain"
                   />
                 </motion.div>
               </motion.div>
             )}
-          </AnimatePresence>
-        </article>
-      </div>
-
+          </AnimatePresence>,
+          document.body
+        )}
     </section>
   );
 }

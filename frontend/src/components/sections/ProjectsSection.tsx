@@ -319,10 +319,10 @@ export default function ProjectsSection() {
               return (
                 <SwiperSlide key={idx} className="flex h-full items-center justify-center px-3">
                   <motion.article
-                    className={`projects-card group relative flex h-[460px] w-full max-w-[400px] flex-col overflow-hidden rounded-3xl border border-text-secondary/20 bg-mica-light/60 p-6 shadow-lg shadow-victus-blue/10 backdrop-blur-md transition-all duration-300 lg:h-[460px] lg:max-w-[420px] lg:p-6 ${
+                    className={`projects-card group relative flex h-auto w-full max-w-[400px] flex-col overflow-hidden rounded-3xl border p-6 shadow-lg shadow-victus-blue/10 backdrop-blur-md transition-all duration-300 lg:max-w-[420px] lg:p-6 ${
                       isActive
-                        ? 'border-victus-blue/40 shadow-xl shadow-victus-blue/25'
-                        : 'border-text-secondary/15 bg-mica-light/45 text-text-secondary/90'
+                        ? 'min-h-[500px] lg:min-h-[520px] border-victus-blue/40 bg-mica-light/60 shadow-xl shadow-victus-blue/25'
+                        : 'min-h-[360px] border-text-secondary/15 bg-mica-light/45 text-text-secondary/90'
                     } hover:!opacity-100 hover:scale-[1.03] hover:border-victus-blue/50 hover:shadow-xl hover:shadow-victus-blue/25`}
                     variants={cardVariants}
                     initial="hidden"
@@ -345,7 +345,7 @@ export default function ProjectsSection() {
                                 src={project.image}
                                 alt={project.title}
                                 loading="lazy"
-                                className="h-full w-full object-cover"
+                                className="h-full w-full object-cover object-center"
                               />
                             </div>
                           )}
@@ -377,7 +377,7 @@ export default function ProjectsSection() {
                           <p className="text-sm font-medium text-victus-blue/80">Role: {project.role}</p>
                         </div>
 
-                        <div className="mt-auto flex justify-center pt-4">
+                        <div className="mt-auto flex flex-col items-center gap-2 pt-4 sm:flex-row sm:justify-center">
                           <a
                             href={project.caseStudyUrl}
                             className="inline-flex items-center gap-2 rounded-full bg-victus-blue/20 px-4 py-2 text-xs font-semibold text-victus-blue transition-colors hover:bg-victus-blue/30"
@@ -390,12 +390,29 @@ export default function ProjectsSection() {
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                             </svg>
                           </a>
+
+                          {project.sourceUrl && (
+                            <a
+                              href={project.sourceUrl}
+                              className="inline-flex items-center gap-2 rounded-full border border-white/10 px-4 py-2 text-xs font-semibold text-white transition-colors hover:border-victus-blue hover:text-victus-blue"
+                              target="_blank"
+                              rel="noreferrer"
+                            >
+                              View Source
+                              <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
+                              </svg>
+                            </a>
+                          )}
                         </div>
                       </>
                     ) : (
                       <div className="flex h-full flex-col gap-4 text-left">
                         {project.image && (
-                          <div className="relative flex-1 overflow-hidden rounded-2xl border border-white/10 bg-mica-dark/20 shadow-md">
+                          <div
+                            className="relative w-full overflow-hidden rounded-2xl border border-white/10 bg-mica-dark/20 shadow-md"
+                            style={{ aspectRatio: "4 / 3" }}
+                          >
                             {project.timeframe && (
                               <span className="absolute left-3 top-3 inline-flex items-center rounded-full bg-victus-blue/20 px-3 py-1 text-[0.7rem] font-semibold uppercase tracking-wide text-victus-blue shadow-sm">
                                 {project.timeframe}
@@ -405,7 +422,7 @@ export default function ProjectsSection() {
                               src={project.image}
                               alt={project.title}
                               loading="lazy"
-                              className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+                              className="h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-[1.06]"
                             />
                           </div>
                         )}
