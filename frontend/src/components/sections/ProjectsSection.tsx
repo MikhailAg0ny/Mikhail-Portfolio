@@ -103,7 +103,7 @@ export default function ProjectsSection() {
   return (
     <section
       ref={sectionRef}
-      className={`relative flex w-full items-center justify-center overflow-visible ${padding}`}
+      className={`relative flex w-full items-center justify-center overflow-hidden ${padding}`}
       style={{ minHeight }}
     >
       <div className="flex w-full max-w-7xl flex-col justify-start gap-6 px-4 sm:justify-center sm:gap-8 sm:px-10">

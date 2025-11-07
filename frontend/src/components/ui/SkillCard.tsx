@@ -13,7 +13,7 @@ export default function SkillCard({ skill, index }: SkillCardProps) {
 
   return (
     <li
-      className="group relative flex w-full max-h-full min-h-[50px] sm:min-h-[50px] flex-col items-center justify-center gap-2 overflow-hidden rounded-2xl border border-text-secondary/20 bg-gradient-to-b from-mica-dark/60 to-mica-dark/80 p-4 text-center transition-all duration-300 hover:scale-105 hover:border-victus-blue/40 hover:bg-gradient-to-b hover:from-mica-light/40 hover:to-mica-dark/60 hover:shadow-2xl hover:shadow-victus-blue/30 sm:gap-3 sm:p-6"
+      className="group relative flex w-full max-h-full min-h-[50px] sm:min-h-[50px] flex-col items-center justify-center gap-2 overflow-hidden rounded-2xl border border-text-secondary/20 bg-gradient-to-b from-mica-dark/60 to-mica-dark/80 p-4 text-center transition-all duration-300 hover:-translate-y-1 hover:border-victus-blue/40 hover:bg-gradient-to-b hover:from-mica-light/40 hover:to-mica-dark/60 hover:shadow-2xl hover:shadow-victus-blue/30 sm:gap-3 sm:p-6"
       style={{ 
         animationDelay: `${index * 0.1}s`
       }}

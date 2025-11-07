@@ -10,7 +10,7 @@ import { useSectionPadding } from "@/hooks/useBreakpoints";
 export default function SkillsSection() {
   const [activeTab, setActiveTab] = useState<SkillCategory>("languages");
   const [currentPage, setCurrentPage] = useState(0);
-  const { padding, minHeight } = useSectionPadding();
+  const { padding } = useSectionPadding();
 
   // Memoize current skills to avoid recalculation
   const currentSkills = useMemo(() => getSkillsByCategory(activeTab), [activeTab]);
@@ -37,8 +37,7 @@ export default function SkillsSection() {
 
   return (
     <section
-      className={`flex w-full items-center justify-center px-4 ${padding}`}
-      style={{ minHeight }}
+      className={`flex w-full items-center justify-center overflow-hidden px-2 sm:px-4 lg:px-6 ${padding}`}
     >
       <div className="flex w-full max-w-5xl flex-col justify-center gap-3 sm:gap-4 md:gap-6">
         <header className="flex-shrink-0 space-y-1 text-center sm:space-y-2 md:space-y-3">
@@ -51,9 +50,9 @@ export default function SkillsSection() {
           </p>
         </header>
 
-        <div className="w-full min-h-[400px] space-y-5 rounded-[28px] border border-text-secondary/20 bg-mica-light/60 p-5 sm:min-h-[420px] sm:space-y-6 sm:p-6 md:min-h-[440px] md:space-y-7 md:p-7 shadow-lg shadow-victus-blue/10 backdrop-blur-xl">
+        <div className="flex w-full max-w-5xl flex-col space-y-5 overflow-hidden rounded-[28px] border border-text-secondary/20 bg-mica-light/60 p-5 sm:space-y-5 sm:p-6 md:space-y-6 md:p-6 shadow-lg shadow-victus-blue/10 backdrop-blur-xl">
           <Tooltip.Provider delayDuration={150} skipDelayDuration={400}>
-            <div className="flex h-9 flex-shrink-0 justify-center gap-1 rounded-full bg-mica-dark/80 p-1 shadow-inner shadow-black/20 sm:h-10 sm:gap-1.5">
+            <div className="flex h-9 flex-shrink-0 justify-center gap-1 overflow-hidden rounded-full bg-mica-dark/80 p-1 shadow-inner shadow-black/20 sm:h-10 sm:gap-1.5">
               {SKILL_CATEGORIES.map((category) => (
                 <Tooltip.Root key={category.key}>
                   <Tooltip.Trigger asChild>
@@ -84,10 +83,10 @@ export default function SkillsSection() {
             </div>
           </Tooltip.Provider>
 
-          <div className="p-3 sm:p-4 md:p-5">
+          <div className="flex-1 p-3 sm:p-4 md:p-5">
             <ul
               key={`${activeTab}-${currentPage}`}
-              className="skill-grid grid w-full grid-cols-1 items-start gap-2 sm:grid-cols-2 sm:gap-3 lg:grid-cols-3 lg:gap-4"
+              className="grid w-full grid-cols-1 items-stretch gap-2 sm:grid-cols-2 sm:gap-3 lg:grid-cols-2 lg:gap-4 xl:grid-cols-3 xl:gap-5"
             >
               {currentItems.map((skill, index) => (
                 <SkillCard key={skill.name} skill={skill} index={index} />

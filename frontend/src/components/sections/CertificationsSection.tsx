@@ -22,7 +22,7 @@ export default function CertificationsSection() {
       className={`flex w-full justify-center ${padding}`}
       style={{ minHeight }}
     >
-      <div className="flex w-full max-w-6xl flex-col gap-8 px-6 sm:px-10">
+      <div className="flex w-full max-w-6xl flex-col gap-8 px-6 sm:px-10 ">
         <header className="space-y-3 text-center">
           <p className="text-xs font-semibold uppercase tracking-[0.4em] text-victus-blue">
             Certifications
@@ -36,15 +36,15 @@ export default function CertificationsSection() {
         </header>
 
         <div
-          className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
+          className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 [grid-auto-rows:minmax(0,1fr)]"
         >
           {certificateImages.map((certificate) => (
             <article
               key={certificate.name}
-              className="group relative flex h-full flex-col items-center justify-between rounded-[28px] border border-text-secondary/20 bg-mica-light/60 p-6 text-center transition-all duration-300 hover:-translate-y-1 hover:border-victus-blue/30 hover:bg-mica-light/70"
+              className="group relative mx-auto flex h-full w-full max-w-[280px] flex-col items-center justify-between overflow-hidden rounded-[22px] border border-text-secondary/20 bg-mica-light/60 p-4 text-center transition-all duration-300 hover:-translate-y-1 hover:border-victus-blue/30 hover:bg-mica-light/70 sm:max-w-[300px] sm:p-5"
             >
               <div
-                className="relative h-32 w-32 overflow-hidden rounded-[24px] border border-white/15 shadow-inner shadow-black/30 sm:h-36 sm:w-36"
+                className="relative h-24 w-24 overflow-hidden rounded-[14px] border border-white/15 shadow-inner shadow-black/30 sm:h-26 sm:w-26"
               >
                 <img
                   src={certificate.image}
