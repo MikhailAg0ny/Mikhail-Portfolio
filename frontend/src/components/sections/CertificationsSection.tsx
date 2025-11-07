@@ -22,7 +22,7 @@ export default function CertificationsSection() {
       className={`flex w-full justify-center ${padding}`}
       style={{ minHeight }}
     >
-      <div className="flex w-full max-w-6xl flex-col gap-8 px-6 sm:px-10 ">
+      <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-4 sm:px-10">
         <header className="space-y-3 text-center">
           <p className="text-xs font-semibold uppercase tracking-[0.4em] text-victus-blue">
             Certifications

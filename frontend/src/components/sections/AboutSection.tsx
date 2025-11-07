@@ -72,7 +72,7 @@ export default function AboutSection() {
       className={`flex w-full items-center justify-center ${padding}`}
       style={{ minHeight }}
     >
-      <div className="flex w-full max-w-6xl flex-col justify-center px-6 sm:px-10">
+      <div className="mx-auto flex w-full max-w-6xl flex-col justify-center px-4 sm:px-10">
         <header className="mb-12 space-y-3 text-center">
           <p className="text-sm uppercase tracking-[0.45em] text-victus-blue">Get to know me</p>
           <h2 className="text-3xl font-semibold text-text-primary md:text-4xl">About Me</h2>

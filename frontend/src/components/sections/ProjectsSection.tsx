@@ -131,7 +131,7 @@ export default function ProjectsSection() {
       className={`relative flex w-full items-center justify-center overflow-hidden ${padding}`}
       style={{ minHeight }}
     >
-      <div className="flex w-full max-w-7xl flex-col items-center justify-start gap-6 px-4 sm:gap-8 sm:px-10">
+      <div className="mx-auto flex w-full max-w-7xl flex-col items-center justify-start gap-6 px-4 sm:gap-8 sm:px-8 lg:px-10">
         {/* Header */}
         <div className="flex-shrink-0 w-full space-y-2 text-center sm:space-y-3">
           <h2 className="text-3xl font-bold tracking-tight text-text-primary sm:text-4xl">My Projects</h2>

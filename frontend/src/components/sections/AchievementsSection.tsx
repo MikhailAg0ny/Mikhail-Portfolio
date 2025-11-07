@@ -141,7 +141,7 @@ export default function AchievementsSection() {
       className={`flex w-full justify-center ${padding}`}
       style={{ minHeight }}
     >
-      <div className="w-full max-w-6xl px-6 sm:px-10">
+      <div className="mx-auto w-full max-w-6xl px-4 sm:px-10">
         <header className="space-y-3 text-left md:text-center">
           <p className="text-sm uppercase tracking-[0.45em] text-victus-blue">Achievements</p>
           <h2 className="text-3xl font-semibold text-text-primary md:text-4xl">Recognitions that capture impact and craft.</h2>
@@ -152,7 +152,7 @@ export default function AchievementsSection() {
         </header>
 
         {/* Single achievement card constrained to 720x720 on desktop */}
-        <article className="relative mx-auto mt-8 overflow-hidden rounded-2xl border border-text-secondary/20 bg-mica-light/60 p-8 shadow-lg shadow-victus-blue/5 transition-colors hover:border-victus-blue/30 md:mt-12 md:w-[1000px]">
+        <article className="relative mx-auto mt-8 w-full overflow-hidden rounded-2xl border border-text-secondary/20 bg-mica-light/60 p-6 shadow-lg shadow-victus-blue/5 transition-colors hover:border-victus-blue/30 sm:p-8 md:mt-12 md:max-w-5xl">
           <div className="flex flex-col gap-6 md:grid md:grid-cols-[minmax(0,1.25fr)_minmax(0,1fr)] md:gap-8">
             {/* Left: hero image with supporting thumbnails */}
             <div
