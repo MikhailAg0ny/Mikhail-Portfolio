@@ -18,8 +18,8 @@ export const metadata: Metadata = {
   title: "Mikhail's Portfolio",
   description: "Web Developer Portfolio",
   icons: {
-    icon: "/icons/catto-favicon.ico",
-    shortcut: "/icons/catto-favicon.ico",
+    icon: "/icons/catto-black-maxwell.ico",
+    shortcut: "/icons/catto-black-maxwell.ico",
   },
 };
 
