@@ -38,18 +38,10 @@ export default function AchievementsSection() {
   const primaryAchievement = achievements[0];
   const { padding, minHeight } = useSectionPadding();
   const [hoveredImage, setHoveredImage] = useState<(typeof collageImages)[number] | null>(null);
-  const holdTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const sectionRef = useRef<HTMLElement | null>(null);
   const hintTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [showHoldHint, setShowHoldHint] = useState(true);
   const [canRenderPortal, setCanRenderPortal] = useState(false);
-
-  const clearTouchHold = () => {
-    if (holdTimeoutRef.current) {
-      clearTimeout(holdTimeoutRef.current);
-      holdTimeoutRef.current = null;
-    }
-  };
 
   const hideHoldHint = useCallback(() => {
     if (hintTimeoutRef.current) {
@@ -68,20 +60,12 @@ export default function AchievementsSection() {
     }, 4000);
   }, [hideHoldHint]);
 
-  const startTouchHold = (image: (typeof collageImages)[number]) => (event: ReactPointerEvent<HTMLDivElement>) => {
+  const handleImageTap = useCallback((image: (typeof collageImages)[number]) => (event: ReactPointerEvent<HTMLDivElement>) => {
     if (event.pointerType === "mouse") return;
-    clearTouchHold();
+    event.preventDefault();
     hideHoldHint();
-    holdTimeoutRef.current = setTimeout(() => {
-      setHoveredImage(image);
-    }, 250);
-  };
-
-  const endTouchHold = (event: ReactPointerEvent<HTMLDivElement>) => {
-    if (event.pointerType === "mouse") return;
-    clearTouchHold();
-    setHoveredImage(null);
-  };
+    setHoveredImage((current) => (current?.src === image.src ? null : image));
+  }, [hideHoldHint]);
 
   useEffect(() => {
     const sectionEl = sectionRef.current;
@@ -107,7 +91,6 @@ export default function AchievementsSection() {
 
   useEffect(
     () => () => {
-      clearTouchHold();
       hideHoldHint();
     },
     [hideHoldHint]
@@ -152,6 +135,16 @@ export default function AchievementsSection() {
           </p>
         </header>
 
+        {showHoldHint && (
+          <div className="pointer-events-none mb-4 flex justify-center sm:hidden">
+            <div className="z-10 flex items-center justify-center gap-3 rounded-full border border-text-secondary/25 bg-mica-light/70 px-4 py-2 text-xs font-semibold text-text-primary shadow-lg shadow-victus-blue/20 backdrop-blur-xl">
+              <MousePointerClick className="h-4 w-4 text-victus-blue" strokeWidth={2.2} />
+              <span className="tracking-wide text-text-secondary/90">Tap to preview</span>
+              <MousePointerClick className="h-4 w-4 text-victus-blue" strokeWidth={2.2} />
+            </div>
+          </div>
+        )}
+
         {/* Single achievement card constrained to 720x720 on desktop */}
         <article className="relative mx-auto mt-8 w-full overflow-hidden rounded-2xl border border-text-secondary/20 bg-mica-light/60 p-6 shadow-lg shadow-victus-blue/5 transition-colors hover:border-victus-blue/30 sm:p-8 md:mt-12 md:max-w-5xl">
           <div className="flex flex-col gap-6 md:grid md:grid-cols-[minmax(0,1.25fr)_minmax(0,1fr)] md:gap-8">
@@ -162,12 +155,14 @@ export default function AchievementsSection() {
             >
               {heroImage && (
                 <div
-                  className="group relative overflow-hidden rounded-2xl sm:h-[200px] md:h-[320px]"
+                  className="group relative h-48 overflow-hidden rounded-2xl sm:h-[200px] md:h-[320px]"
                   onMouseEnter={() => setHoveredImage(heroImage)}
-                  onPointerDown={startTouchHold(heroImage)}
-                  onPointerUp={endTouchHold}
-                  onPointerLeave={endTouchHold}
-                  onPointerCancel={endTouchHold}
+                  onPointerDown={handleImageTap(heroImage)}
+                  onPointerLeave={(event) => {
+                    if (event.pointerType === "mouse") {
+                      setHoveredImage((current) => (current?.src === heroImage.src ? null : current));
+                    }
+                  }}
                 >
                   <Image
                     src={heroImage.src}
@@ -181,27 +176,19 @@ export default function AchievementsSection() {
                 </div>
               )}
 
-              {showHoldHint && (
-                <div className="pointer-events-none sm:hidden">
-                  <div className="flex items-center justify-center gap-3 rounded-full border border-text-secondary/25 bg-mica-light/60 px-4 py-2 text-xs font-semibold text-text-primary shadow-lg shadow-victus-blue/20 backdrop-blur-xl animate-pulse">
-                    <MousePointerClick className="h-4 w-4 text-victus-blue" strokeWidth={2.2} />
-                    <span className="tracking-wide text-text-secondary/90">Press & hold to preview</span>
-                    <MousePointerClick className="h-4 w-4 text-victus-blue" strokeWidth={2.2} />
-                  </div>
-                </div>
-              )}
-
               {supportImages.length > 0 && (
                 <div className="grid grid-cols-3 gap-3">
                   {supportImages.map((image) => (
                     <div
                       key={image.src}
-                      className="group relative overflow-hidden rounded-xl sm:h-[80px] md:h-[100px]"
+                      className="group relative h-24 overflow-hidden rounded-xl sm:h-[80px] md:h-[100px]"
                       onMouseEnter={() => setHoveredImage(image)}
-                      onPointerDown={startTouchHold(image)}
-                      onPointerUp={endTouchHold}
-                      onPointerLeave={endTouchHold}
-                      onPointerCancel={endTouchHold}
+                      onPointerDown={handleImageTap(image)}
+                      onPointerLeave={(event) => {
+                        if (event.pointerType === "mouse") {
+                          setHoveredImage((current) => (current?.src === image.src ? null : current));
+                        }
+                      }}
                     >
                       <Image
                         src={image.src}
