@@ -101,9 +101,9 @@ export default function Navbar({ activeSection = "hero", onNavigate }: NavbarPro
             return (
               <li key={link.label}>
                 <Link
-                  className={`text-sm font-medium transition ${
+                  className={`nav-link text-sm font-medium transition ${
                     isActive
-                      ? "text-victus-blue"
+                      ? "text-victus-blue nav-link-active"
                       : "text-text-secondary hover:text-victus-blue"
                   }`}
                   href={path}
