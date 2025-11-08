@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import Link from "next/link";
+import Image from "next/image";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import { animated, useSpring } from "@react-spring/web";
 
@@ -71,7 +73,7 @@ export default function Navbar({ activeSection = "hero", onNavigate }: NavbarPro
       style={navSpring}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 sm:px-10">
-        <a
+        <Link
           href="/"
           className="group flex items-center gap-3"
           onClick={(event) => {
@@ -80,15 +82,16 @@ export default function Navbar({ activeSection = "hero", onNavigate }: NavbarPro
             handleNavClick("hero");
           }}
         >
-          <img
+          <Image
             src="/images/bongo-catto.gif"
             alt="Bongo cat drumming"
             className="h-10 w-10 transition-transform duration-300 group-hover:-translate-y-1 group-hover:rotate-6"
             width={40}
             height={40}
+            unoptimized
           />
-          <span className="text-lg font-semibold text-victus-blue">Mikhail's Portfolio</span>
-        </a>
+          <span className="text-lg font-semibold text-victus-blue">Mikhail&apos;s Portfolio</span>
+        </Link>
         
         {/* Desktop Menu */}
         <ul id="navbar-menu" className="hidden gap-6 md:flex">
@@ -97,7 +100,7 @@ export default function Navbar({ activeSection = "hero", onNavigate }: NavbarPro
             const path = link.anchor === "hero" ? "/" : `/${link.anchor}`;
             return (
               <li key={link.label}>
-                <a
+                <Link
                   className={`text-sm font-medium transition ${
                     isActive
                       ? "text-victus-blue"
@@ -110,9 +113,10 @@ export default function Navbar({ activeSection = "hero", onNavigate }: NavbarPro
                     event.preventDefault();
                     handleNavClick(link.anchor);
                   }}
+                  prefetch={false}
                 >
                   {link.label}
-                </a>
+                </Link>
               </li>
             );
           })}
