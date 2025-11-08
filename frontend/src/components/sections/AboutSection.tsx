@@ -1,6 +1,6 @@
 'use client';
 
-import { ReactNode, useState } from "react";
+import { MouseEvent, ReactNode, useState } from "react";
 
 import ImageWithFallback from "@/components/ui/ImageWithFallback";
 import * as Popover from "@radix-ui/react-popover";
@@ -10,12 +10,52 @@ import { useSectionPadding } from "@/hooks/useBreakpoints";
 export default function AboutSection() {
   const { padding, minHeight } = useSectionPadding();
   const [showPreview, setShowPreview] = useState(false);
+  const [cardTilt, setCardTilt] = useState<{ rotateX: number; rotateY: number }>({ rotateX: 0, rotateY: 0 });
+  const [logoOffset, setLogoOffset] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
+  const [glarePosition, setGlarePosition] = useState<{ x: number; y: number }>({ x: 50, y: 50 });
 
   const profileImage = {
     src: "/images/jesus_christ_is_king.jpeg",
     alt: "Portrait of Mikhail standing beside text declaring Jesus Christ is King",
     width: 320,
     height: 384,
+  };
+
+  const overlayImage = {
+    src: "/images/cit_u_logo.png",
+    alt: "Cebu Institute of Technology University logo",
+    width: 512,
+    height: 512,
+  };
+
+  const handlePreviewOpen = () => setShowPreview(true);
+
+  const handlePreviewClose = () => {
+    setShowPreview(false);
+    setCardTilt({ rotateX: 0, rotateY: 0 });
+    setLogoOffset({ x: 0, y: 0 });
+    setGlarePosition({ x: 50, y: 50 });
+  };
+
+  const handleCardMouseMove = (event: MouseEvent<HTMLDivElement>) => {
+    const bounds = event.currentTarget.getBoundingClientRect();
+    const offsetX = event.clientX - bounds.left;
+    const offsetY = event.clientY - bounds.top;
+    const centerX = bounds.width / 2;
+    const centerY = bounds.height / 2;
+
+    const rotateY = ((offsetX - centerX) / centerX) * 8;
+    const rotateX = ((offsetY - centerY) / centerY) * -8;
+
+    setCardTilt({ rotateX, rotateY });
+    setLogoOffset({
+      x: ((offsetX - centerX) / centerX) * 18,
+      y: ((offsetY - centerY) / centerY) * 18,
+    });
+    setGlarePosition({
+      x: (offsetX / bounds.width) * 100,
+      y: (offsetY / bounds.height) * 100,
+    });
   };
 
   const popovers: LearnMorePopoverProps[] = [
@@ -91,29 +131,96 @@ export default function AboutSection() {
                   </p>
                 </div>
 
-                <div
-                  className="mx-auto flex h-72 w-64 flex-shrink-0 items-center justify-center rounded-[36px] cursor-zoom-in lg:flex-[0.7] lg:max-w-[15rem] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-victus-blue/60"
-                  onMouseEnter={() => setShowPreview(true)}
-                  onMouseLeave={() => setShowPreview(false)}
-                  onFocus={() => setShowPreview(true)}
-                  onBlur={() => setShowPreview(false)}
-                  onTouchStart={() => setShowPreview(true)}
-                  onTouchEnd={() => setShowPreview(false)}
-                  onTouchCancel={() => setShowPreview(false)}
+                <motion.div
+                  className="mx-auto flex h-72 w-64 flex-shrink-0 items-center justify-center overflow-visible rounded-[36px] cursor-pointer lg:flex-[0.7] lg:max-w-[15rem] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-victus-blue/60"
+                  style={{ transformPerspective: 1100, rotateX: cardTilt.rotateX, rotateY: cardTilt.rotateY }}
+                  whileHover={{ scale: 1.02 }}
+                  transition={{ type: "spring", stiffness: 260, damping: 22 }}
+                  onMouseEnter={(event) => {
+                    handlePreviewOpen();
+                    handleCardMouseMove(event);
+                  }}
+                  onMouseLeave={handlePreviewClose}
+                  onMouseMove={handleCardMouseMove}
+                  onFocus={handlePreviewOpen}
+                  onBlur={handlePreviewClose}
+                  onTouchStart={handlePreviewOpen}
+                  onTouchEnd={handlePreviewClose}
+                  onTouchCancel={handlePreviewClose}
                   role="button"
                   tabIndex={0}
                   aria-label="Preview profile portrait"
                 >
-                  <div className="relative h-full w-full overflow-hidden rounded-2xl shadow-[0_0_35px_rgba(33,150,243,0.35)]">
-                    <ImageWithFallback
-                      src={profileImage.src}
-                      alt={profileImage.alt}
-                      width={profileImage.width}
-                      height={profileImage.height}
-                      className="h-full w-full object-cover"
-                    />
+                  <div className="relative h-full w-full">
+                    <motion.div
+                      className="relative h-full w-full overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-mica-dark/85 via-mica-dark/55 to-mica-dark/65 shadow-[0_28px_55px_rgba(0,0,0,0.45)]"
+                      animate={{ boxShadow: showPreview ? "0 32px 75px rgba(0, 207, 232, 0.3)" : "0 28px 55px rgba(0, 0, 0, 0.45)" }}
+                      transition={{ duration: 0.25, ease: "easeOut" }}
+                    >
+                      <ImageWithFallback
+                        src={profileImage.src}
+                        alt={profileImage.alt}
+                        width={profileImage.width}
+                        height={profileImage.height}
+                        className="h-full w-full object-cover"
+                      />
+
+                      <AnimatePresence>
+                        {showPreview && (
+                          <motion.div
+                            key="card-blur"
+                            className="pointer-events-none absolute inset-0 rounded-2xl bg-mica-dark/25 backdrop-blur-md"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: .8 }}
+                            exit={{ opacity: 0 }}
+                            transition={{ duration: 0.22, ease: "easeOut" }}
+                          />
+                        )}
+                      </AnimatePresence>
+
+                      <motion.div
+                        className="pointer-events-none absolute inset-0"
+                        style={{
+                          background: `radial-gradient(circle at ${glarePosition.x}% ${glarePosition.y}%, rgba(255, 255, 255, ${showPreview ? 0.42 : 0.18}), transparent 62%)`,
+                        }}
+                        animate={{ opacity: showPreview ? 1 : 0.7 }}
+                        transition={{ duration: 0.25, ease: "easeOut" }}
+                      />
+
+                      <motion.div
+                        className="pointer-events-none absolute inset-x-6 bottom-4 h-8 rounded-full bg-victus-blue/35 blur-3xl"
+                        animate={{ opacity: showPreview ? 0.55 : 0.18, scale: showPreview ? 1.1 : 0.9 }}
+                        transition={{ duration: 0.3, ease: "easeOut" }}
+                      />
+                    </motion.div>
+
+                    <AnimatePresence>
+                      {showPreview && (
+                        <motion.div
+                          key="cit-logo"
+                          className="pointer-events-none absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 items-center justify-center"
+                          initial={{ opacity: 0, scale: 0.82, y: 28 }}
+                          animate={{
+                            opacity: 1,
+                            scale: 2.7,
+                            x: logoOffset.x * 0.45,
+                            y: logoOffset.y * 0.45 - 24,
+                          }}
+                          exit={{ opacity: 0, scale: 0.78, y: 32 }}
+                          transition={{ type: "spring", stiffness: 240, damping: 18 }}
+                        >
+                          <ImageWithFallback
+                            src={overlayImage.src}
+                            alt={overlayImage.alt}
+                            width={overlayImage.width}
+                            height={overlayImage.height}
+                            className="h-auto w-64 drop-shadow-[0_25px_55px_rgba(0,207,232,0.5)] md:w-64"
+                          />
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                   </div>
-                </div>
+                </motion.div>
               </div>
 
               <div className="space-y-3 border-t border-text-secondary/20 pt-6">
@@ -126,33 +233,6 @@ export default function AboutSection() {
                 </div>
               </div>
 
-              <AnimatePresence>
-                {showPreview && (
-                  <motion.div
-                    className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center rounded-3xl bg-black/60 backdrop-blur-md"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.25, ease: "easeOut" }}
-                  >
-                    <motion.div
-                      className="pointer-events-none max-h-[85%] max-w-[85%] overflow-hidden rounded-3xl border border-white/10 shadow-2xl"
-                      initial={{ scale: 0.94, opacity: 0.95 }}
-                      animate={{ scale: 1, opacity: 1 }}
-                      exit={{ scale: 0.94, opacity: 0.95 }}
-                      transition={{ duration: 0.25, ease: "easeOut" }}
-                    >
-                      <ImageWithFallback
-                        src={profileImage.src}
-                        alt={profileImage.alt}
-                        width={profileImage.width}
-                        height={profileImage.height}
-                        className="h-full w-full object-cover"
-                      />
-                    </motion.div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
             </div>
           </div>
 
