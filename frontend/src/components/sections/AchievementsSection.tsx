@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import type { PointerEvent as ReactPointerEvent } from "react";
 import { createPortal } from "react-dom";
 import { AnimatePresence, motion } from "framer-motion";
@@ -161,18 +162,21 @@ export default function AchievementsSection() {
             >
               {heroImage && (
                 <div
-                  className="group overflow-hidden rounded-2xl sm:h-[200px] md:h-[320px]"
+                  className="group relative overflow-hidden rounded-2xl sm:h-[200px] md:h-[320px]"
                   onMouseEnter={() => setHoveredImage(heroImage)}
                   onPointerDown={startTouchHold(heroImage)}
                   onPointerUp={endTouchHold}
                   onPointerLeave={endTouchHold}
                   onPointerCancel={endTouchHold}
                 >
-                  <img
+                  <Image
                     src={heroImage.src}
                     alt={heroImage.alt}
-                    className="block h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    sizes="(max-width: 768px) 90vw, 45vw"
                     loading="lazy"
+                    unoptimized
                   />
                 </div>
               )}
@@ -192,18 +196,21 @@ export default function AchievementsSection() {
                   {supportImages.map((image) => (
                     <div
                       key={image.src}
-                      className="group overflow-hidden rounded-xl sm:h-[80px] md:h-[100px]"
+                      className="group relative overflow-hidden rounded-xl sm:h-[80px] md:h-[100px]"
                       onMouseEnter={() => setHoveredImage(image)}
                       onPointerDown={startTouchHold(image)}
                       onPointerUp={endTouchHold}
                       onPointerLeave={endTouchHold}
                       onPointerCancel={endTouchHold}
                     >
-                      <img
+                      <Image
                         src={image.src}
                         alt={image.alt}
-                        className="block h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                        fill
+                        className="object-cover transition-transform duration-500 group-hover:scale-110"
+                        sizes="(max-width: 768px) 28vw, 20vw"
                         loading="lazy"
+                        unoptimized
                       />
                     </div>
                   ))}
@@ -269,16 +276,21 @@ export default function AchievementsSection() {
                 transition={{ duration: 0.25, ease: "easeOut" }}
               >
                 <motion.div
-                  className="pointer-events-none mx-4 max-h-[90vh] w-full max-w-5xl overflow-hidden rounded-3xl border border-white/10 shadow-2xl"
+                  className="pointer-events-none relative mx-4 w-full max-w-5xl overflow-hidden rounded-3xl border border-white/10 shadow-2xl aspect-[4/3]"
+                  style={{ maxHeight: "90vh" }}
                   initial={{ scale: 0.95, opacity: 0.9 }}
                   animate={{ scale: 1, opacity: 1 }}
                   exit={{ scale: 0.95, opacity: 0.9 }}
                   transition={{ duration: 0.25, ease: "easeOut" }}
                 >
-                  <img
+                  <Image
                     src={hoveredImage.src}
                     alt={hoveredImage.alt}
-                    className="block h-full w-full object-contain"
+                    fill
+                    className="object-contain"
+                    sizes="100vw"
+                    priority
+                    unoptimized
                   />
                 </motion.div>
               </motion.div>

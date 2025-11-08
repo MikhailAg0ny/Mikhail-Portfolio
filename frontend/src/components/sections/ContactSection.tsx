@@ -4,8 +4,7 @@ import * as Tooltip from "@radix-ui/react-tooltip";
 import { FiArrowUpRight } from "react-icons/fi";
 import { useSectionPadding } from "@/hooks/useBreakpoints";
 
-const FACEBOOK_URL = process.env.NEXT_PUBLIC_FACEBOOK_URL || 'https://www.facebook.com/M1kh4ilAg0ny';
-const EMAIL_ADDRESS = process.env.NEXT_PUBLIC_EMAIL || 'mikhailjpn@gmail.com';
+const EMAIL_ADDRESS = process.env.NEXT_PUBLIC_EMAIL || "mikhailjpn@gmail.com";
 
 export default function ContactSection() {
   const { padding, minHeight } = useSectionPadding();
@@ -19,10 +18,10 @@ export default function ContactSection() {
         <div className="max-w-3xl space-y-3 text-center sm:space-y-4">
           <p className="text-xs font-semibold uppercase tracking-[0.3em] text-victus-blue/80 sm:text-sm">Get In Touch</p>
           <h2 className="text-3xl font-bold tracking-tight text-text-primary sm:text-4xl md:text-5xl">
-            Let's Work Together
+            Let&apos;s Work Together
           </h2>
           <p className="text-sm leading-relaxed text-text-secondary/80 sm:text-base md:text-lg">
-            I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision.
+            I&apos;m always open to discussing new projects, creative ideas, or opportunities to be part of your vision.
           </p>
         </div>
 

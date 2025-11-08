@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import * as Tooltip from "@radix-ui/react-tooltip";
 
 import { myProjects } from "@/lib/projects";
@@ -192,12 +193,15 @@ export default function ProjectsSection() {
                     </span>
 
                     {project.image && (
-                      <div className="relative overflow-hidden rounded-xl">
-                        <img
+                      <div className="relative h-64 overflow-hidden rounded-xl">
+                        <Image
                           src={project.image}
                           alt={project.title}
+                          fill
+                          className="object-cover"
+                          sizes="(max-width: 640px) 100vw, 33vw"
                           loading="lazy"
-                          className="h-64 w-full object-cover"
+                          unoptimized
                         />
                       </div>
                     )}
@@ -365,11 +369,14 @@ export default function ProjectsSection() {
                               className="relative w-full overflow-hidden rounded-xl shadow-inner"
                               style={{ aspectRatio: "4 / 3" }}
                             >
-                              <img
+                              <Image
                                 src={project.image}
                                 alt={project.title}
+                                fill
+                                className="object-cover object-center"
+                                sizes="(max-width: 1024px) 60vw, 28vw"
                                 loading="lazy"
-                                className="h-full w-full object-cover object-center"
+                                unoptimized
                               />
                             </div>
                           )}
@@ -442,11 +449,14 @@ export default function ProjectsSection() {
                                 {project.timeframe}
                               </span>
                             )}
-                            <img
+                            <Image
                               src={project.image}
                               alt={project.title}
+                              fill
+                              className="object-cover object-center transition-transform duration-500 group-hover:scale-[1.06]"
+                              sizes="(max-width: 1024px) 60vw, 25vw"
                               loading="lazy"
-                              className="h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-[1.06]"
+                              unoptimized
                             />
                           </div>
                         )}

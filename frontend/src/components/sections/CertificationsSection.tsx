@@ -1,14 +1,15 @@
 "use client";
 
 import { useMemo } from "react";
-
-import { certifications } from "@/lib/certification";
-import { useSectionPadding } from "@/hooks/useBreakpoints";
+import Image from "next/image";
 import { ExternalLink } from "lucide-react";
+import { useSectionPadding } from "@/hooks/useBreakpoints";
+import { certifications } from "@/lib/certification";
+import type { Certificate } from "@/types";
 
 export default function CertificationsSection() {
   const { padding, minHeight } = useSectionPadding();
-  const certificateImages = useMemo(
+  const certificateImages = useMemo<Certificate[]>(
     () =>
       certifications.map((certificate) => ({
         ...certificate,
@@ -43,14 +44,15 @@ export default function CertificationsSection() {
               key={certificate.name}
               className="group relative mx-auto flex h-full w-full max-w-[280px] flex-col items-center justify-between overflow-hidden rounded-[16px] border border-text-secondary/20 bg-mica-light/60 p-4 text-center transition-all duration-300 hover:-translate-y-1 hover:border-victus-blue/30 hover:bg-mica-light/70 sm:max-w-[300px] sm:p-5"
             >
-              <div
-                className="relative h-24 w-24 overflow-hidden rounded-[14px] border border-white/15 shadow-inner shadow-black/30 sm:h-12 sm:w-12"
-              >
-                <img
+              <div className="relative h-24 w-24 overflow-hidden rounded-[14px] border border-white/15 shadow-inner shadow-black/30 sm:h-12 sm:w-12">
+                <Image
                   src={certificate.image}
                   alt={`${certificate.name} certificate preview`}
-                  className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                  fill
+                  className="object-cover transition-transform duration-300 group-hover:scale-105"
+                  sizes="(max-width: 640px) 40vw, 120px"
                   loading="lazy"
+                  unoptimized
                 />
               </div>
 

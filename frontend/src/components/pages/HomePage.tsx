@@ -12,6 +12,7 @@ import CertificationsSection from '@/components/sections/CertificationsSection';
 import ContactSection from '@/components/sections/ContactSection';
 import Footer from '@/components/layout/Footer';
 import { SECTION_ORDER, type SectionKey } from '@/lib/sections';
+import type { FullPageApi } from 'fullpage.js';
 
 type PagePilingWrapperProps = {
   children: ReactNode;
@@ -99,7 +100,7 @@ export default function HomePage({ initialSection = 'hero' }: HomePageProps) {
   const handleNavigate = useCallback((section: string) => {
     if (!SECTION_ORDER.includes(section as SectionKey)) return;
     const typedSection = section as SectionKey;
-    const instance = (window as any)?.fullpage_api;
+    const instance = (window as typeof window & { fullpage_api?: FullPageApi }).fullpage_api;
     if (isPagePilingActive && instance && typeof instance.moveTo === 'function') {
       instance.moveTo(typedSection);
     } else {

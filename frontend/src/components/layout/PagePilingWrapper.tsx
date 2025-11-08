@@ -2,6 +2,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import type { FullPageApi } from "fullpage.js";
 
 type Props = {
   children: React.ReactNode;
@@ -60,9 +61,15 @@ function cleanupFullpageArtifacts(container?: HTMLElement | null) {
   }
 }
 
+type MinimalSectionMeta = {
+  index: number;
+};
+
+type WindowWithFullpage = typeof window & { fullpage_api?: FullPageApi };
+
 export default function PagePilingWrapper({ children, onSectionChange, initialAnchor = "hero", enableAtWidth = 1024, onModeChange }: Props) {
   const fullpageRef = useRef<HTMLDivElement>(null);
-  const fullpageInstance = useRef<any>(null);
+  const fullpageInstance = useRef<FullPageApi | null>(null);
   const onSectionChangeRef = useRef(onSectionChange);
   const initialAnchorRef = useRef(initialAnchor);
   const [isReady, setIsReady] = useState(false);
@@ -85,6 +92,7 @@ export default function PagePilingWrapper({ children, onSectionChange, initialAn
   useEffect(() => {
     if (typeof window === "undefined") return;
 
+    const windowWithFullpage = window as WindowWithFullpage;
     const shouldEnable = window.innerWidth >= enableAtWidth;
     setIsEnabled(shouldEnable);
     onModeChange?.(shouldEnable);
@@ -110,7 +118,7 @@ export default function PagePilingWrapper({ children, onSectionChange, initialAn
             console.error("Error destroying fullpage.js during resize:", error);
           }
           fullpageInstance.current = null;
-          (window as any).fullpage_api = null;
+          windowWithFullpage.fullpage_api = undefined;
           setIsReady(false);
           cleanupFullpageArtifacts(fullpageRef.current);
         }
@@ -122,12 +130,14 @@ export default function PagePilingWrapper({ children, onSectionChange, initialAn
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, [enableAtWidth, isEnabled]);
+  }, [enableAtWidth, isEnabled, onModeChange]);
 
   useEffect(() => {
     // Only run on client side
     if (typeof window === "undefined") return;
     if (!isEnabled || fullpageInstance.current) return;
+
+    const windowWithFullpage = window as WindowWithFullpage;
 
     // Dynamically import fullpage.js
     const initFullPage = async () => {
@@ -166,10 +176,10 @@ export default function PagePilingWrapper({ children, onSectionChange, initialAn
             lockAnchors: true,
             recordHistory: false,
             animateAnchor: false,
-            onLeave: function (origin: any, destination: any, direction: string) {
+            onLeave: function (_origin: MinimalSectionMeta, destination: MinimalSectionMeta) {
               onSectionChangeRef.current(destination.index);
             },
-            afterLoad: function (_origin: any, destination: any) {
+            afterLoad: function (_origin: MinimalSectionMeta, destination: MinimalSectionMeta) {
               navScrollPositionRef.current = destination.index * window.innerHeight;
               ScrollTrigger.update();
             },
@@ -206,7 +216,7 @@ export default function PagePilingWrapper({ children, onSectionChange, initialAn
           setIsReady(true);
 
           // Expose instance globally for navbar navigation
-          (window as any).fullpage_api = fullpageInstance.current;
+          windowWithFullpage.fullpage_api = fullpageInstance.current ?? undefined;
         }
       } catch (error) {
         console.error("Error initializing fullpage.js:", error);
@@ -217,15 +227,20 @@ export default function PagePilingWrapper({ children, onSectionChange, initialAn
 
     // Cleanup
     return () => {
-      if (fullpageInstance.current) {
+      const windowWithFullpageCleanup = typeof window === "undefined" ? undefined : (window as WindowWithFullpage);
+      const instance = fullpageInstance.current;
+      const container = fullpageRef.current;
+      if (instance) {
         try {
-          fullpageInstance.current.destroy("all");
+          instance.destroy("all");
         } catch (e) {
           console.error("Error destroying fullpage:", e);
         }
         fullpageInstance.current = null;
-        (window as any).fullpage_api = null;
-        cleanupFullpageArtifacts(fullpageRef.current);
+        if (windowWithFullpageCleanup) {
+          windowWithFullpageCleanup.fullpage_api = undefined;
+        }
+        cleanupFullpageArtifacts(container);
       }
       setIsReady(false);
     };

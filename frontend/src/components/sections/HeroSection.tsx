@@ -4,6 +4,7 @@ import { useCallback } from "react";
 import ImageWithFallback from "@/components/ui/ImageWithFallback";
 import * as Tooltip from "@radix-ui/react-tooltip";
 import { useSectionPadding } from "@/hooks/useBreakpoints";
+import type { FullPageApi } from "fullpage.js";
 
 export default function HeroSection() {
   const { padding, minHeight } = useSectionPadding();
@@ -11,7 +12,7 @@ export default function HeroSection() {
     if (typeof window === "undefined") return;
 
     const targetSection = section.toLowerCase();
-    const fullpage = (window as any)?.fullpage_api;
+    const fullpage = (window as typeof window & { fullpage_api?: FullPageApi }).fullpage_api;
 
     if (fullpage && typeof fullpage.moveTo === "function") {
       fullpage.moveTo(targetSection);

@@ -6,10 +6,9 @@ import { useState } from "react";
 type Props = Omit<ImageProps, "src" | "alt"> & {
   src: string;
   alt: string;
-  className?: string;
 };
 
-export default function ImageWithFallback({ src, alt, className, ...rest }: Props) {
+export default function ImageWithFallback({ src, alt, className, ...rest }: Props & { className?: string }) {
   const [hasError, setHasError] = useState(false);
 
   if (hasError) {
@@ -44,12 +43,10 @@ export default function ImageWithFallback({ src, alt, className, ...rest }: Prop
   }
 
   return (
-    // next/image uses native img on the client; we attach onError to signal fallback
-    // eslint-disable-next-line jsx-a11y/alt-text
     <Image
       src={src}
       alt={alt}
-      {...(rest as any)}
+      {...rest}
       className={className}
       onError={() => setHasError(true)}
     />

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import type { Skill } from "@/lib/skills";
 
 interface SkillCardProps {
@@ -21,12 +22,15 @@ export default function SkillCard({ skill, index }: SkillCardProps) {
       <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-victus-blue/0 to-victus-blue/0 opacity-0 transition-opacity duration-300 group-hover:from-victus-blue/5 group-hover:to-cyan-400/5 group-hover:opacity-100" />
       
       {!imageError ? (
-        <img
+        <Image
           src={skill.icon}
           alt={skill.name}
+          width={44}
+          height={44}
           loading="lazy"
           onError={() => setImageError(true)}
           className="relative z-10 h-9 w-9 flex-shrink-0 drop-shadow-[0_0_10px_rgba(0,207,232,0.35)] transition-all duration-300 group-hover:scale-110 group-hover:drop-shadow-[0_0_20px_rgba(0,207,232,0.55)] sm:h-11 sm:w-11"
+          unoptimized
         />
       ) : (
         <div className="relative z-10 flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg bg-victus-blue/20 text-xs font-bold text-victus-blue sm:h-11 sm:w-11">
