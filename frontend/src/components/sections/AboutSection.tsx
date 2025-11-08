@@ -83,11 +83,11 @@ export default function AboutSection() {
           <div className="hidden w-full max-w-md flex-col lg:flex">
             <div className="relative flex h-full flex-col gap-6 rounded-3xl border border-text-secondary/20 bg-mica-light/60 p-8 shadow-lg shadow-victus-blue/10">
               <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:gap-10">
-                <div className="space-y-4 lg:flex-[0.7]">
+                <div className="space-y-4 lg:flex-[0.8] lg:pr-1 ">
                   <h3 className="text-2xl font-semibold text-text-primary">Mikhail</h3>
                   <p className="text-sm leading-relaxed text-text-secondary">
-                    A passionate developer with a love for creating innovative solutions and exploring new technologies.
-                    Focused on building scalable applications and delivering exceptional user experiences.
+                    Graduate of the Bachelor of Science in Information Technology program at Cebu Institute of Technology - University, with experience in web, game, and mobile development.
+                    Currently broadening skills in backend and frontend design.
                   </p>
                 </div>
 

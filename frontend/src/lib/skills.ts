@@ -61,7 +61,7 @@ export const getSkillsByCategory = (category: SkillCategory): Skill[] => {
 };
 
 // Constants
-export const ITEMS_PER_PAGE = 6;
+export const ITEMS_PER_PAGE = 9;
 export const SKILL_CATEGORIES: { key: SkillCategory; label: string }[] = [
   { key: "languages", label: "Languages" },
   { key: "tools", label: "Tools" },

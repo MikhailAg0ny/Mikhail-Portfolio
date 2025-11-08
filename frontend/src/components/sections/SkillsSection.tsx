@@ -1,31 +1,38 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import * as Tooltip from "@radix-ui/react-tooltip";
 import { getSkillsByCategory, ITEMS_PER_PAGE, SKILL_CATEGORIES } from "@/lib/skills";
 import type { SkillCategory } from "@/lib/skills";
 import SkillCard from "@/components/ui/SkillCard";
-import { useSectionPadding } from "@/hooks/useBreakpoints";
+import { useBreakpoints, useSectionPadding } from "@/hooks/useBreakpoints";
 
 export default function SkillsSection() {
   const [activeTab, setActiveTab] = useState<SkillCategory>("languages");
   const [currentPage, setCurrentPage] = useState(0);
   const { padding } = useSectionPadding();
+  const { isMobile } = useBreakpoints();
+
+  const itemsPerPage = isMobile ? 6 : ITEMS_PER_PAGE;
 
   // Memoize current skills to avoid recalculation
   const currentSkills = useMemo(() => getSkillsByCategory(activeTab), [activeTab]);
   
   // Memoize paginated items
   const currentItems = useMemo(() => {
-    const startIndex = currentPage * ITEMS_PER_PAGE;
-    return currentSkills.slice(startIndex, startIndex + ITEMS_PER_PAGE);
-  }, [currentSkills, currentPage]);
+    const startIndex = currentPage * itemsPerPage;
+    return currentSkills.slice(startIndex, startIndex + itemsPerPage);
+  }, [currentSkills, currentPage, itemsPerPage]);
 
   // Memoize total pages
   const totalPages = useMemo(() => 
-    Math.ceil(currentSkills.length / ITEMS_PER_PAGE),
-    [currentSkills.length]
+    Math.ceil(currentSkills.length / itemsPerPage),
+    [currentSkills.length, itemsPerPage]
   );
+
+  useEffect(() => {
+    setCurrentPage(0);
+  }, [itemsPerPage]);
 
   const handleTabChange = (tab: SkillCategory) => {
     setActiveTab(tab);
@@ -86,7 +93,7 @@ export default function SkillsSection() {
           <div className="flex-1 p-3 sm:p-4 md:p-5">
             <ul
               key={`${activeTab}-${currentPage}`}
-              className="skill-grid grid w-full grid-cols-2 items-stretch gap-3 sm:grid-cols-2 sm:gap-3 lg:grid-cols-2 lg:gap-4 xl:grid-cols-3 xl:gap-5 [grid-auto-rows:minmax(0,1fr)]"
+              className="skill-grid grid w-full grid-cols-2 items-stretch gap-3 sm:grid-cols-2 sm:gap-3 md:grid-cols-3 md:gap-3 lg:grid-cols-3 lg:gap-4 xl:grid-cols-3 xl:gap-5 [grid-auto-rows:minmax(0,1fr)]"
             >
               {currentItems.map((skill, index) => (
                 <SkillCard key={skill.name} skill={skill} index={index} />
