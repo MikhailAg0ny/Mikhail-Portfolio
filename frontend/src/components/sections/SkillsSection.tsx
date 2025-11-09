@@ -1,7 +1,11 @@
 "use client";
 
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 import * as Tooltip from "@radix-ui/react-tooltip";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Keyboard } from "swiper/modules";
+import type { Swiper as SwiperType } from "swiper";
+import "swiper/css";
 import { getSkillsByCategory, ITEMS_PER_PAGE, SKILL_CATEGORIES } from "@/lib/skills";
 import type { SkillCategory } from "@/lib/skills";
 import SkillCard from "@/components/ui/SkillCard";
@@ -12,27 +16,31 @@ export default function SkillsSection() {
   const [currentPage, setCurrentPage] = useState(0);
   const { padding } = useSectionPadding();
   const { isMobile } = useBreakpoints();
+  const swiperRef = useRef<SwiperType | null>(null);
 
   const itemsPerPage = isMobile ? 6 : ITEMS_PER_PAGE;
 
   // Memoize current skills to avoid recalculation
   const currentSkills = useMemo(() => getSkillsByCategory(activeTab), [activeTab]);
-  
-  // Memoize paginated items
-  const currentItems = useMemo(() => {
-    const startIndex = currentPage * itemsPerPage;
-    return currentSkills.slice(startIndex, startIndex + itemsPerPage);
-  }, [currentSkills, currentPage, itemsPerPage]);
 
-  // Memoize total pages
-  const totalPages = useMemo(() => 
-    Math.ceil(currentSkills.length / itemsPerPage),
-    [currentSkills.length, itemsPerPage]
-  );
+  // Chunk skills into pages
+  const pagedSkills = useMemo(() => {
+    const pages: typeof currentSkills[] = [];
+    for (let i = 0; i < currentSkills.length; i += itemsPerPage) {
+      pages.push(currentSkills.slice(i, i + itemsPerPage));
+    }
+    return pages;
+  }, [currentSkills, itemsPerPage]);
+
+  const totalPages = pagedSkills.length || 1;
 
   useEffect(() => {
     setCurrentPage(0);
   }, [itemsPerPage]);
+
+  useEffect(() => {
+    swiperRef.current?.slideTo(0, 0);
+  }, [activeTab, itemsPerPage]);
 
   const handleTabChange = (tab: SkillCategory) => {
     setActiveTab(tab);
@@ -91,21 +99,57 @@ export default function SkillsSection() {
           </Tooltip.Provider>
 
           <div className="flex-1 p-3 sm:p-4 md:p-5">
-            <ul
-              key={`${activeTab}-${currentPage}`}
-              className="skill-grid grid w-full grid-cols-2 items-stretch gap-3 sm:grid-cols-2 sm:gap-3 md:grid-cols-3 md:gap-3 lg:grid-cols-3 lg:gap-4 xl:grid-cols-3 xl:gap-5 [grid-auto-rows:minmax(0,1fr)]"
-            >
-              {currentItems.map((skill, index) => (
-                <SkillCard key={skill.name} skill={skill} index={index} />
-              ))}
-            </ul>
+            {totalPages > 1 ? (
+              <Swiper
+                modules={[Keyboard]}
+                slidesPerView={1}
+                spaceBetween={18}
+                allowTouchMove
+                keyboard={{ enabled: true }}
+                onSwiper={(swiper) => {
+                  swiperRef.current = swiper;
+                }}
+                onSlideChange={(swiper) => {
+                  setCurrentPage(swiper.realIndex);
+                }}
+                className="skills-swiper"
+                autoHeight
+              >
+                {pagedSkills.map((pageSkills, pageIndex) => (
+                  <SwiperSlide key={`${activeTab}-page-${pageIndex}`} className="h-auto">
+                    <ul
+                      className="skill-grid grid w-full grid-cols-2 items-stretch gap-3 sm:grid-cols-2 sm:gap-3 md:grid-cols-3 md:gap-3 lg:grid-cols-3 lg:gap-4 xl:grid-cols-3 xl:gap-5 [grid-auto-rows:minmax(0,1fr)]"
+                    >
+                      {pageSkills.map((skill, index) => (
+                        <SkillCard
+                          key={skill.name}
+                          skill={skill}
+                          index={pageIndex * itemsPerPage + index}
+                        />
+                      ))}
+                    </ul>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            ) : (
+              <ul
+                className="skill-grid grid w-full grid-cols-2 items-stretch gap-3 sm:grid-cols-2 sm:gap-3 md:grid-cols-3 md:gap-3 lg:grid-cols-3 lg:gap-4 xl:grid-cols-3 xl:gap-5 [grid-auto-rows:minmax(0,1fr)]"
+              >
+                {currentSkills.map((skill, index) => (
+                  <SkillCard key={skill.name} skill={skill} index={index} />
+                ))}
+              </ul>
+            )}
 
             {totalPages > 1 && (
               <div className="mt-4 flex justify-center gap-2 sm:mt-6">
                 {Array.from({ length: totalPages }).map((_, index) => (
                   <button
                     key={index}
-                    onClick={() => setCurrentPage(index)}
+                    onClick={() => {
+                      setCurrentPage(index);
+                      swiperRef.current?.slideTo(index);
+                    }}
                     className={`h-1.5 rounded-full transition-all duration-300 sm:h-2 ${
                       currentPage === index
                         ? "w-6 sm:w-8 md:w-10 bg-gradient-to-r from-victus-blue to-cyan-400 shadow-md shadow-victus-blue/50"
