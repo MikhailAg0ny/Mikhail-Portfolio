@@ -126,10 +126,10 @@ export default function AchievementsSection() {
       style={{ minHeight }}
     >
       <div className="mx-auto w-full max-w-6xl px-4 sm:px-10">
-        <header className="space-y-3 text-left md:text-center">
-          <p className="text-sm uppercase tracking-[0.45em] text-victus-blue">Achievements</p>
-          <h2 className="text-3xl font-semibold text-text-primary md:text-4xl">Recognitions that capture impact and craft.</h2>
-          <p className="text-base text-text-secondary md:text-lg">
+        <header className="space-y-2.5 text-left md:text-center">
+          <p className="text-xs uppercase tracking-[0.45em] text-victus-blue sm:text-sm">Achievements</p>
+          <h2 className="text-2xl font-semibold text-text-primary sm:text-3xl md:text-4xl">Recognitions that capture impact and craft.</h2>
+          <p className="text-sm text-text-secondary sm:text-base md:text-lg">
             Milestones across game jams, community events, and product teams that highlight leadership, experimentation, and measurable
             outcomes.
           </p>
@@ -146,16 +146,16 @@ export default function AchievementsSection() {
         )}
 
         {/* Single achievement card constrained to 720x720 on desktop */}
-        <article className="relative mx-auto mt-8 w-full overflow-hidden rounded-2xl border border-text-secondary/20 bg-mica-light/60 p-6 shadow-lg shadow-victus-blue/5 transition-colors hover:border-victus-blue/30 sm:p-8 md:mt-12 md:max-w-5xl">
-          <div className="flex flex-col gap-6 md:grid md:grid-cols-[minmax(0,1.25fr)_minmax(0,1fr)] md:gap-8">
+        <article className="relative mx-auto mt-6 w-full overflow-hidden rounded-2xl border border-text-secondary/20 bg-mica-light/60 p-5 shadow-lg shadow-victus-blue/5 transition-colors hover:border-victus-blue/30 sm:mt-8 sm:p-7 md:mt-12 md:max-w-5xl">
+          <div className="flex flex-col gap-5 md:grid md:grid-cols-[minmax(0,1.25fr)_minmax(0,1fr)] md:gap-7">
             {/* Left: hero image with supporting thumbnails */}
             <div
-              className="flex flex-col gap-4"
+              className="flex flex-col gap-3.5"
               onMouseLeave={() => setHoveredImage(null)}
             >
               {heroImage && (
                 <div
-                  className="group relative h-48 overflow-hidden rounded-2xl sm:h-[200px] md:h-[320px]"
+                  className="group relative h-44 overflow-hidden rounded-2xl sm:h-[200px] md:h-[320px]"
                   onMouseEnter={() => setHoveredImage(heroImage)}
                   onPointerDown={handleImageTap(heroImage)}
                   onPointerLeave={(event) => {
@@ -177,11 +177,11 @@ export default function AchievementsSection() {
               )}
 
               {supportImages.length > 0 && (
-                <div className="grid grid-cols-3 gap-3">
+                <div className="grid grid-cols-3 gap-2.5 sm:gap-3">
                   {supportImages.map((image) => (
                     <div
                       key={image.src}
-                      className="group relative h-24 overflow-hidden rounded-xl sm:h-[80px] md:h-[100px]"
+                      className="group relative h-20 overflow-hidden rounded-xl sm:h-[80px] md:h-[100px]"
                       onMouseEnter={() => setHoveredImage(image)}
                       onPointerDown={handleImageTap(image)}
                       onPointerLeave={(event) => {
@@ -207,14 +207,14 @@ export default function AchievementsSection() {
 
             {/* Right: achievement copy and metadata */}
             {primaryAchievement && (
-              <div className="flex flex-col gap-6 rounded-2xl border border-text-secondary/15 bg-mica-light/50 p-6 md:h-full">
+              <div className="flex flex-col gap-5 rounded-2xl border border-text-secondary/15 bg-mica-light/50 p-5 sm:p-6 md:h_full">
                 <div className="space-y-4">
                   <div className="flex flex-col gap-2">
-                    <span className="text-xs uppercase tracking-[0.35em] text-text-secondary/60">{primaryAchievement.year}</span>
-                    <h3 className="text-2xl font-semibold text-text-primary md:text-3xl">{primaryAchievement.title}</h3>
-                    <p className="text-sm font-medium text-victus-blue">{primaryAchievement.event}</p>
+                    <span className="text-[0.65rem] uppercase tracking-[0.35em] text-text-secondary/60 sm:text-xs">{primaryAchievement.year}</span>
+                    <h3 className="text-xl font-semibold text-text-primary sm:text-2xl md:text-3xl">{primaryAchievement.title}</h3>
+                    <p className="text-xs font-medium text-victus-blue sm:text-sm">{primaryAchievement.event}</p>
                   </div>
-                  <p className="text-sm leading-relaxed text-text-secondary">{primaryAchievement.highlight}</p>
+                  <p className="text-sm leading-relaxed text-text-secondary sm:text-sm">{primaryAchievement.highlight}</p>
                 </div>
 
                 {(() => {
@@ -222,8 +222,8 @@ export default function AchievementsSection() {
                   if (featuredLinks.length === 0) return null;
 
                   return (
-                  <div className="space-y-3">
-                    <h4 className="text-xs uppercase tracking-[0.35em] text-text-secondary/50">Featured coverage</h4>
+                  <div className="space-y-2.5">
+                    <h4 className="text-[0.65rem] uppercase tracking-[0.35em] text-text-secondary/50 sm:text-xs">Featured coverage</h4>
                     <ul className="space-y-2">
                       {featuredLinks.map((link) => (
                         <li key={link.name}>
@@ -231,7 +231,7 @@ export default function AchievementsSection() {
                             href={link.url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="group flex items-center gap-3 rounded-xl border border-text-secondary/10 bg-mica-light/40 px-3 py-2 text-sm text-text-secondary transition-colors hover:border-victus-blue/30 hover:text-text-primary"
+                            className="group flex items-center gap-2.5 rounded-xl border border-text-secondary/10 bg-mica-light/40 px-3 py-2 text-xs text-text-secondary transition-colors hover:border-victus-blue/30 hover:text-text-primary sm:text-sm"
                           >
                             <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-victus-blue/10 text-victus-blue transition-colors group-hover:bg-victus-blue/20 group-hover:text-victus-blue">
                               {renderLinkIcon(link.icon)}

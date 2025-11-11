@@ -54,26 +54,26 @@ export default function SkillsSection() {
     <section
       className={`flex w-full items-center justify-center overflow-hidden px-2 sm:px-4 lg:px-6 ${padding}`}
     >
-      <div className="flex w-full max-w-5xl flex-col justify-center gap-3 sm:gap-4 md:gap-6">
-        <header className="flex-shrink-0 space-y-1 text-center sm:space-y-2 md:space-y-3">
-          <p className="text-xs font-semibold uppercase tracking-[0.3em] text-victus-blue/80 sm:text-xs md:text-sm">Technical Expertise</p>
-          <h2 className="text-2xl font-bold tracking-tight text-white sm:text-3xl md:text-4xl">
+      <div className="flex w-full max-w-5xl flex-col justify-center gap-2.5 sm:gap-4 md:gap-6">
+        <header className="flex-shrink-0 space-y-0.5 text-center sm:space-y-2 md:space-y-3">
+          <p className="text-[0.65rem] font-semibold uppercase tracking-[0.3em] text-victus-blue/80 sm:text-xs md:text-sm">Technical Expertise</p>
+          <h2 className="text-xl font-bold tracking-tight text-white sm:text-3xl md:text-4xl">
             My Skills
           </h2>
-          <p className="text-xs text-text-secondary/80 sm:text-sm md:text-base">
+          <p className="text-[0.7rem] text-text-secondary/80 sm:text-sm md:text-base">
             Technologies and tools I work with
           </p>
         </header>
 
-        <div className="flex w-full min-h-[460px] max-w-5xl flex-col space-y-5 overflow-hidden rounded-[28px] border border-text-secondary/20 bg-mica-light/60 p-5 sm:min-h-[520px] sm:space-y-5 sm:p-6 md:min-h-[550px] md:space-y-6 md:p-6 lg:min-w-[700px] shadow-lg shadow-victus-blue/10 backdrop-blur-xl">
+        <div className="flex w/full min-h-[380px] max-w-5xl flex-col space-y-4 overflow-hidden rounded-[24px] border border-text-secondary/20 bg-mica-light/60 p-4 sm:min-h-[500px] sm:space-y-5 sm:p-6 md:min-h-[540px] md:space-y-6 md:p-6 lg:min-w-[700px] shadow-lg shadow-victus-blue/10 backdrop-blur-xl">
           <Tooltip.Provider delayDuration={150} skipDelayDuration={400}>
-            <div className="flex h-9 flex-shrink-0 justify-center gap-1 overflow-hidden rounded-full bg-mica-dark/80 p-1 shadow-inner shadow-black/20 sm:h-10 sm:gap-1.5">
+            <div className="flex h-8 flex-shrink-0 justify-center gap-1 overflow-hidden rounded-full bg-mica-dark/80 p-1 shadow-inner shadow-black/20 sm:h-10 sm:gap-1.5">
               {SKILL_CATEGORIES.map((category) => (
                 <Tooltip.Root key={category.key}>
                   <Tooltip.Trigger asChild>
                     <button
                       onClick={() => handleTabChange(category.key)}
-                      className={`relative flex-1 rounded-full px-1.5 py-1 text-xs sm:px-2.5 sm:py-1.5 sm:text-xs md:text-sm font-semibold transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 ${
+                      className={`relative flex-1 rounded-full px-1.5 py-0.5 text-[0.65rem] sm:px-2.5 sm:py-1.5 sm:text-xs md:text-sm font-semibold transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 ${
                         activeTab === category.key
                           ? "bg-gradient-to-r from-victus-blue to-cyan-400 text-white shadow-lg shadow-victus-blue/40 scale-105"
                           : "bg-mica-light/20 text-text-secondary shadow-inner shadow-black/10 hover:bg-mica-light/30 hover:text-white"
@@ -98,7 +98,7 @@ export default function SkillsSection() {
             </div>
           </Tooltip.Provider>
 
-          <div className="flex-1 p-3 sm:p-4 md:p-5">
+          <div className="flex-1 p-2.5 sm:p-4 md:p-5">
             {totalPages > 1 ? (
               <Swiper
                 modules={[Keyboard]}
@@ -142,7 +142,7 @@ export default function SkillsSection() {
             )}
 
             {totalPages > 1 && (
-              <div className="mt-4 flex justify-center gap-2 sm:mt-6">
+              <div className="mt-3 flex justify-center gap-2 sm:mt-6">
                 {Array.from({ length: totalPages }).map((_, index) => (
                   <button
                     key={index}

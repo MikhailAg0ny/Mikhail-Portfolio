@@ -39,7 +39,7 @@ export function useSectionPadding(): SectionSpacing {
   }
 
   return {
-    padding: "pt-28 pb-16",
-    minHeight: "calc(100svh - 11rem)",
+    padding: "pt-14 pb-10",
+    minHeight: "calc(100svh - 7.5rem)",
   };
 }

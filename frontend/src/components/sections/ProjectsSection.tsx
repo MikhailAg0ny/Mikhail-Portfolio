@@ -132,11 +132,11 @@ export default function ProjectsSection() {
       className={`relative flex w-full items-center justify-center overflow-hidden ${padding}`}
       style={{ minHeight }}
     >
-      <div className="mx-auto flex w-full max-w-7xl flex-col items-center justify-start gap-6 px-4 sm:gap-8 sm:px-8 lg:px-10">
+      <div className="mx-auto flex w-full max-w-7xl flex-col items-center justify-start gap-5 px-4 sm:gap-8 sm:px-8 lg:px-10">
         {/* Header */}
-        <div className="flex-shrink-0 w-full space-y-2 text-center sm:space-y-3">
-          <h2 className="text-3xl font-bold tracking-tight text-text-primary sm:text-4xl">My Projects</h2>
-          <p className="text-base text-text-secondary sm:text-lg">A selection of my recent work</p>
+        <div className="flex-shrink-0 w-full space-y-1.5 text-center sm:space-y-3">
+          <h2 className="text-2xl font-bold tracking-tight text-text-primary sm:text-4xl">My Projects</h2>
+          <p className="text-sm text-text-secondary sm:text-lg">A selection of my recent work</p>
         </div>
 
         {/* Mobile Swiper */}
@@ -145,10 +145,10 @@ export default function ProjectsSection() {
           {/* Mobile Swipe Hint */}
           {showSwipeHint && (
             <div className="pointer-events-none absolute inset-x-0 bottom-6 z-10 flex justify-center">
-              <div className="flex items-center gap-3 rounded-full border border-text-secondary/25 bg-mica-light/60 px-4 py-2 text-xs font-semibold text-text-primary shadow-lg shadow-victus-blue/20 backdrop-blur-xl animate-pulse">
-                <ArrowLeftRight className="h-4 w-4 text-victus-blue" strokeWidth={2.2} />
+              <div className="flex items-center gap-2.5 rounded-full border border-text-secondary/25 bg-mica-light/60 px-3.5 py-1.5 text-[0.7rem] font-semibold text-text-primary shadow-lg shadow-victus-blue/20 backdrop-blur-xl animate-pulse">
+                <ArrowLeftRight className="h-3.5 w-3.5 text-victus-blue" strokeWidth={2.2} />
                 <span className="tracking-wide text-text-secondary/90">Swipe or drag to explore</span>
-                <MousePointerClick className="h-4 w-4 text-victus-blue" strokeWidth={2.2} />
+                <MousePointerClick className="h-3.5 w-3.5 text-victus-blue" strokeWidth={2.2} />
               </div>
             </div>
           )}
@@ -182,18 +182,18 @@ export default function ProjectsSection() {
                 >
                   {/* Mobile project card layout */}
                   <motion.article
-                    className="projects-card flex w-full flex-col gap-4 rounded-3xl border border-text-secondary/20 bg-mica-light/60 p-6 shadow-lg shadow-victus-blue/10 backdrop-blur-md"
+                    className="projects-card flex w-full flex-col gap-3.5 rounded-3xl border border-text-secondary/20 bg-mica-light/60 p-5 shadow-lg shadow-victus-blue/10 backdrop-blur-md"
                     variants={cardVariants}
                     initial="hidden"
                     animate="active"
                     transition={{ delay: idx * 0.07 }}
                   >
-                    <span className="inline-block w-fit rounded-full bg-victus-blue/15 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-victus-blue">
+                    <span className="inline-block w-fit rounded-full bg-victus-blue/15 px-2.5 py-0.5 text-[0.7rem] font-semibold uppercase tracking-wider text-victus-blue">
                       {project.timeframe}
                     </span>
 
                     {project.image && (
-                      <div className="relative h-64 overflow-hidden rounded-xl">
+                      <div className="relative h-56 overflow-hidden rounded-xl">
                         <Image
                           src={project.image}
                           alt={project.title}
@@ -206,9 +206,9 @@ export default function ProjectsSection() {
                       </div>
                     )}
 
-                    <div className="space-y-2 text-left">
-                      <h3 className="text-xl font-bold leading-tight text-white">{project.title}</h3>
-                      {primaryTech && <p className="text-sm font-semibold text-victus-blue/90">{primaryTech}</p>}
+                    <div className="space-y-1.5 text-left">
+                      <h3 className="text-lg font-bold leading-tight text-white">{project.title}</h3>
+                      {primaryTech && <p className="text-xs font-semibold text-victus-blue/90">{primaryTech}</p>}
                     </div>
 
                     <p className="text-sm leading-relaxed text-text-secondary/90">{project.problem}</p>
@@ -243,7 +243,7 @@ export default function ProjectsSection() {
                     <div className="flex flex-col gap-3 pt-2">
                       <a
                         href={project.caseStudyUrl}
-                        className="inline-flex items-center justify-center gap-2 rounded-full bg-victus-blue/20 px-5 py-2 text-sm font-semibold text-victus-blue transition-colors hover:bg-victus-blue/30"
+                        className="inline-flex items-center justify-center gap-2 rounded-full bg-victus-blue/20 px-4 py-2 text-xs font-semibold text-victus-blue transition-colors hover:bg-victus-blue/30"
                         aria-label={`Open ${project.title} case study`}
                         target="_blank"
                         rel="noreferrer"

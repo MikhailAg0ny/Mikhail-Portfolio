@@ -113,12 +113,12 @@ export default function AboutSection() {
       style={{ minHeight }}
     >
       <div className="mx-auto flex w-full max-w-6xl flex-col justify-center px-4 sm:px-10">
-        <header className="mb-12 space-y-3 text-center">
-          <p className="text-sm uppercase tracking-[0.45em] text-victus-blue">Get to know me</p>
-          <h2 className="text-3xl font-semibold text-text-primary md:text-4xl">About Me</h2>
+        <header className="mb-8 space-y-2.5 text-center sm:mb-12 sm:space-y-3">
+          <p className="text-xs uppercase tracking-[0.45em] text-victus-blue sm:text-sm">Get to know me</p>
+          <h2 className="text-2xl font-semibold text-text-primary sm:text-3xl md:text-4xl">About Me</h2>
         </header>
 
-        <div className="flex h-full w-full max-w-6xl flex-col gap-8 lg:flex-row lg:items-stretch lg:gap-12">
+        <div className="flex h-full w-full max-w-6xl flex-col gap-6 sm:gap-8 lg:flex-row lg:items-stretch lg:gap-12">
           {/* Left Side - Profile Card */}
           <div className="hidden w-full max-w-md flex-col lg:flex">
             <div className="relative flex h-full flex-col gap-6 rounded-3xl border border-text-secondary/20 bg-mica-light/60 p-8 shadow-lg shadow-victus-blue/10">
@@ -237,11 +237,11 @@ export default function AboutSection() {
           </div>
 
         {/* Right Side - Content Sections */}
-        <div className="flex h-full w-full flex-col justify-center gap-5 lg:justify-between">
-          {popovers.map((item) => (
-            <LearnMorePopover key={item.id} {...item} />
-          ))}
-        </div>
+          <div className="flex h-full w-full flex-col justify-center gap-4 sm:gap-5 lg:justify-between">
+            {popovers.map((item) => (
+              <LearnMorePopover key={item.id} {...item} />
+            ))}
+          </div>
         </div>
       </div>
     </section>
@@ -263,16 +263,16 @@ function LearnMorePopover({ heading, summary, content }: LearnMorePopoverProps) 
       <Popover.Trigger asChild>
         <motion.button
           type="button"
-          className="group w-full rounded-2xl border border-text-secondary/20 bg-mica-light/60 p-6 text-left transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-victus-blue/60"
+          className="group w-full rounded-2xl border border-text-secondary/20 bg-mica-light/60 p-5 text-left transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-victus-blue/60 sm:p-6"
           whileHover={{ y: -2 }}
           whileTap={{ y: 0 }}
           animate={{ borderColor: open ? "rgba(33, 150, 243, 0.3)" : "rgba(148, 163, 184, 0.2)" }}
           transition={{ type: "spring", stiffness: 400, damping: 28 }}
         >
-          <h3 className="mb-3 text-lg font-semibold text-victus-blue">{heading}</h3>
-          <p className="text-sm leading-relaxed text-text-secondary">{summary}</p>
+          <h3 className="mb-2.5 text-base font-semibold text-victus-blue sm:text-lg">{heading}</h3>
+          <p className="text-xs leading-relaxed text-text-secondary sm:text-sm">{summary}</p>
           <motion.span
-            className="mt-4 inline-flex items-center gap-2 text-xs font-semibold text-victus-blue/70"
+            className="mt-3 inline-flex items-center gap-2 text-[0.7rem] font-semibold uppercase tracking-[0.25em] text-victus-blue/70 sm:mt-4 sm:text-xs sm:normal-case sm:tracking-normal"
             animate={{ opacity: open ? 1 : 0.85 }}
             transition={{ duration: 0.2, ease: "easeOut" }}
           >
@@ -298,7 +298,7 @@ function LearnMorePopover({ heading, summary, content }: LearnMorePopoverProps) 
           <Popover.Portal forceMount>
             <Popover.Content sideOffset={12} align="start" asChild>
               <motion.div
-                className="z-[90] w-[min(420px,90vw)] rounded-3xl border border-victus-blue/25 bg-mica-dark/95 p-5 text-sm leading-relaxed text-text-secondary shadow-2xl backdrop-blur-xl focus:outline-none"
+                className="z-[90] w-[min(360px,88vw)] rounded-3xl border border-victus-blue/25 bg-mica-dark/95 p-4 text-sm leading-relaxed text-text-secondary shadow-2xl backdrop-blur-xl focus:outline-none sm:w-[min(420px,90vw)] sm:p-5"
                 initial={{ opacity: 0, y: -8, scale: 0.96 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: -8, scale: 0.96 }}
