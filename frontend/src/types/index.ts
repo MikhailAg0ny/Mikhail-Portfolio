@@ -25,6 +25,7 @@ export interface ProjectCaseStudy {
   showCaseStudyButton?: boolean;
   stack: string[];
   image?: string;
+  images?: string[];
 }
 
 export interface Experience {

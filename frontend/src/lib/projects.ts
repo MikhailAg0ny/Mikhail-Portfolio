@@ -29,6 +29,10 @@ export const myProjects: ProjectCaseStudy[] = [
     caseStudyUrl: "#",
     sourceUrl: "#",
     showCaseStudyButton: false,
+    images: [
+      "/Pictures/JAVA_OOP2_GAME/JAVA OOP2 GROUP.jpg",
+      "/Pictures/UXPH_EVENT_2025/uxph_1.jpeg",
+    ],
   },
   {
     timeframe: "2023",
@@ -43,6 +47,10 @@ export const myProjects: ProjectCaseStudy[] = [
     caseStudyUrl: "#",
     sourceUrl: "#",
     showCaseStudyButton: true,
+    images: [
+      "/Pictures/UXPH_EVENT_2025/uxph_1.jpeg",
+      "/Pictures/JAVA_OOP2_GAME/JAVA OOP2 GROUP.jpg",
+    ],
   },
   {
     timeframe: "2023",
@@ -57,6 +65,9 @@ export const myProjects: ProjectCaseStudy[] = [
     caseStudyUrl: "#",
     sourceUrl: "#",
     showCaseStudyButton: true,
+    images: [
+      "/images/projects/roblox-showcase.jpg",
+    ],
   },
   {
     timeframe: "2024",
@@ -71,6 +82,9 @@ export const myProjects: ProjectCaseStudy[] = [
     caseStudyUrl: "#",
     sourceUrl: "#",
     showCaseStudyButton: true,
+    images: [
+      "/images/projects/pbr-asset-manager.jpg",
+    ],
   },
   {
     timeframe: "2023",
@@ -85,6 +99,9 @@ export const myProjects: ProjectCaseStudy[] = [
     caseStudyUrl: "#",
     sourceUrl: "#",
     showCaseStudyButton: true,
+    images: [
+      "/images/projects/open-source-engine-docs.jpg",
+    ],
   },
   {
     timeframe: "2024",
@@ -99,6 +116,9 @@ export const myProjects: ProjectCaseStudy[] = [
     caseStudyUrl: "#",
     sourceUrl: "#",
     showCaseStudyButton: true,
+    images: [
+      "/images/projects/pixel-tribe-hub.jpg",
+    ],
   },
 ];
 

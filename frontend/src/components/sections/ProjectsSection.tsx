@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import * as Tooltip from "@radix-ui/react-tooltip";
 
@@ -11,20 +11,129 @@ import type { Swiper as SwiperType } from 'swiper';
 import { useSectionPadding } from "@/hooks/useBreakpoints";
 import { ArrowLeftRight, MousePointerClick } from "lucide-react";
 import { motion, type Variants } from "framer-motion";
+import type { ProjectCaseStudy } from "@/types";
 
 // Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
+const IMAGE_ROTATION_INTERVAL = 4000;
+
+const getProjectMediaSources = (project: ProjectCaseStudy): string[] => {
+  if (project.images && project.images.length > 0) {
+    return project.images;
+  }
+
+  if (project.image) {
+    return [project.image];
+  }
+
+  return [];
+};
+
+type ProjectImageCarouselProps = {
+  images?: string[];
+  fallbackImage?: string;
+  alt: string;
+  sizes: string;
+  imageClassName?: string;
+  activeIndex: number;
+};
+
+function ProjectImageCarousel({
+  images,
+  fallbackImage,
+  alt,
+  sizes,
+  imageClassName = "object-cover object-center",
+  activeIndex,
+}: ProjectImageCarouselProps) {
+  const sources = useMemo(() => {
+    if (images && images.length > 0) {
+      return images;
+    }
+
+    if (fallbackImage) {
+      return [fallbackImage];
+    }
+
+    return [];
+  }, [images, fallbackImage]);
+
+  if (sources.length === 0) {
+    return null;
+  }
+
+  const resolvedIndex = sources.length > 0
+    ? Math.min(activeIndex, sources.length - 1)
+    : 0;
+
+  return (
+    <>
+      {sources.map((src, idx) => (
+        <motion.div
+          key={`${src}-${idx}`}
+          className="absolute inset-0"
+          initial={{ opacity: idx === 0 ? 1 : 0 }}
+          animate={{ opacity: idx === resolvedIndex ? 1 : 0 }}
+          transition={{ duration: 0.6, ease: "easeInOut" }}
+        >
+          <Image
+            src={src}
+            alt={alt}
+            fill
+            className={imageClassName}
+            sizes={sizes}
+            loading="lazy"
+            unoptimized
+          />
+        </motion.div>
+      ))}
+    </>
+  );
+}
+
 export default function ProjectsSection() {
   // Use the dataset as-is (no duplication or looping)
   const projects = myProjects;
   const [activeIndex, setActiveIndex] = useState(0);
   const [showSwipeHint, setShowSwipeHint] = useState(true);
+  const projectMediaSources = useMemo(
+    () => projects.map(getProjectMediaSources),
+    [projects],
+  );
+  const [imageIndexes, setImageIndexes] = useState<number[]>(() =>
+    projectMediaSources.map(() => 0),
+  );
   const sectionRef = useRef<HTMLElement | null>(null);
   const hintTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const { padding, minHeight } = useSectionPadding();
+
+  useEffect(() => {
+    setImageIndexes(projectMediaSources.map(() => 0));
+  }, [projectMediaSources, activeIndex]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setImageIndexes((prev) =>
+        prev.map((current, idx) => {
+          const sources = projectMediaSources[idx];
+          if (!sources || sources.length <= 1) {
+            return 0;
+          }
+
+          if (idx !== activeIndex) {
+            return 0;
+          }
+
+          return (current + 1) % sources.length;
+        }),
+      );
+    }, IMAGE_ROTATION_INTERVAL);
+
+    return () => clearInterval(interval);
+  }, [projectMediaSources, activeIndex]);
 
   const hideSwipeHint = useCallback(() => {
     if (hintTimeoutRef.current) {
@@ -194,16 +303,14 @@ export default function ProjectsSection() {
                       {project.timeframe}
                     </span>
 
-                    {project.image && (
+                    {(project.images?.length || project.image) && (
                       <div className="relative h-56 overflow-hidden rounded-xl">
-                        <Image
-                          src={project.image}
+                        <ProjectImageCarousel
+                          images={project.images}
+                          fallbackImage={project.image}
                           alt={project.title}
-                          fill
-                          className="object-cover"
                           sizes="(max-width: 640px) 100vw, 33vw"
-                          loading="lazy"
-                          unoptimized
+                          activeIndex={imageIndexes[idx] ?? 0}
                         />
                       </div>
                     )}
@@ -370,19 +477,17 @@ export default function ProjectsSection() {
                             {project.timeframe}
                           </span>
 
-                          {project.image && (
+                          {(project.images?.length || project.image) && (
                             <div
                               className="relative w-full overflow-hidden rounded-xl shadow-inner"
                               style={{ aspectRatio: "4 / 3" }}
                             >
-                              <Image
-                                src={project.image}
+                              <ProjectImageCarousel
+                                images={project.images}
+                                fallbackImage={project.image}
                                 alt={project.title}
-                                fill
-                                className="object-cover object-center"
                                 sizes="(max-width: 1024px) 60vw, 28vw"
-                                loading="lazy"
-                                unoptimized
+                                activeIndex={imageIndexes[idx] ?? 0}
                               />
                             </div>
                           )}
@@ -447,24 +552,23 @@ export default function ProjectsSection() {
                       </>
                     ) : (
                       <div className="flex h-full flex-col gap-4 text-left">
-                        {project.image && (
+                        {(project.images?.length || project.image) && (
                           <div
                             className="relative w-full overflow-hidden rounded-2xl border border-white/10 bg-mica-dark/20 shadow-md"
                             style={{ aspectRatio: "4 / 3" }}
                           >
                             {project.timeframe && (
-                              <span className="absolute left-3 top-3 inline-flex items-center rounded-full bg-victus-blue/20 px-3 py-1 text-[0.7rem] font-semibold uppercase tracking-wide text-victus-blue shadow-sm">
+                              <span className="absolute left-3 top-3 z-10 inline-flex items-center rounded-full bg-victus-blue/20 px-3 py-1 text-[0.7rem] font-semibold uppercase tracking-wide text-victus-blue shadow-sm">
                                 {project.timeframe}
                               </span>
                             )}
-                            <Image
-                              src={project.image}
+                            <ProjectImageCarousel
+                              images={project.images}
+                              fallbackImage={project.image}
                               alt={project.title}
-                              fill
-                              className="object-cover object-center transition-transform duration-500 group-hover:scale-[1.06]"
                               sizes="(max-width: 1024px) 60vw, 25vw"
-                              loading="lazy"
-                              unoptimized
+                              imageClassName="object-cover object-center transition-transform duration-500 group-hover:scale-[1.06]"
+                              activeIndex={imageIndexes[idx] ?? 0}
                             />
                           </div>
                         )}
