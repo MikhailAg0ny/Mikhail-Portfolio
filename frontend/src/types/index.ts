@@ -19,11 +19,10 @@ export interface ProjectCaseStudy {
   timeframe: string;
   primaryTech: string;
   featuredTechs: string[];
-  problem: string;
-  solution: string;
-  results: string[];
-  caseStudyUrl: string;
-  sourceUrl: string;
+  description: string;
+  caseStudyUrl?: string;
+  sourceUrl?: string;
+  showCaseStudyButton?: boolean;
   stack: string[];
   image?: string;
 }

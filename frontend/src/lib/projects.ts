@@ -1,3 +1,5 @@
+//DO NOT TOUCH UNLESS I SAY SO
+
 import type { ProjectCaseStudy } from "@/types";
 
 export type ProjectCategory = "all" | "featured";
@@ -13,7 +15,7 @@ export const myProjects: ProjectCaseStudy[] = [
   {
     timeframe: "2024",
     image: "/Pictures/JAVA_OOP2_GAME/JAVA OOP2 GROUP.jpg",
-    title: "Mythic Quest Companion",
+    title: "HeroConquest Turn Based RPG",
     primaryTech: "Java OOP2 Game",
     featuredTechs: ["Apache Netbeans", "Java"],
     stack: [
@@ -21,19 +23,12 @@ export const myProjects: ProjectCaseStudy[] = [
       "Apache Netbeans",
       "Java",
     ],
-    role: "Product Designer & Front-End Developer",
-    // Modal details
-    problem:
-      "Increase player retention with a lore companion experience that works seamlessly on web and mobile.",
-    solution:
-      "Built a headless CMS driven site with in-browser mini games, accessibility-first navigation, and a component library shared with in-game overlays.",
-    results: [
-      "+38% session duration",
-      "22% reduction in support tickets",
-      "Optimized TTI under 1.2s",
-    ],
+    role: "Game Programmer, Pixel Artist",
+    description:
+      "A Java-based turn-based RPG with custom pixel art, party management systems, and tactical combat built in Apache NetBeans.",
     caseStudyUrl: "#",
     sourceUrl: "#",
+    showCaseStudyButton: false,
   },
   {
     timeframe: "2023",
@@ -43,14 +38,11 @@ export const myProjects: ProjectCaseStudy[] = [
     featuredTechs: ["Automation", "Deployment Pipeline"],
     stack: ["Full-Stack Development", "Automation", "Deployment Pipeline"],
     role: "Lead Developer",
-    // Modal details
-    problem:
-      "Ship customizable portfolio templates for game developers with minimal setup.",
-    solution:
-      "Architected a modular content model, delivered theming controls, and automated deployments.",
-    results: ["12+ live portfolios", "Average Lighthouse 95+", "2 week turnaround"],
+    description:
+      "A customizable portfolio engine for indie developers featuring modular content models, theming controls, and an automated deployment pipeline.",
     caseStudyUrl: "#",
     sourceUrl: "#",
+    showCaseStudyButton: true,
   },
   {
     timeframe: "2023",
@@ -60,14 +52,11 @@ export const myProjects: ProjectCaseStudy[] = [
     featuredTechs: ["Luau Scripting", "Live Ops"],
     stack: ["Game Systems", "Luau Scripting", "Live Ops"],
     role: "Lead Developer",
-    // Modal details
-    problem:
-      "Ship customizable portfolio templates for game developers with minimal setup.",
-    solution:
-      "Architected a modular content model, delivered theming controls, and automated deployments.",
-    results: ["12+ live portfolios", "Average Lighthouse 95+", "2 week turnaround"],
+    description:
+      "Delivered live operations tooling and core gameplay systems for Roblox experiences using Luau scripting and data-driven events.",
     caseStudyUrl: "#",
     sourceUrl: "#",
+    showCaseStudyButton: true,
   },
   {
     timeframe: "2024",
@@ -77,14 +66,11 @@ export const myProjects: ProjectCaseStudy[] = [
     featuredTechs: ["Wireframing", "User Research"],
     stack: ["UI/UX Design", "Wireframing", "User Research"],
     role: "UI/UX Designer",
-    // Modal details
-    problem:
-      "Game artists needed a way to visually browse, tag, and manage a massive library of 3D assets and materials without technical overhead.",
-    solution:
-      "Designed a drag-and-drop interface with real-time 3D model previews, batch-editing for metadata, and a smart-tagging system.",
-    results: ["-50% time spent searching for assets", "Artist adoption rate of 95%", "Standardized asset library"],
+    description:
+      "Designed a drag-and-drop interface for browsing, tagging, and managing large PBR asset libraries with real-time 3D previews and smart tagging.",
     caseStudyUrl: "#",
     sourceUrl: "#",
+    showCaseStudyButton: true,
   },
   {
     timeframe: "2023",
@@ -94,14 +80,11 @@ export const myProjects: ProjectCaseStudy[] = [
     featuredTechs: ["Search Integration", "Technical Writing"],
     stack: ["Static Site Generation", "Search Integration", "Technical Writing"],
     role: "Technical Writer & Front-End Developer",
-    // Modal details
-    problem:
-      "A new engine struggled with adoption because its documentation was disorganized, hard to search, and not beginner-friendly.",
-    solution:
-      "Migrated all content to a static site generator, implemented powerful algorithmic search, and rewrote key tutorials with interactive code samples.",
-    results: ["+200% daily active doc users", "Community contributions to docs increased", "Ranked #1 on Google for key engine queries"],
+    description:
+      "Rebuilt the documentation for an open-source engine with static generation, advanced search integration, and interactive tutorials to boost adoption.",
     caseStudyUrl: "#",
     sourceUrl: "#",
+    showCaseStudyButton: true,
   },
   {
     timeframe: "2024",
@@ -111,14 +94,11 @@ export const myProjects: ProjectCaseStudy[] = [
     featuredTechs: ["API Integration", "Database Management"],
     stack: ["Community Platform", "API Integration", "Database Management"],
     role: "Full-Stack Developer",
-    // Modal details
-    problem:
-      "An indie game needed a hub for players to share creations, form guilds, and view leaderboards outside of the game client.",
-    solution:
-      "Developed a secure forum with API-driven leaderboards, user-generated content galleries, and OAuth integration with the game's auth system.",
-    results: ["10,000+ user accounts in 3 months", "User-generated content drove social engagement", "Reduced developer time on community management"],
+    description:
+      "Developed a community hub with API-driven leaderboards, user-generated content galleries, and OAuth integration to extend an indie game's reach.",
     caseStudyUrl: "#",
     sourceUrl: "#",
+    showCaseStudyButton: true,
   },
 ];
 

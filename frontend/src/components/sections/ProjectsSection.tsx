@@ -174,6 +174,8 @@ export default function ProjectsSection() {
                 project.featuredTechs && project.featuredTechs.length > 0
                   ? project.featuredTechs
                   : project.stack.filter((tech) => tech !== primaryTech);
+              const showCaseStudyButton =
+                project.showCaseStudyButton ?? Boolean(project.caseStudyUrl);
 
               return (
                 <SwiperSlide
@@ -211,7 +213,7 @@ export default function ProjectsSection() {
                       {primaryTech && <p className="text-xs font-semibold text-victus-blue/90">{primaryTech}</p>}
                     </div>
 
-                    <p className="text-sm leading-relaxed text-text-secondary/90">{project.problem}</p>
+                    <p className="text-sm leading-relaxed text-text-secondary/90">{project.description}</p>
 
                     {secondaryTechs.length > 0 && (
                       <div className="flex flex-wrap gap-2">
@@ -241,18 +243,20 @@ export default function ProjectsSection() {
                     <p className="text-sm font-medium text-victus-blue/80">Role: {project.role}</p>
 
                     <div className="flex flex-col gap-3 pt-2">
-                      <a
-                        href={project.caseStudyUrl}
-                        className="inline-flex items-center justify-center gap-2 rounded-full bg-victus-blue/20 px-4 py-2 text-xs font-semibold text-victus-blue transition-colors hover:bg-victus-blue/30"
-                        aria-label={`Open ${project.title} case study`}
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        View Project
-                        <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                        </svg>
-                      </a>
+                      {showCaseStudyButton && project.caseStudyUrl && (
+                        <a
+                          href={project.caseStudyUrl}
+                          className="inline-flex items-center justify-center gap-2 rounded-full bg-victus-blue/20 px-4 py-2 text-xs font-semibold text-victus-blue transition-colors hover:bg-victus-blue/30"
+                          aria-label={`Open ${project.title} case study`}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          View Project
+                          <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                          </svg>
+                        </a>
+                      )}
 
                       {project.sourceUrl && (
                         <a
@@ -343,6 +347,8 @@ export default function ProjectsSection() {
                 project.featuredTechs && project.featuredTechs.length > 0
                   ? project.featuredTechs
                 : project.stack.filter((tech) => tech !== primaryTech);
+              const showCaseStudyButton =
+                project.showCaseStudyButton ?? Boolean(project.caseStudyUrl);
               const isActive = idx === activeIndex;
 
               return (
@@ -389,7 +395,7 @@ export default function ProjectsSection() {
                           </div>
 
                           <p className="line-clamp-4 text-sm text-text-secondary">
-                            {project.problem}
+                            {project.description}
                           </p>
 
                           {secondaryTechs.length > 0 && (
@@ -409,18 +415,20 @@ export default function ProjectsSection() {
                         </div>
 
                         <div className="mt-auto flex flex-col items-center gap-2 pt-4 sm:flex-row sm:justify-center">
-                          <a
-                            href={project.caseStudyUrl}
-                            className="inline-flex items-center gap-2 rounded-full bg-victus-blue/20 px-4 py-2 text-xs font-semibold text-victus-blue transition-colors hover:bg-victus-blue/30"
-                            aria-label={`Open ${project.title} case study`}
-                            target="_blank"
-                            rel="noreferrer"
-                          >
-                            View Project
-                            <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                            </svg>
-                          </a>
+                          {showCaseStudyButton && project.caseStudyUrl && (
+                            <a
+                              href={project.caseStudyUrl}
+                              className="inline-flex items-center gap-2 rounded-full bg-victus-blue/20 px-4 py-2 text-xs font-semibold text-victus-blue transition-colors hover:bg-victus-blue/30"
+                              aria-label={`Open ${project.title} case study`}
+                              target="_blank"
+                              rel="noreferrer"
+                            >
+                              View Project
+                              <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                              </svg>
+                            </a>
+                          )}
 
                           {project.sourceUrl && (
                             <a
