@@ -8,7 +8,8 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Link as LinkIcon, Globe, Newspaper, Play, Trophy, MousePointerClick, Gamepad2 } from "lucide-react";
 
 import { achievements } from "@/lib/achievements";
-import { useSectionPadding } from "@/hooks/useBreakpoints";
+import { useSectionPadding, useBreakpoints } from "@/hooks/useBreakpoints";
+import clsx from "clsx";
 
 const collageImages = [
   // Feature photo covering the main recognition moment
@@ -37,6 +38,7 @@ export default function AchievementsSection() {
   const [heroImage, ...supportImages] = collageImages;
   const primaryAchievement = achievements[0];
   const { padding, minHeight } = useSectionPadding();
+  const { isShort } = useBreakpoints();
   const [hoveredImage, setHoveredImage] = useState<(typeof collageImages)[number] | null>(null);
   const sectionRef = useRef<HTMLElement | null>(null);
   const hintTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -125,7 +127,12 @@ export default function AchievementsSection() {
       className={`flex w-full justify-center ${padding}`}
       style={{ minHeight }}
     >
-      <div className="mx-auto w-full max-w-6xl px-4 sm:px-10">
+      <div
+        className={clsx(
+          "mx-auto w-full max-w-6xl px-4 sm:px-10 transition-transform duration-300 ease-out",
+          isShort && "scale-90 origin-center"
+        )}
+      >
         <header className="space-y-2.5 text-left md:text-center">
           <p className="text-xs uppercase tracking-[0.45em] text-victus-blue sm:text-sm">Achievements</p>
           <h2 className="text-2xl font-semibold text-text-primary sm:text-3xl md:text-4xl">Recognitions that capture impact and craft.</h2>
@@ -222,26 +229,26 @@ export default function AchievementsSection() {
                   if (featuredLinks.length === 0) return null;
 
                   return (
-                  <div className="space-y-2.5">
-                    <h4 className="text-[0.65rem] uppercase tracking-[0.35em] text-text-secondary/50 sm:text-xs">Featured coverage</h4>
-                    <ul className="space-y-2">
-                      {featuredLinks.map((link) => (
-                        <li key={link.name}>
-                          <a
-                            href={link.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="group flex items-center gap-2.5 rounded-xl border border-text-secondary/10 bg-mica-light/40 px-3 py-2 text-xs text-text-secondary transition-colors hover:border-victus-blue/30 hover:text-text-primary sm:text-sm"
-                          >
-                            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-victus-blue/10 text-victus-blue transition-colors group-hover:bg-victus-blue/20 group-hover:text-victus-blue">
-                              {renderLinkIcon(link.icon)}
-                            </span>
-                            <span className="font-medium text-text-primary transition-colors group-hover:text-victus-blue">{link.name}</span>
-                          </a>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                    <div className="space-y-2.5">
+                      <h4 className="text-[0.65rem] uppercase tracking-[0.35em] text-text-secondary/50 sm:text-xs">Featured coverage</h4>
+                      <ul className="space-y-2">
+                        {featuredLinks.map((link) => (
+                          <li key={link.name}>
+                            <a
+                              href={link.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="group flex items-center gap-2.5 rounded-xl border border-text-secondary/10 bg-mica-light/40 px-3 py-2 text-xs text-text-secondary transition-colors hover:border-victus-blue/30 hover:text-text-primary sm:text-sm"
+                            >
+                              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-victus-blue/10 text-victus-blue transition-colors group-hover:bg-victus-blue/20 group-hover:text-victus-blue">
+                                {renderLinkIcon(link.icon)}
+                              </span>
+                              <span className="font-medium text-text-primary transition-colors group-hover:text-victus-blue">{link.name}</span>
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
                   );
                 })()}
               </div>

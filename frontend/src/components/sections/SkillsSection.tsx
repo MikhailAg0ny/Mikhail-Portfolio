@@ -10,12 +10,13 @@ import { getSkillsByCategory, ITEMS_PER_PAGE, SKILL_CATEGORIES } from "@/lib/ski
 import type { SkillCategory } from "@/lib/skills";
 import SkillCard from "@/components/ui/SkillCard";
 import { useBreakpoints, useSectionPadding } from "@/hooks/useBreakpoints";
+import clsx from "clsx";
 
 export default function SkillsSection() {
   const [activeTab, setActiveTab] = useState<SkillCategory>("languages");
   const [currentPage, setCurrentPage] = useState(0);
   const { padding } = useSectionPadding();
-  const { isMobile } = useBreakpoints();
+  const { isMobile, isShort } = useBreakpoints();
   const swiperRef = useRef<SwiperType | null>(null);
 
   const itemsPerPage = isMobile ? 6 : ITEMS_PER_PAGE;
@@ -54,7 +55,12 @@ export default function SkillsSection() {
     <section
       className={`flex w-full items-center justify-center overflow-hidden px-2 sm:px-4 lg:px-6 ${padding}`}
     >
-      <div className="flex w-full max-w-5xl flex-col justify-center gap-2.5 sm:gap-4 md:gap-6">
+      <div
+        className={clsx(
+          "flex w-full max-w-5xl flex-col justify-center gap-2.5 sm:gap-4 md:gap-6 transition-transform duration-300 ease-out",
+          isShort && "scale-90 origin-center"
+        )}
+      >
         <header className="flex-shrink-0 space-y-0.5 text-center sm:space-y-2 md:space-y-3">
           <p className="text-[0.65rem] font-semibold uppercase tracking-[0.3em] text-victus-blue/80 sm:text-xs md:text-sm">Technical Expertise</p>
           <h2 className="text-xl font-bold tracking-tight text-white sm:text-3xl md:text-4xl">
@@ -73,11 +79,10 @@ export default function SkillsSection() {
                   <Tooltip.Trigger asChild>
                     <button
                       onClick={() => handleTabChange(category.key)}
-                      className={`relative flex-1 rounded-full px-1.5 py-0.5 text-[0.65rem] sm:px-2.5 sm:py-1.5 sm:text-xs md:text-sm font-semibold transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 ${
-                        activeTab === category.key
-                          ? "bg-gradient-to-r from-victus-blue to-cyan-400 text-white shadow-lg shadow-victus-blue/40 scale-105"
-                          : "bg-mica-light/20 text-text-secondary shadow-inner shadow-black/10 hover:bg-mica-light/30 hover:text-white"
-                      }`}
+                      className={`relative flex-1 rounded-full px-1.5 py-0.5 text-[0.65rem] sm:px-2.5 sm:py-1.5 sm:text-xs md:text-sm font-semibold transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 ${activeTab === category.key
+                        ? "bg-gradient-to-r from-victus-blue to-cyan-400 text-white shadow-lg shadow-victus-blue/40 scale-105"
+                        : "bg-mica-light/20 text-text-secondary shadow-inner shadow-black/10 hover:bg-mica-light/30 hover:text-white"
+                        }`}
                       aria-pressed={activeTab === category.key}
                       type="button"
                     >
@@ -150,11 +155,10 @@ export default function SkillsSection() {
                       setCurrentPage(index);
                       swiperRef.current?.slideTo(index);
                     }}
-                    className={`h-1.5 rounded-full transition-all duration-300 sm:h-2 ${
-                      currentPage === index
-                        ? "w-6 sm:w-8 md:w-10 bg-gradient-to-r from-victus-blue to-cyan-400 shadow-md shadow-victus-blue/50"
-                        : "w-1.5 sm:w-2 bg-text-secondary/40 hover:w-2.5 sm:hover:w-3 hover:bg-text-secondary/60"
-                    }`}
+                    className={`h-1.5 rounded-full transition-all duration-300 sm:h-2 ${currentPage === index
+                      ? "w-6 sm:w-8 md:w-10 bg-gradient-to-r from-victus-blue to-cyan-400 shadow-md shadow-victus-blue/50"
+                      : "w-1.5 sm:w-2 bg-text-secondary/40 hover:w-2.5 sm:hover:w-3 hover:bg-text-secondary/60"
+                      }`}
                     aria-label={`Go to page ${index + 1}`}
                   />
                 ))}

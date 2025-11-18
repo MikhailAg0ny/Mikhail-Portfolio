@@ -25,7 +25,7 @@ export default function Navbar({ activeSection = "hero", onNavigate }: NavbarPro
   const isTransparent = isHeroSection && !hasScrolled;
 
   const [navSpring, navApi] = useSpring(() => ({
-    backgroundColor: isTransparent ? "rgba(42, 47, 53, 0)" : "rgba(42, 47, 53, 0.82)",
+    backgroundColor: isTransparent ? "rgba(42, 47, 53, 0)" : "rgba(42, 47, 53, 1)",
     boxShadow: isTransparent ? "0px 0px 0px rgba(26, 29, 33, 0)" : "0px 8px 28px rgba(26, 29, 33, 0.35)",
     config: { tension: 240, friction: 26 },
   }));
@@ -57,7 +57,7 @@ export default function Navbar({ activeSection = "hero", onNavigate }: NavbarPro
   useEffect(() => {
     const transparent = isHeroSection && !hasScrolled;
     navApi.start({
-      backgroundColor: transparent ? "rgba(42, 47, 53, 0)" : "rgba(42, 47, 53, 0.82)",
+      backgroundColor: transparent ? "rgba(42, 47, 53, 0)" : "rgba(42, 47, 53, 1)",
       boxShadow: transparent ? "0px 0px 0px rgba(26, 29, 33, 0)" : "0px 8px 24px rgba(26, 29, 33, 0.35)",
     });
   }, [hasScrolled, isHeroSection, navApi]);
@@ -65,11 +65,10 @@ export default function Navbar({ activeSection = "hero", onNavigate }: NavbarPro
   return (
     <animated.nav
       id="navbar"
-      className={`fixed top-0 z-[100] w-full border-b transition duration-300 ${
-        isTransparent
+      className={`fixed top-0 z-[100] w-full border-b transition duration-300 ${isTransparent
           ? "border-transparent bg-transparent backdrop-blur-none"
-          : "border-text-secondary/20 bg-mica-light/80 backdrop-blur-lg"
-      }`}
+          : "border-text-secondary/20 bg-mica-light"
+        }`}
       style={navSpring}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 sm:px-10">
@@ -92,7 +91,7 @@ export default function Navbar({ activeSection = "hero", onNavigate }: NavbarPro
           />
           <span className="text-lg font-semibold text-victus-blue">Mikhail&apos;s Portfolio</span>
         </Link>
-        
+
         {/* Desktop Menu */}
         <ul id="navbar-menu" className="hidden gap-6 md:flex">
           {navLinks.map((link) => {
@@ -101,11 +100,10 @@ export default function Navbar({ activeSection = "hero", onNavigate }: NavbarPro
             return (
               <li key={link.label}>
                 <Link
-                  className={`nav-link text-sm font-medium transition ${
-                    isActive
+                  className={`nav-link text-sm font-medium transition ${isActive
                       ? "text-victus-blue nav-link-active"
                       : "text-text-secondary hover:text-victus-blue"
-                  }`}
+                    }`}
                   href={path}
                   data-menuanchor={link.anchor}
                   onClick={(event) => {
@@ -151,11 +149,10 @@ export default function Navbar({ activeSection = "hero", onNavigate }: NavbarPro
                 return (
                   <DropdownMenu.Item
                     key={link.anchor}
-                    className={`flex cursor-pointer items-center rounded-xl px-3 py-2 transition ${
-                      isActive
+                    className={`flex cursor-pointer items-center rounded-xl px-3 py-2 transition ${isActive
                         ? "bg-victus-blue/20 text-victus-blue"
                         : "hover:bg-mica-light/30 hover:text-victus-blue"
-                    }`}
+                      }`}
                     onSelect={(event) => {
                       event.preventDefault();
                       handleNavClick(link.anchor);

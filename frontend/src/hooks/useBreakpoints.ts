@@ -5,14 +5,16 @@ export function useBreakpoints() {
   const isDesktop = useMediaQuery({ minWidth: 1024 });
   const isTablet = useMediaQuery({ minWidth: 768, maxWidth: 1023 });
   const isMobile = useMediaQuery({ maxWidth: 767 });
+  const isShort = useMediaQuery({ maxHeight: 900 });
 
   return useMemo(
     () => ({
       isDesktop,
       isTablet,
       isMobile,
+      isShort,
     }),
-    [isDesktop, isTablet, isMobile]
+    [isDesktop, isTablet, isMobile, isShort]
   );
 }
 
@@ -22,18 +24,18 @@ type SectionSpacing = {
 };
 
 export function useSectionPadding(): SectionSpacing {
-  const { isDesktop, isTablet } = useBreakpoints();
+  const { isDesktop, isTablet, isShort } = useBreakpoints();
 
   if (isDesktop) {
     return {
-      padding: "pt-32 pb-20",
+      padding: isShort ? "pt-24 pb-12" : "pt-32 pb-20",
       minHeight: "calc(100svh - 13rem)",
     };
   }
 
   if (isTablet) {
     return {
-      padding: "pt-32 pb-20",
+      padding: isShort ? "pt-24 pb-12" : "pt-32 pb-20",
       minHeight: "calc(100svh - 13rem)",
     };
   }

@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
+import dynamic from "next/dynamic";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import type { FullPageApi } from "fullpage.js";
@@ -37,7 +38,7 @@ function cleanupFullpageArtifacts(container?: HTMLElement | null) {
     style.removeProperty("touch-action");
     style.removeProperty("-ms-touch-action");
   });
-  
+
   // Explicitly enable vertical scrolling
   html.style.overflowY = "auto";
   html.style.overflowX = "hidden";
@@ -96,7 +97,7 @@ export default function PagePilingWrapper({ children, onSectionChange, initialAn
     const shouldEnable = window.innerWidth >= enableAtWidth;
     setIsEnabled(shouldEnable);
     onModeChange?.(shouldEnable);
-    
+
     // Force scroll enable on mobile
     if (!shouldEnable) {
       cleanupFullpageArtifacts(fullpageRef.current);

@@ -3,11 +3,14 @@
 import { useCallback } from "react";
 import ImageWithFallback from "@/components/ui/ImageWithFallback";
 import * as Tooltip from "@radix-ui/react-tooltip";
-import { useSectionPadding } from "@/hooks/useBreakpoints";
+import { useSectionPadding, useBreakpoints } from "@/hooks/useBreakpoints";
 import type { FullPageApi } from "fullpage.js";
+import clsx from "clsx";
 
 export default function HeroSection() {
   const { padding, minHeight } = useSectionPadding();
+  const { isShort } = useBreakpoints();
+
   const handleNavigate = useCallback((section: string) => {
     if (typeof window === "undefined") return;
 
@@ -29,10 +32,18 @@ export default function HeroSection() {
 
   return (
     <section
-      className={`flex w-full items-center justify-center ${padding}`}
+      className={clsx(
+        "flex w-full items-center justify-center",
+        padding
+      )}
       style={{ minHeight }}
     >
-      <div className="mx-auto w-full max-w-6xl px-4 sm:px-8 lg:px-12">
+      <div
+        className={clsx(
+          "mx-auto w-full max-w-6xl px-4 sm:px-8 lg:px-12 transition-transform duration-300 ease-out",
+          isShort && "scale-90 origin-center"
+        )}
+      >
         <div className="grid gap-8 sm:gap-10 lg:grid-cols-[1fr_1.2fr] lg:items-center">
           <div className="flex justify-center lg:justify-start">
             <div className="relative">

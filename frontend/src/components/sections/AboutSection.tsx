@@ -1,14 +1,16 @@
 'use client';
 
 import { MouseEvent, ReactNode, useState } from "react";
+import clsx from "clsx";
 
 import ImageWithFallback from "@/components/ui/ImageWithFallback";
 import * as Popover from "@radix-ui/react-popover";
 import { AnimatePresence, motion } from "framer-motion";
-import { useSectionPadding } from "@/hooks/useBreakpoints";
+import { useSectionPadding, useBreakpoints } from "@/hooks/useBreakpoints";
 
 export default function AboutSection() {
   const { padding, minHeight } = useSectionPadding();
+  const { isShort } = useBreakpoints();
   const [showPreview, setShowPreview] = useState(false);
   const [cardTilt, setCardTilt] = useState<{ rotateX: number; rotateY: number }>({ rotateX: 0, rotateY: 0 });
   const [logoOffset, setLogoOffset] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
@@ -109,20 +111,41 @@ export default function AboutSection() {
 
   return (
     <section
-      className={`flex w-full items-center justify-center ${padding}`}
+      className={clsx(
+        "flex w-full",
+        padding,
+        "items-center justify-center" // Always center since we are scaling to fit
+      )}
       style={{ minHeight }}
     >
-      <div className="mx-auto flex w-full max-w-6xl flex-col justify-center px-4 sm:px-10">
+      <div
+        className={clsx(
+          "mx-auto flex w-full flex-col px-4 sm:px-10 transition-transform duration-300 ease-out",
+          !isShort ? "max-w-6xl justify-center" : "max-w-[90%] scale-90 origin-center" // Scale down on short screens
+        )}
+      >
         <header className="mb-8 space-y-2.5 text-center sm:mb-12 sm:space-y-3">
           <p className="text-xs uppercase tracking-[0.45em] text-victus-blue sm:text-sm">Get to know me</p>
           <h2 className="text-2xl font-semibold text-text-primary sm:text-3xl md:text-4xl">About Me</h2>
         </header>
 
-        <div className="flex h-full w-full max-w-6xl flex-col gap-6 sm:gap-8 lg:flex-row lg:items-stretch lg:gap-12">
+        <div
+          className={clsx(
+            "flex w-full flex-col gap-6 sm:gap-8",
+            "lg:flex-row lg:gap-12", // Always allow side-by-side on large screens
+            !isShort ? "max-w-6xl h-full lg:items-stretch" : "items-start" // Only constrain height/width if NOT short
+          )}
+        >
           {/* Left Side - Profile Card */}
           <div className="hidden w-full max-w-md flex-col lg:flex">
-            <div className="relative flex h-full flex-col gap-6 rounded-3xl border border-text-secondary/20 bg-mica-light/60 p-8 shadow-lg shadow-victus-blue/10">
-              <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:gap-10">
+            <div className={clsx(
+              "relative flex h-full flex-col rounded-3xl border border-text-secondary/20 bg-mica-light/60 shadow-lg shadow-victus-blue/10",
+              isShort ? "gap-4 p-5" : "gap-6 p-8"
+            )}>
+              <div className={clsx(
+                "flex flex-col lg:flex-row lg:items-start",
+                isShort ? "gap-4 lg:gap-6" : "gap-6 lg:gap-10"
+              )}>
                 <div className="space-y-4 lg:flex-[0.8] lg:pr-1 ">
                   <h3 className="text-2xl font-semibold text-text-primary">Mikhail</h3>
                   <p className="text-sm leading-relaxed text-text-secondary">
@@ -132,7 +155,10 @@ export default function AboutSection() {
                 </div>
 
                 <motion.div
-                  className="mx-auto flex h-72 w-64 flex-shrink-0 items-center justify-center overflow-visible rounded-[36px] cursor-pointer lg:flex-[0.7] lg:max-w-[15rem] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-victus-blue/60"
+                  className={clsx(
+                    "mx-auto flex w-full aspect-[3/4] flex-shrink-0 items-center justify-center overflow-visible rounded-[36px] cursor-pointer lg:flex-[0.7] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-victus-blue/60",
+                    isShort ? "max-w-[10rem]" : "max-w-[14rem]"
+                  )}
                   style={{ transformPerspective: 1100, rotateX: cardTilt.rotateX, rotateY: cardTilt.rotateY }}
                   whileHover={{ scale: 1.02 }}
                   transition={{ type: "spring", stiffness: 260, damping: 22 }}
@@ -223,7 +249,10 @@ export default function AboutSection() {
                 </motion.div>
               </div>
 
-              <div className="space-y-3 border-t border-text-secondary/20 pt-6">
+              <div className={clsx(
+                "border-t border-text-secondary/20",
+                isShort ? "space-y-2 pt-4" : "space-y-3 pt-6"
+              )}>
                 <p className="text-xs uppercase tracking-[0.2em] text-victus-blue">Interests</p>
                 <div className="flex flex-wrap gap-2">
                   <span className="rounded-full border border-victus-blue/30 bg-mica-dark/40 px-3 py-1 text-xs text-victus-blue">Game Development</span>
@@ -236,7 +265,7 @@ export default function AboutSection() {
             </div>
           </div>
 
-        {/* Right Side - Content Sections */}
+          {/* Right Side - Content Sections */}
           <div className="flex h-full w-full flex-col justify-center gap-4 sm:gap-5 lg:justify-between">
             {popovers.map((item) => (
               <LearnMorePopover key={item.id} {...item} />

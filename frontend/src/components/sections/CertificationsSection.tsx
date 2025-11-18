@@ -3,12 +3,14 @@
 import { useMemo } from "react";
 import Image from "next/image";
 import { ExternalLink } from "lucide-react";
-import { useSectionPadding } from "@/hooks/useBreakpoints";
+import { useSectionPadding, useBreakpoints } from "@/hooks/useBreakpoints";
 import { certifications } from "@/lib/certification";
 import type { Certificate } from "@/types";
+import clsx from "clsx";
 
 export default function CertificationsSection() {
   const { padding, minHeight } = useSectionPadding();
+  const { isShort } = useBreakpoints();
   const certificateImages = useMemo<Certificate[]>(
     () =>
       certifications.map((certificate) => ({
@@ -23,7 +25,12 @@ export default function CertificationsSection() {
       className={`flex w-full justify-center ${padding}`}
       style={{ minHeight }}
     >
-      <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-4 sm:px-10">
+      <div
+        className={clsx(
+          "mx-auto flex w-full max-w-6xl flex-col gap-8 px-4 sm:px-10 transition-transform duration-300 ease-out",
+          isShort && "scale-90 origin-center"
+        )}
+      >
         <header className="space-y-3 text-center">
           <p className="text-xs font-semibold uppercase tracking-[0.4em] text-victus-blue">
             Certifications

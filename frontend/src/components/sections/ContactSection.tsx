@@ -2,19 +2,26 @@
 
 import * as Tooltip from "@radix-ui/react-tooltip";
 import { FiArrowUpRight } from "react-icons/fi";
-import { useSectionPadding } from "@/hooks/useBreakpoints";
+import { useSectionPadding, useBreakpoints } from "@/hooks/useBreakpoints";
+import clsx from "clsx";
 
 const EMAIL_ADDRESS = process.env.NEXT_PUBLIC_EMAIL || "mikhailjpn@gmail.com";
 
 export default function ContactSection() {
   const { padding, minHeight } = useSectionPadding();
+  const { isShort } = useBreakpoints();
 
   return (
     <section
       className={`flex w-full items-center justify-center overflow-hidden ${padding}`}
       style={{ minHeight }}
     >
-      <div className="flex w-full max-w-6xl flex-col items-center justify-center gap-8 px-4 sm:gap-8 sm:px-10">
+      <div
+        className={clsx(
+          "flex w-full max-w-6xl flex-col items-center justify-center gap-8 px-4 sm:gap-8 sm:px-10 transition-transform duration-300 ease-out",
+          isShort && "scale-90 origin-center"
+        )}
+      >
         <div className="max-w-3xl space-y-3 text-center sm:space-y-4">
           <p className="text-xs font-semibold uppercase tracking-[0.3em] text-victus-blue/80 sm:text-sm">Get In Touch</p>
           <h2 className="text-3xl font-bold tracking-tight text-text-primary sm:text-4xl md:text-5xl">
