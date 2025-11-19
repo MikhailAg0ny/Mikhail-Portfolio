@@ -1,5 +1,5 @@
 // Skill data types and constants
-// DO NOT TOUCH
+// DO NOT TOUCH THE URL
 export interface Skill {
   name: string;
   icon: string;
@@ -7,6 +7,7 @@ export interface Skill {
 
 export type SkillCategory = "languages" | "tools" | "platforms";
 
+// DO NOT TOUCH THE URL
 // Tools & Software
 export const tools: Skill[] = [
   { name: "Android Studio", icon: "https://www.svgrepo.com/show/305701/androidstudio.svg" },
@@ -24,6 +25,7 @@ export const tools: Skill[] = [
   { name: "Windsurf", icon: "https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/windsurf-icon.png" },
 ];
 
+// DO NOT TOUCH THE URL
 // Platforms & Frameworks
 export const platforms: Skill[] = [
   { name: "AWS", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" },
@@ -31,6 +33,7 @@ export const platforms: Skill[] = [
   { name: "Node.js", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" },
 ];
 
+// DO NOT TOUCH THE URL
 // Languages & Technologies
 export const languages: Skill[] = [
   { name: "C++", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" },
@@ -44,11 +47,13 @@ export const languages: Skill[] = [
   { name: "TypeScript", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" },
 ];
 
+// DO NOT TOUCH THE URL
 // Currently learning
 export const currentlyLearning: Skill[] = [
   { name: "C++", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" },
 ];
 
+// DO NOT TOUCH THE URL
 // Helper to get skills by category
 export const getSkillsByCategory = (category: SkillCategory): Skill[] => {
   switch (category) {
@@ -63,6 +68,7 @@ export const getSkillsByCategory = (category: SkillCategory): Skill[] => {
   }
 };
 
+// DO NOT TOUCH THE URL
 // Constants
 export const ITEMS_PER_PAGE = 9;
 export const SKILL_CATEGORIES: { key: SkillCategory; label: string }[] = [

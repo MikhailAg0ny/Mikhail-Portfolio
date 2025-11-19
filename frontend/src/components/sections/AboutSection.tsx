@@ -292,14 +292,14 @@ function LearnMorePopover({ heading, summary, content }: LearnMorePopoverProps) 
       <Popover.Trigger asChild>
         <motion.button
           type="button"
-          className="group w-full rounded-2xl border border-text-secondary/20 bg-mica-light/60 p-5 text-left transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-victus-blue/60 sm:p-6"
+          className="group flex w-full flex-col items-center rounded-2xl border border-text-secondary/20 bg-mica-light/60 p-5 text-center transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-victus-blue/60 sm:p-6 lg:items-start lg:text-left"
           whileHover={{ y: -2 }}
           whileTap={{ y: 0 }}
           animate={{ borderColor: open ? "rgba(33, 150, 243, 0.3)" : "rgba(148, 163, 184, 0.2)" }}
           transition={{ type: "spring", stiffness: 400, damping: 28 }}
         >
-          <h3 className="mb-2.5 text-base font-semibold text-victus-blue sm:text-lg">{heading}</h3>
-          <p className="text-xs leading-relaxed text-text-secondary sm:text-sm">{summary}</p>
+          <h3 className="mb-2.5 w-full text-base font-semibold text-victus-blue sm:text-lg">{heading}</h3>
+          <p className="w-full text-xs leading-relaxed text-text-secondary sm:text-sm">{summary}</p>
           <motion.span
             className="mt-3 inline-flex items-center gap-2 text-[0.7rem] font-semibold uppercase tracking-[0.25em] text-victus-blue/70 sm:mt-4 sm:text-xs sm:normal-case sm:tracking-normal"
             animate={{ opacity: open ? 1 : 0.85 }}

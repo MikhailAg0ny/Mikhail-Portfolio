@@ -4,6 +4,7 @@ import { useCallback } from "react";
 import ImageWithFallback from "@/components/ui/ImageWithFallback";
 import * as Tooltip from "@radix-ui/react-tooltip";
 import { useSectionPadding, useBreakpoints } from "@/hooks/useBreakpoints";
+import { motion } from "framer-motion";
 import type { FullPageApi } from "fullpage.js";
 import clsx from "clsx";
 
@@ -60,11 +61,34 @@ export default function HeroSection() {
             </div>
           </div>
 
-          <div className="space-y-5 text-center lg:max-w-xl lg:text-left">
+          <div className="space-y-5 text-center mx-auto lg:mx-0 lg:max-w-xl lg:text-left">
             <p className="text-xs uppercase tracking-[0.45em] text-victus-blue sm:text-sm">Hello There, I am</p>
-            <h1 className="text-3xl font-bold tracking-tight text-text-primary sm:text-4xl md:text-5xl lg:text-6xl">
-              Mikhail James P. Navarro
-            </h1>
+            <motion.h1
+              className="text-3xl font-bold tracking-tight text-text-primary sm:text-4xl md:text-5xl lg:text-6xl"
+              initial="hidden"
+              animate="visible"
+              variants={{
+                hidden: { opacity: 1 },
+                visible: {
+                  opacity: 1,
+                  transition: {
+                    staggerChildren: 0.08,
+                  },
+                },
+              }}
+            >
+              {"Mikhail James P. Navarro".split("").map((char, index) => (
+                <motion.span
+                  key={index}
+                  variants={{
+                    hidden: { opacity: 0, y: 10 },
+                    visible: { opacity: 1, y: 0 },
+                  }}
+                >
+                  {char}
+                </motion.span>
+              ))}
+            </motion.h1>
             <p className="text-lg font-semibold text-victus-blue sm:text-xl md:text-2xl">
               Frontend Web Developer & AI Enthusiast
             </p>
