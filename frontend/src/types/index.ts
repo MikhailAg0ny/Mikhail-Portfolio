@@ -23,7 +23,7 @@ export interface ProjectCaseStudy {
   caseStudyUrl?: string;
   sourceUrl?: string;
   showCaseStudyButton?: boolean;
-  stack: string[];
+
   image?: string;
   images?: string[];
 }

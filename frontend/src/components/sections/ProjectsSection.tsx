@@ -286,10 +286,7 @@ export default function ProjectsSection() {
             >
               {projects.map((project, idx) => {
                 const primaryTech = project.primaryTech;
-                const secondaryTechs =
-                  project.featuredTechs && project.featuredTechs.length > 0
-                    ? project.featuredTechs
-                    : project.stack.filter((tech) => tech !== primaryTech);
+                const secondaryTechs = project.featuredTechs || [];
                 const showCaseStudyButton =
                   project.showCaseStudyButton ?? Boolean(project.caseStudyUrl);
 
@@ -456,10 +453,7 @@ export default function ProjectsSection() {
           >
             {projects.map((project, idx) => {
               const primaryTech = project.primaryTech;
-              const secondaryTechs =
-                project.featuredTechs && project.featuredTechs.length > 0
-                  ? project.featuredTechs
-                  : project.stack.filter((tech) => tech !== primaryTech);
+              const secondaryTechs = project.featuredTechs || [];
               const showCaseStudyButton =
                 project.showCaseStudyButton ?? Boolean(project.caseStudyUrl);
               const isActive = idx === activeIndex;

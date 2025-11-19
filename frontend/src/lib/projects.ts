@@ -18,11 +18,6 @@ export const myProjects: ProjectCaseStudy[] = [
     title: "HeroConquest Turn Based RPG",
     primaryTech: "Java OOP2 Game",
     featuredTechs: ["Apache Netbeans", "Java", "SQL"],
-    stack: [
-      "Apache Netbeans",
-      "Java",
-      "SQL",
-    ],
     role: "Game Programmer, Pixel Artist",
     description:
       "A Java-based turn-based RPG with custom pixel art, party management systems, and tactical combat built in Apache NetBeans.",
@@ -42,10 +37,9 @@ export const myProjects: ProjectCaseStudy[] = [
     title: "Sapatosan",
     primaryTech: "CSIT321 Applications Development",
     featuredTechs: ["Springboot", "Reactjs", "Vite", "Java"],
-    stack: ["Full-Stack Development", "Automation", "Deployment Pipeline"],
     role: "Frontend And Backend Developer",
     description:
-      "Sapatosan E-Commerce Platform: A full-stack application built with Spring Boot and React, featuring a secure RESTful API, JWT authentication, and a responsive user interface.",
+      "A responsive footwear marketplace with secure customer checkout and a dedicated administrative suite for full control over inventory, orders, and users.",
     caseStudyUrl: "#",
     sourceUrl: "https://github.com/rommelmars/Sapatosan",
     showCaseStudyButton: false,
@@ -58,16 +52,14 @@ export const myProjects: ProjectCaseStudy[] = [
       "/Pictures/Sapatosan/6_sapatosan.png",
       "/Pictures/Sapatosan/7_sapatosan.png",
       "/Pictures/Sapatosan/8_sapatosan.png",
-
     ],
   },
   {
     timeframe: "2025",
     image: "/Pictures/Barangay360/1_barangay360.png",
     title: "Barangay360 Web and Mobile",
-    primaryTech: "IT342	Systems Integration and Architecture",
+    primaryTech: "IT342 Systems Integration and Architecture",
     featuredTechs: ["Kotlin", "Android Studio", "Springboot", "MySQL"],
-    stack: ["Game Systems", "Luau Scripting", "Live Ops"],
     role: "Mobile Developer",
     description:
       "A community-centric platform designed to strengthen communication and engagement between barangay officials and residents.",
@@ -82,9 +74,8 @@ export const myProjects: ProjectCaseStudy[] = [
     timeframe: "2025",
     image: "/Pictures/TimEd/1_timed.png",
     title: "TimEd - Smart Educational Time Management System",
-    primaryTech: "UI/UX Design",
-    featuredTechs: ["Wireframing", "User Research"],
-    stack: ["Mobile", "User Research"],
+    primaryTech: "Androiid Studio and Web",
+    featuredTechs: ["Reactjs", "Firebase", "Springboot"],
     role: "Mobile Developer, Tester",
     description:
       "TimEd is a time management platform that helps schools and universities streamline event organization, real-time attendance, and department management.",
@@ -98,13 +89,12 @@ export const myProjects: ProjectCaseStudy[] = [
   {
     timeframe: "2025",
     image: "/Pictures/Identity_Fragments_Of_Me/1_identity.png",
-    title: "Identity: Fragments of Me (Godot Turn-based Horror)",
-    primaryTech: "Godot Game",
-    featuredTechs: ["Search Integration", "Technical Writing"],
-    stack: ["Static Site Generation", "Search Integration", "Technical Writing"],
-    role: "Technical Writer & Front-End Developer",
+    title: "Identity: Fragments of Me",
+    primaryTech: "Godot Engine",
+    featuredTechs: ["Godot Engine", "GDScript"],
+    role: "Game Developer, Pixel Artist",
     description:
-      "Identity: Fragments of Me A psychological turn-based horror RPG in Godot, blending strategic combat and exploration as players reconstruct a fractured psyche in a shifting reality.",
+      "A psychological turn-based horror RPG in Godot, blending strategic combat and exploration as players reconstruct a fractured psyche in a shifting reality.",
     caseStudyUrl: "#",
     sourceUrl: "https://github.com/danrave1234/Godot-Project",
     showCaseStudyButton: false,
