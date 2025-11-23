@@ -1,17 +1,18 @@
 'use client';
 
-import { MouseEvent, ReactNode, useState } from "react";
+import { MouseEvent, useState } from "react";
 import clsx from "clsx";
 
 import ImageWithFallback from "@/components/ui/ImageWithFallback";
-import * as Popover from "@radix-ui/react-popover";
 import { AnimatePresence, motion } from "framer-motion";
 import { useSectionPadding, useBreakpoints } from "@/hooks/useBreakpoints";
+import ElectricBorder from "@/components/ElectricBorder";
 
 export default function AboutSection() {
   const { padding, minHeight } = useSectionPadding();
   const { isShort } = useBreakpoints();
   const [showPreview, setShowPreview] = useState(false);
+  const [profileCardHovered, setProfileCardHovered] = useState(false);
   const [cardTilt, setCardTilt] = useState<{ rotateX: number; rotateY: number }>({ rotateX: 0, rotateY: 0 });
   const [logoOffset, setLogoOffset] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
   const [glarePosition, setGlarePosition] = useState<{ x: number; y: number }>({ x: 50, y: 50 });
@@ -60,52 +61,24 @@ export default function AboutSection() {
     });
   };
 
-  const popovers: LearnMorePopoverProps[] = [
+  const infoCards: InfoCardProps[] = [
     {
       id: "who",
       heading: "Who I Am",
       summary:
-        "Brief introduction about yourself. Share your passion, what drives you, and what makes you unique as a developer.",
-      content: (
-        <>
-          <h4 className="mb-2 text-base font-semibold text-text-primary">Crafted storyteller</h4>
-          <p>
-            I combine game design instincts with product thinking to turn ambiguous ideas into interactive narratives.
-            Every project starts with empathy, playtesting, and clear success metrics so the end result feels intuitive and delightful.
-          </p>
-        </>
-      ),
+        "Aspiring developer with a passion for innovative web design, focused on building scalable systems and solid project management. Curious and eager to learn, I am keen to contribute to forward-thinking web solutions.",
     },
     {
       id: "what",
       heading: "What I Do",
       summary:
-        "Describe your expertise, specializations, and the kind of work you love doing. Highlight your key skills and interests.",
-      content: (
-        <>
-          <h4 className="mb-2 text-base font-semibold text-text-primary">Designing joyful systems</h4>
-          <ul className="list-disc space-y-1 pl-4">
-            <li>UX audits and rapid prototyping for responsive web apps.</li>
-            <li>Component libraries that bridge marketing sites and in-game UI.</li>
-            <li>Automation pipelines that keep delivery fast and measurable.</li>
-          </ul>
-        </>
-      ),
+        "I build web and mobile applications, as well as games, with a focus on functionality and user experience. From production platforms to creative projects, I strive to deliver work that is both technical and thoughtful.",
     },
     {
       id: "beyond",
       heading: "Beyond Code",
       summary:
-        "Share your hobbies, interests outside of programming, or what you do in your free time. Make it personal and engaging.",
-      content: (
-        <>
-          <h4 className="mb-2 text-base font-semibold text-text-primary">Fuel outside the IDE</h4>
-          <p>
-            When I’m not shipping features you’ll find me prototyping indie games, mentoring aspiring devs, or composing synthwave soundtracks for upcoming projects.
-            These creative breaks keep my product instincts sharp.
-          </p>
-        </>
-      ),
+        "As for my hobbies outside of the programming, I enjoy most of time reading books, play various type of video games or doing other extra curricular activities that improve or developing my skills.",
     },
   ];
 
@@ -127,6 +100,9 @@ export default function AboutSection() {
         <header className="mb-8 space-y-2.5 text-center sm:mb-12 sm:space-y-3">
           <p className="text-xs uppercase tracking-[0.45em] text-victus-blue sm:text-sm">Get to know me</p>
           <h2 className="text-2xl font-semibold text-text-primary sm:text-3xl md:text-4xl">About Me</h2>
+          <p className="mx-auto max-w-3xl text-sm text-text-secondary md:text-base">
+            Introduction
+          </p>
         </header>
 
         <div
@@ -137,209 +113,189 @@ export default function AboutSection() {
           )}
         >
           {/* Left Side - Profile Card */}
-          <div className="hidden w-full max-w-md flex-col lg:flex">
-            <div className={clsx(
-              "relative flex h-full flex-col rounded-3xl border border-text-secondary/20 bg-mica-light/60 shadow-lg shadow-victus-blue/10",
-              isShort ? "gap-4 p-5" : "gap-6 p-8"
-            )}>
+          <div
+            className="hidden w-full max-w-md flex-col lg:flex"
+            onMouseEnter={() => setProfileCardHovered(true)}
+            onMouseLeave={() => setProfileCardHovered(false)}
+          >
+            <ElectricBorder
+              color="#38bdf8"
+              speed={profileCardHovered ? 1.5 : 0}
+              chaos={1.2}
+              thickness={2}
+              className={`w-full h-full rounded-3xl ${!profileCardHovered ? 'eb-hidden' : ''}`}
+              style={{}}
+            >
               <div className={clsx(
-                "flex flex-col lg:flex-row lg:items-start",
-                isShort ? "gap-4 lg:gap-6" : "gap-6 lg:gap-10"
+                "relative flex h-full flex-col rounded-3xl border border-text-secondary/20 bg-mica-light/60",
+                isShort ? "gap-4 p-5" : "gap-6 p-8"
               )}>
-                <div className="space-y-4 lg:flex-[0.8] lg:pr-1 ">
-                  <h3 className="text-2xl font-semibold text-text-primary">Mikhail</h3>
-                  <p className="text-sm leading-relaxed text-text-secondary">
-                    Graduate of the Bachelor of Science in Information Technology program at Cebu Institute of Technology - University, with experience in web, game, and mobile development.
-                    Currently broadening skills in backend and frontend design.
-                  </p>
-                </div>
+                <div className={clsx(
+                  "flex flex-col lg:flex-row lg:items-start",
+                  isShort ? "gap-4 lg:gap-6" : "gap-6 lg:gap-10"
+                )}>
+                  <div className="space-y-4 lg:flex-[0.8] lg:pr-1 ">
+                    <h3 className="text-2xl font-semibold text-text-primary">Mikhail</h3>
+                    <p className="text-sm leading-relaxed text-text-secondary">
+                      Graduate of the Bachelor of Science in Information Technology program at Cebu Institute of Technology - University, with experience in web, game, and mobile development.
+                      Currently broadening skills in backend and frontend design.
+                    </p>
+                  </div>
 
-                <motion.div
-                  className={clsx(
-                    "mx-auto flex w-full aspect-[3/4] flex-shrink-0 items-center justify-center overflow-visible rounded-[36px] cursor-pointer lg:flex-[0.7] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-victus-blue/60",
-                    isShort ? "max-w-[10rem]" : "max-w-[14rem]"
-                  )}
-                  style={{ transformPerspective: 1100, rotateX: cardTilt.rotateX, rotateY: cardTilt.rotateY }}
-                  whileHover={{ scale: 1.02 }}
-                  transition={{ type: "spring", stiffness: 260, damping: 22 }}
-                  onMouseEnter={(event) => {
-                    handlePreviewOpen();
-                    handleCardMouseMove(event);
-                  }}
-                  onMouseLeave={handlePreviewClose}
-                  onMouseMove={handleCardMouseMove}
-                  onFocus={handlePreviewOpen}
-                  onBlur={handlePreviewClose}
-                  onTouchStart={handlePreviewOpen}
-                  onTouchEnd={handlePreviewClose}
-                  onTouchCancel={handlePreviewClose}
-                  role="button"
-                  tabIndex={0}
-                  aria-label="Preview profile portrait"
-                >
-                  <div className="relative h-full w-full">
-                    <motion.div
-                      className="relative h-full w-full overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-mica-dark/85 via-mica-dark/55 to-mica-dark/65 shadow-[0_28px_55px_rgba(0,0,0,0.45)]"
-                      animate={{ boxShadow: showPreview ? "0 32px 75px rgba(0, 207, 232, 0.3)" : "0 28px 55px rgba(0, 0, 0, 0.45)" }}
-                      transition={{ duration: 0.25, ease: "easeOut" }}
-                    >
-                      <ImageWithFallback
-                        src={profileImage.src}
-                        alt={profileImage.alt}
-                        width={profileImage.width}
-                        height={profileImage.height}
-                        className="h-full w-full object-cover"
-                      />
+                  <motion.div
+                    className={clsx(
+                      "mx-auto flex w-full aspect-[3/4] flex-shrink-0 items-center justify-center overflow-visible rounded-[36px] cursor-pointer lg:flex-[0.7] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-victus-blue/60",
+                      isShort ? "max-w-[10rem]" : "max-w-[14rem]"
+                    )}
+                    style={{ transformPerspective: 1100, rotateX: cardTilt.rotateX, rotateY: cardTilt.rotateY }}
+                    whileHover={{ scale: 1.02 }}
+                    transition={{ type: "spring", stiffness: 260, damping: 22 }}
+                    onMouseEnter={(event) => {
+                      handlePreviewOpen();
+                      handleCardMouseMove(event);
+                    }}
+                    onMouseLeave={handlePreviewClose}
+                    onMouseMove={handleCardMouseMove}
+                    onFocus={handlePreviewOpen}
+                    onBlur={handlePreviewClose}
+                    onTouchStart={handlePreviewOpen}
+                    onTouchEnd={handlePreviewClose}
+                    onTouchCancel={handlePreviewClose}
+                    role="button"
+                    tabIndex={0}
+                    aria-label="Preview profile portrait"
+                  >
+                    <div className="relative h-full w-full">
+                      <motion.div
+                        className="relative h-full w-full overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-mica-dark/85 via-mica-dark/55 to-mica-dark/65 shadow-[0_28px_55px_rgba(0,0,0,0.45)]"
+                        animate={{ boxShadow: showPreview ? "0 32px 75px rgba(0, 207, 232, 0.3)" : "0 28px 55px rgba(0, 0, 0, 0.45)" }}
+                        transition={{ duration: 0.25, ease: "easeOut" }}
+                      >
+                        <ImageWithFallback
+                          src={profileImage.src}
+                          alt={profileImage.alt}
+                          width={profileImage.width}
+                          height={profileImage.height}
+                          className="h-full w-full object-cover"
+                        />
+
+                        <AnimatePresence>
+                          {showPreview && (
+                            <motion.div
+                              key="card-blur"
+                              className="pointer-events-none absolute inset-0 rounded-2xl bg-mica-dark/25 backdrop-blur-md"
+                              initial={{ opacity: 0 }}
+                              animate={{ opacity: .8 }}
+                              exit={{ opacity: 0 }}
+                              transition={{ duration: 0.22, ease: "easeOut" }}
+                            />
+                          )}
+                        </AnimatePresence>
+
+                        <motion.div
+                          className="pointer-events-none absolute inset-0"
+                          style={{
+                            background: `radial-gradient(circle at ${glarePosition.x}% ${glarePosition.y}%, rgba(255, 255, 255, ${showPreview ? 0.42 : 0.18}), transparent 62%)`,
+                          }}
+                          animate={{ opacity: showPreview ? 1 : 0.7 }}
+                          transition={{ duration: 0.25, ease: "easeOut" }}
+                        />
+
+                        <motion.div
+                          className="pointer-events-none absolute inset-x-6 bottom-4 h-8 rounded-full bg-victus-blue/35 blur-3xl"
+                          animate={{ opacity: showPreview ? 0.55 : 0.18, scale: showPreview ? 1.1 : 0.9 }}
+                          transition={{ duration: 0.3, ease: "easeOut" }}
+                        />
+                      </motion.div>
 
                       <AnimatePresence>
                         {showPreview && (
                           <motion.div
-                            key="card-blur"
-                            className="pointer-events-none absolute inset-0 rounded-2xl bg-mica-dark/25 backdrop-blur-md"
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: .8 }}
-                            exit={{ opacity: 0 }}
-                            transition={{ duration: 0.22, ease: "easeOut" }}
-                          />
+                            key="cit-logo"
+                            className="pointer-events-none absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 items-center justify-center"
+                            initial={{ opacity: 0, scale: 0.82, y: 28 }}
+                            animate={{
+                              opacity: 1,
+                              scale: 2.7,
+                              x: logoOffset.x * 0.45,
+                              y: logoOffset.y * 0.45 - 24,
+                            }}
+                            exit={{ opacity: 0, scale: 0.78, y: 32 }}
+                            transition={{ type: "spring", stiffness: 240, damping: 18 }}
+                          >
+                            <ImageWithFallback
+                              src={overlayImage.src}
+                              alt={overlayImage.alt}
+                              width={overlayImage.width}
+                              height={overlayImage.height}
+                              className="h-auto w-64 drop-shadow-[0_25px_55px_rgba(0,207,232,0.5)] md:w-64"
+                            />
+                          </motion.div>
                         )}
                       </AnimatePresence>
-
-                      <motion.div
-                        className="pointer-events-none absolute inset-0"
-                        style={{
-                          background: `radial-gradient(circle at ${glarePosition.x}% ${glarePosition.y}%, rgba(255, 255, 255, ${showPreview ? 0.42 : 0.18}), transparent 62%)`,
-                        }}
-                        animate={{ opacity: showPreview ? 1 : 0.7 }}
-                        transition={{ duration: 0.25, ease: "easeOut" }}
-                      />
-
-                      <motion.div
-                        className="pointer-events-none absolute inset-x-6 bottom-4 h-8 rounded-full bg-victus-blue/35 blur-3xl"
-                        animate={{ opacity: showPreview ? 0.55 : 0.18, scale: showPreview ? 1.1 : 0.9 }}
-                        transition={{ duration: 0.3, ease: "easeOut" }}
-                      />
-                    </motion.div>
-
-                    <AnimatePresence>
-                      {showPreview && (
-                        <motion.div
-                          key="cit-logo"
-                          className="pointer-events-none absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 items-center justify-center"
-                          initial={{ opacity: 0, scale: 0.82, y: 28 }}
-                          animate={{
-                            opacity: 1,
-                            scale: 2.7,
-                            x: logoOffset.x * 0.45,
-                            y: logoOffset.y * 0.45 - 24,
-                          }}
-                          exit={{ opacity: 0, scale: 0.78, y: 32 }}
-                          transition={{ type: "spring", stiffness: 240, damping: 18 }}
-                        >
-                          <ImageWithFallback
-                            src={overlayImage.src}
-                            alt={overlayImage.alt}
-                            width={overlayImage.width}
-                            height={overlayImage.height}
-                            className="h-auto w-64 drop-shadow-[0_25px_55px_rgba(0,207,232,0.5)] md:w-64"
-                          />
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
-                </motion.div>
-              </div>
-
-              <div className={clsx(
-                "border-t border-text-secondary/20",
-                isShort ? "space-y-2 pt-4" : "space-y-3 pt-6"
-              )}>
-                <p className="text-xs uppercase tracking-[0.2em] text-victus-blue">Interests</p>
-                <div className="flex flex-wrap gap-2">
-                  <span className="rounded-full border border-victus-blue/30 bg-mica-dark/40 px-3 py-1 text-xs text-victus-blue">Game Development</span>
-                  <span className="rounded-full border border-victus-blue/30 bg-mica-dark/40 px-3 py-1 text-xs text-victus-blue">Mobile Development</span>
-                  <span className="rounded-full border border-victus-blue/30 bg-mica-dark/40 px-3 py-1 text-xs text-victus-blue">Frontend Web Development</span>
-                  <span className="rounded-full border border-victus-blue/30 bg-mica-dark/40 px-3 py-1 text-xs text-victus-blue">UI/UX Design</span>
+                    </div>
+                  </motion.div>
                 </div>
-              </div>
 
-            </div>
+                <div className={clsx(
+                  "border-t border-text-secondary/20",
+                  isShort ? "space-y-2 pt-4" : "space-y-3 pt-6"
+                )}>
+                  <p className="text-xs uppercase tracking-[0.2em] text-victus-blue">Interests</p>
+                  <div className="flex flex-wrap gap-2">
+                    <span className="rounded-full border border-victus-blue/30 bg-mica-dark/40 px-3 py-1 text-xs text-victus-blue">Game Development</span>
+                    <span className="rounded-full border border-victus-blue/30 bg-mica-dark/40 px-3 py-1 text-xs text-victus-blue">Mobile Development</span>
+                    <span className="rounded-full border border-victus-blue/30 bg-mica-dark/40 px-3 py-1 text-xs text-victus-blue">Web Development</span>
+                    <span className="rounded-full border border-victus-blue/30 bg-mica-dark/40 px-3 py-1 text-xs text-victus-blue">UI/UX Design</span>
+                  </div>
+                </div>
+
+              </div>
+            </ElectricBorder>
           </div>
 
           {/* Right Side - Content Sections */}
           <div className="flex h-full w-full flex-col justify-center gap-4 sm:gap-5 lg:justify-between">
-            {popovers.map((item) => (
-              <LearnMorePopover key={item.id} {...item} />
+            {infoCards.map((item) => (
+              <InfoCard key={item.id} {...item} />
             ))}
           </div>
         </div>
-      </div>
-    </section>
+      </div >
+    </section >
   );
 }
 
-type LearnMorePopoverProps = {
+type InfoCardProps = {
   id: string;
   heading: string;
   summary: string;
-  content: ReactNode;
 };
 
-function LearnMorePopover({ heading, summary, content }: LearnMorePopoverProps) {
-  const [open, setOpen] = useState(false);
+function InfoCard({ heading, summary }: InfoCardProps) {
+  const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <Popover.Root open={open} onOpenChange={setOpen}>
-      <Popover.Trigger asChild>
-        <motion.button
-          type="button"
-          className="group flex w-full flex-col items-center rounded-2xl border border-text-secondary/20 bg-mica-light/60 p-5 text-center transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-victus-blue/60 sm:p-6 lg:items-start lg:text-left"
-          whileHover={{ y: -2 }}
-          whileTap={{ y: 0 }}
-          animate={{ borderColor: open ? "rgba(33, 150, 243, 0.3)" : "rgba(148, 163, 184, 0.2)" }}
-          transition={{ type: "spring", stiffness: 400, damping: 28 }}
-        >
+    <motion.div
+      className="group flex w-full h-full flex-col items-center rounded-2xl overflow-hidden"
+      whileHover={{ y: -2 }}
+      transition={{ type: "spring", stiffness: 400, damping: 28 }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <ElectricBorder
+        color="#38bdf8"
+        speed={isHovered ? 1.5 : 0}
+        chaos={1.2}
+        thickness={2}
+        className={`w-full h-full rounded-2xl ${!isHovered ? 'eb-hidden' : ''}`}
+        style={{}}
+      >
+        <div className="flex w-full h-full flex-col items-center border border-text-secondary/20 bg-mica-light/60 p-5 text-center sm:p-6 lg:items-start lg:text-left rounded-2xl">
           <h3 className="mb-2.5 w-full text-base font-semibold text-victus-blue sm:text-lg">{heading}</h3>
           <p className="w-full text-xs leading-relaxed text-text-secondary sm:text-sm">{summary}</p>
-          <motion.span
-            className="mt-3 inline-flex items-center gap-2 text-[0.7rem] font-semibold uppercase tracking-[0.25em] text-victus-blue/70 sm:mt-4 sm:text-xs sm:normal-case sm:tracking-normal"
-            animate={{ opacity: open ? 1 : 0.85 }}
-            transition={{ duration: 0.2, ease: "easeOut" }}
-          >
-            Learn more
-            <motion.svg
-              viewBox="0 0 20 20"
-              fill="currentColor"
-              className="h-3 w-3"
-              animate={{ rotate: open ? 90 : 0, x: open ? 2 : 0 }}
-              transition={{ type: "spring", stiffness: 400, damping: 26 }}
-            >
-              <path
-                fillRule="evenodd"
-                d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                clipRule="evenodd"
-              />
-            </motion.svg>
-          </motion.span>
-        </motion.button>
-      </Popover.Trigger>
-      <AnimatePresence>
-        {open && (
-          <Popover.Portal forceMount>
-            <Popover.Content sideOffset={12} align="start" asChild>
-              <motion.div
-                className="z-[90] w-[min(360px,88vw)] rounded-3xl border border-victus-blue/25 bg-mica-dark/95 p-4 text-sm leading-relaxed text-text-secondary shadow-2xl backdrop-blur-xl focus:outline-none sm:w-[min(420px,90vw)] sm:p-5"
-                initial={{ opacity: 0, y: -8, scale: 0.96 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: -8, scale: 0.96 }}
-                transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-              >
-                {content}
-                <Popover.Arrow className="fill-mica-dark/95" />
-              </motion.div>
-            </Popover.Content>
-          </Popover.Portal>
-        )}
-      </AnimatePresence>
-    </Popover.Root>
+        </div>
+      </ElectricBorder>
+    </motion.div>
   );
 }

@@ -12,9 +12,8 @@ export default function Footer({ isVisible = false }: FooterProps) {
   return (
     <footer
       id="footer-bar"
-      className={`fixed bottom-0 left-0 right-0 z-40 border-t border-text-secondary/20 bg-mica-light/90 backdrop-blur-lg transition-all duration-300 ease-out ${
-        isVisible ? "translate-y-0 opacity-100 pointer-events-auto" : "translate-y-full opacity-0 pointer-events-none"
-      }`}
+      className={`fixed bottom-0 left-0 right-0 z-40 border-t border-text-secondary/20 bg-mica-light/90 backdrop-blur-lg transition-all duration-300 ease-out ${isVisible ? "translate-y-0 opacity-100 pointer-events-auto" : "translate-y-full opacity-0 pointer-events-none"
+        }`}
     >
       <div className="mx-auto flex max-w-6xl flex-col gap-6 px-6 py-6 sm:px-10">
         {/* Top Section: Name & Social Icons */}
@@ -24,12 +23,13 @@ export default function Footer({ isVisible = false }: FooterProps) {
               Mikhail James P. Navarro
             </p>
             <p className="text-sm text-text-secondary">
-              Web Developer | Game Designer | AI Enthusiast
+              Fullstack Developer | Game Developer
             </p>
           </div>
 
           {/* Social Icons */}
           <div className="flex items-center gap-4">
+            <span className="text-sm font-medium text-text-secondary">Connect with Me</span>
             <a
               href="https://github.com/MikhailAg0ny"
               className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-victus-blue/20 text-text-secondary transition hover:bg-victus-blue/10 hover:text-victus-blue"

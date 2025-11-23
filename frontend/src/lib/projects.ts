@@ -18,7 +18,7 @@ export const myProjects: ProjectCaseStudy[] = [
     title: "HeroConquest Turn Based RPG",
     primaryTech: "Java OOP2 Game",
     featuredTechs: ["Apache Netbeans", "Java", "SQL"],
-    role: "Game Programmer, Pixel Artist",
+
     description:
       "A Java-based turn-based RPG with custom pixel art, party management systems, and tactical combat built in Apache NetBeans.",
     caseStudyUrl: "#",
@@ -37,7 +37,7 @@ export const myProjects: ProjectCaseStudy[] = [
     title: "Sapatosan",
     primaryTech: "CSIT321 Applications Development",
     featuredTechs: ["Springboot", "Reactjs", "Vite", "Java"],
-    role: "Frontend And Backend Developer",
+
     description:
       "A responsive footwear marketplace with secure customer checkout and a dedicated administrative suite for full control over inventory, orders, and users.",
     caseStudyUrl: "#",
@@ -60,7 +60,7 @@ export const myProjects: ProjectCaseStudy[] = [
     title: "Barangay360 Web and Mobile",
     primaryTech: "IT342 Systems Integration and Architecture",
     featuredTechs: ["Kotlin", "Android Studio", "Springboot", "MySQL"],
-    role: "Mobile Developer",
+
     description:
       "A community-centric platform designed to strengthen communication and engagement between barangay officials and residents.",
     caseStudyUrl: "https://barangay360.vercel.app/",
@@ -76,7 +76,7 @@ export const myProjects: ProjectCaseStudy[] = [
     title: "TimEd - Smart Educational Time Management System",
     primaryTech: "Androiid Studio and Web",
     featuredTechs: ["Reactjs", "Firebase", "Springboot"],
-    role: "Mobile Developer, Tester",
+
     description:
       "TimEd is a time management platform that helps schools and universities streamline event organization, real-time attendance, and department management.",
     caseStudyUrl: "https://timedsystem.netlify.app/",
@@ -92,7 +92,7 @@ export const myProjects: ProjectCaseStudy[] = [
     title: "Identity: Fragments of Me",
     primaryTech: "Godot Engine",
     featuredTechs: ["Godot Engine", "GDScript"],
-    role: "Game Developer, Pixel Artist",
+
     description:
       "A psychological turn-based horror RPG in Godot, blending strategic combat and exploration as players reconstruct a fractured psyche in a shifting reality.",
     caseStudyUrl: "#",

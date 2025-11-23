@@ -32,14 +32,14 @@ export default function CertificationsSection() {
         )}
       >
         <header className="space-y-3 text-center">
-          <p className="text-xs font-semibold uppercase tracking-[0.4em] text-victus-blue">
+          <p className="text-sm font-semibold uppercase tracking-[0.4em] text-victus-blue">
             Certifications
           </p>
           <h2 className="text-3xl font-semibold text-text-primary md:text-4xl">
-            Continuous learning that reinforces product craft
+            My Certifications and Event Participations
           </h2>
           <p className="mx-auto max-w-3xl text-sm text-text-secondary md:text-base">
-            Highlights from UX, engineering, and game development programs that shape how I build, collaborate, and ship polished experiences.
+            Highlights from my recent certifications, commitment completion and event participations.
           </p>
         </header>
 

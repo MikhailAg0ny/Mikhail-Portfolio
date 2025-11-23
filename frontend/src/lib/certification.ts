@@ -21,8 +21,8 @@ export const certifications: Certificate[] = [
     name: "Introduction to C++",
     issuer: "Sololearn",
     date: "2025",
-    image: "/Certificates/pictures/C++ MIKHAIL JAMES NAVARRO.jpg",
-    link: "/Certificates/pictures/C++%20MIKHAIL%20JAMES%20NAVARRO.jpg",
+    image: "/Certificates/pictures/cpp_mikhail_james_navarro.jpg",
+    link: "/Certificates/pictures/cpp_mikhail_james_navarro.jpg",
   },
   {
     name: "AWS Academy Graduate: Cloud Foundations",

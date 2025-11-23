@@ -90,11 +90,11 @@ export default function HeroSection() {
               ))}
             </motion.h1>
             <p className="text-lg font-semibold text-victus-blue sm:text-xl md:text-2xl">
-              Frontend Web Developer & AI Enthusiast
+              Full Stack Developer
             </p>
             <p className="max-w-xl text-sm text-text-secondary sm:text-base md:text-lg">
-              Crafting playful, human-centered digital experiences that merge game sensibilities with product delivery.
-              I translate ideas into interactive stories, polished design systems, and measurable outcomes.
+              Experience full stack over 2+ years. I create interactive and engaging web, game and mobile applications.
+              Ensuring that the final product is both visually appealing and functional.
             </p>
             <Tooltip.Provider delayDuration={200} skipDelayDuration={400}>
               <div className="flex flex-col gap-3 sm:flex-row sm:justify-center lg:justify-start lg:gap-4">

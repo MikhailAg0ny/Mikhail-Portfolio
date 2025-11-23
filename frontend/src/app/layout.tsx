@@ -16,10 +16,15 @@ const jetBrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   title: "Mikhail's Portfolio",
-  description: "Web Developer Portfolio",
+  description: "Fullstack Developer Portfolio",
   icons: {
-    icon: "/icons/catto-black-maxwell.ico",
-    shortcut: "/icons/catto-black-maxwell.ico",
+    icon: [
+      { url: "/icons/catto-black-maxwell.ico", sizes: "any" },
+    ],
+    shortcut: ["/icons/catto-black-maxwell.ico"],
+    apple: [
+      { url: "/icons/catto-black-maxwell.ico" },
+    ],
   },
 };
 

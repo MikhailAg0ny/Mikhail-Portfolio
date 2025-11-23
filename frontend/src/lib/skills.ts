@@ -10,8 +10,9 @@ export type SkillCategory = "languages" | "tools" | "platforms";
 // DO NOT TOUCH THE URL
 // Tools & Software
 export const tools: Skill[] = [
-  { name: "Android Studio", icon: "https://www.svgrepo.com/show/305701/androidstudio.svg" },
+  { name: "Android Studio", icon: "https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/android-studio-icon.png" },
   { name: "Aseprite", icon: "https://images.seeklogo.com/logo-png/50/1/aseprite-logo-png_seeklogo-506592.png" },
+  { name: "Canva", icon: "https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/canva-icon.png" },
   { name: "Figma", icon: "https://cdn.jim-nielsen.com/macos/1024/figma-2021-05-05.png" },
   { name: "GitHub Copilot", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" },
   { name: "Godot Engine", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/godot/godot-original.svg" },

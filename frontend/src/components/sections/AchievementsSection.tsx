@@ -134,11 +134,14 @@ export default function AchievementsSection() {
         )}
       >
         <header className="space-y-2.5 text-left md:text-center">
-          <p className="text-xs uppercase tracking-[0.45em] text-victus-blue sm:text-sm">Achievements</p>
-          <h2 className="text-2xl font-semibold text-text-primary sm:text-3xl md:text-4xl">Recognitions that capture impact and craft.</h2>
-          <p className="text-sm text-text-secondary sm:text-base md:text-lg">
-            Milestones across game jams, community events, and product teams that highlight leadership, experimentation, and measurable
-            outcomes.
+          <p className="text-sm font-semibold uppercase tracking-[0.4em] text-victus-blue">
+            Achievements
+          </p>
+          <h2 className="text-3xl font-semibold text-text-primary md:text-4xl">
+            My Achievements
+          </h2>
+          <p className="mx-auto max-w-3xl text-sm text-text-secondary md:text-base">
+            My recent milestones so far to participate in hackathons and events.
           </p>
         </header>
 

@@ -15,7 +15,7 @@ export interface NavLink {
 
 export interface ProjectCaseStudy {
   title: string;
-  role: string;
+
   timeframe: string;
   primaryTech: string;
   featuredTechs: string[];

@@ -251,8 +251,15 @@ export default function ProjectsSection() {
       >
         {/* Header */}
         <div className="flex-shrink-0 w-full space-y-1.5 text-center sm:space-y-3">
-          <h2 className="text-2xl font-bold tracking-tight text-text-primary sm:text-4xl">My Projects</h2>
-          <p className="text-sm text-text-secondary sm:text-lg">A selection of my recent work</p>
+          <p className="text-sm font-semibold uppercase tracking-[0.4em] text-victus-blue">
+            Projects
+          </p>
+          <h2 className="text-3xl font-semibold text-text-primary md:text-4xl">
+            My Projects
+          </h2>
+          <p className="mx-auto max-w-3xl text-sm text-text-secondary md:text-base">
+            Recent projects or side projects I have worked on.
+          </p>
         </div>
 
         {/* Mobile Swiper */}
@@ -351,7 +358,7 @@ export default function ProjectsSection() {
                         </div>
                       )}
 
-                      <p className="text-sm font-medium text-victus-blue/80">Role: {project.role}</p>
+
 
                       <div className="flex flex-col gap-3 pt-2">
                         {showCaseStudyButton && project.caseStudyUrl && (
@@ -515,7 +522,7 @@ export default function ProjectsSection() {
                             </div>
                           )}
 
-                          <p className="text-sm font-medium text-victus-blue/80">Role: {project.role}</p>
+
                         </div>
 
                         <div className="mt-auto flex flex-col items-center gap-2 pt-4 sm:flex-row sm:justify-center">

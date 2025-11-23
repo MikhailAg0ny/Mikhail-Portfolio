@@ -62,12 +62,15 @@ export default function SkillsSection() {
         )}
       >
         <header className="flex-shrink-0 space-y-0.5 text-center sm:space-y-2 md:space-y-3">
-          <p className="text-[0.65rem] font-semibold uppercase tracking-[0.3em] text-victus-blue/80 sm:text-xs md:text-sm">Technical Expertise</p>
-          <h2 className="text-xl font-bold tracking-tight text-white sm:text-3xl md:text-4xl">
+
+          <p className="text-sm font-semibold uppercase tracking-[0.4em] text-victus-blue">
+            Skills
+          </p>
+          <h2 className="text-3xl font-semibold text-text-primary md:text-4xl">
             My Skills
           </h2>
-          <p className="text-[0.7rem] text-text-secondary/80 sm:text-sm md:text-base">
-            Technologies and tools I work with
+          <p className="mx-auto max-w-3xl text-sm text-text-secondary md:text-base">
+            Technologies and tools I work with.
           </p>
         </header>
 

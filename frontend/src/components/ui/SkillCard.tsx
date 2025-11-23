@@ -20,7 +20,7 @@ export default function SkillCard({ skill, index }: SkillCardProps) {
       }}
     >
       <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-victus-blue/0 to-victus-blue/0 opacity-0 transition-opacity duration-300 group-hover:from-victus-blue/5 group-hover:to-cyan-400/5 group-hover:opacity-100" />
-      
+
       {!imageError ? (
         <Image
           src={skill.icon}
@@ -37,7 +37,7 @@ export default function SkillCard({ skill, index }: SkillCardProps) {
           {skill.name.charAt(0)}
         </div>
       )}
-      
+
       <span className="relative z-10 mt-1 w-full px-1 text-center text-[0.7rem] leading-5 font-medium text-text-secondary transition-colors duration-300 group-hover:text-victus-blue sm:mt-1.5 sm:px-1.5 sm:text-xs line-clamp-2 whitespace-normal break-words min-h-[0.9rem] sm:min-h-[1.3rem]" title={skill.name}>
         {skill.name}
       </span>
