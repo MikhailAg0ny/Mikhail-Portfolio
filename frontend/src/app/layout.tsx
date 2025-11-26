@@ -42,6 +42,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" href="/icons/catto-black-maxwell.ico" />
+        <link rel="shortcut icon" href="/icons/catto-black-maxwell.ico" />
+        <link rel="apple-touch-icon" href="/icons/catto-black-maxwell.ico" />
+        <meta name="theme-color" content="#000000" />
+      </head>
       <body
         className={`${inter.variable} ${jetBrainsMono.variable} antialiased min-h-[100svh] overflow-x-hidden bg-black text-slate-100`}
       >

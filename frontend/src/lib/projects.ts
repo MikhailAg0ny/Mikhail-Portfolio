@@ -74,7 +74,7 @@ export const myProjects: ProjectCaseStudy[] = [
     timeframe: "2025",
     image: "/Pictures/TimEd/1_timed.png",
     title: "TimEd - Smart Educational Time Management System",
-    primaryTech: "Androiid Studio and Web",
+    primaryTech: "Capstone Project",
     featuredTechs: ["Reactjs", "Firebase", "Springboot"],
 
     description:
@@ -90,7 +90,7 @@ export const myProjects: ProjectCaseStudy[] = [
     timeframe: "2025",
     image: "/Pictures/Identity_Fragments_Of_Me/1_identity.png",
     title: "Identity: Fragments of Me",
-    primaryTech: "Godot Engine",
+    primaryTech: "Side Project Game",
     featuredTechs: ["Godot Engine", "GDScript"],
 
     description:
