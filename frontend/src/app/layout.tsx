@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+import ClickSpark from "@/components/ClickSpark";
+import CustomCursor from "@/components/layout/CustomCursor";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -57,17 +59,26 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${jetBrainsMono.variable} antialiased min-h-[100svh] overflow-x-hidden bg-black text-slate-100`}
       >
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="fixed left-0 top-0 z-[-1] h-full w-full object-cover"
-          aria-hidden="true"
+        <CustomCursor />
+        <ClickSpark
+          sparkColor="#fff"
+          sparkSize={10}
+          sparkRadius={15}
+          sparkCount={8}
+          duration={400}
         >
-          <source src="/videos/video_bg.mp4" type="video/mp4" />
-        </video>
-        <div className="relative z-0 h-full w-full bg-black/50">{children}</div>
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="fixed left-0 top-0 z-[-1] h-full w-full object-cover"
+            aria-hidden="true"
+          >
+            <source src="/videos/video_bg.mp4" type="video/mp4" />
+          </video>
+          <div className="relative z-0 h-full w-full bg-black/50">{children}</div>
+        </ClickSpark>
       </body>
     </html>
   );

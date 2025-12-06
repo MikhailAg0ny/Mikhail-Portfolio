@@ -110,7 +110,7 @@ export default function ProjectsSection() {
   const sectionRef = useRef<HTMLElement | null>(null);
   const hintTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const { padding, minHeight } = useSectionPadding();
-  const { isShort } = useBreakpoints();
+  const { isShort, isMobile } = useBreakpoints();
 
   useEffect(() => {
     setImageIndexes(projectMediaSources.map(() => 0));
@@ -240,7 +240,7 @@ export default function ProjectsSection() {
   return (
     <section
       ref={sectionRef}
-      className={`relative flex w-full items-center justify-center overflow-hidden ${padding}`}
+      className={`relative flex w-full items-center justify-center overflow-hidden ${padding} ${isMobile ? '!pt-28' : ''}`}
       style={{ minHeight }}
     >
       <div
@@ -456,7 +456,7 @@ export default function ProjectsSection() {
                 spaceBetween: 36,
               },
             }}
-            style={{ minHeight: '420px', maxHeight: '520px', overflow: 'visible', paddingBottom: '12px', paddingTop: '12px' }}
+            style={{ minHeight: '420px', overflow: 'hidden', paddingBottom: '12px', paddingTop: '12px' }}
           >
             {projects.map((project, idx) => {
               const primaryTech = project.primaryTech;

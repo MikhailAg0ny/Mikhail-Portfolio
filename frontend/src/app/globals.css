@@ -369,6 +369,14 @@ body {
 }
 
 @layer base {
+  html, body {
+    cursor: none;
+  }
+
+  a, button, [role="button"], input[type="submit"], input[type="button"], label, select, .pointer-cursor {
+    cursor: none;
+  }
+
   * {
     @apply border-border outline-ring/50;
   }

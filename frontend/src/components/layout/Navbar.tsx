@@ -25,8 +25,8 @@ export default function Navbar({ activeSection = "hero", onNavigate }: NavbarPro
   const isTransparent = isHeroSection && !hasScrolled;
 
   const [navSpring, navApi] = useSpring(() => ({
-    backgroundColor: isTransparent ? "rgba(42, 47, 53, 0)" : "rgba(42, 47, 53, 1)",
-    boxShadow: isTransparent ? "0px 0px 0px rgba(26, 29, 33, 0)" : "0px 8px 28px rgba(26, 29, 33, 0.35)",
+    backgroundColor: isTransparent ? "rgba(42, 47, 53, 0)" : "rgba(42, 47, 53, 0.9)",
+    boxShadow: "0px 0px 0px rgba(0, 0, 0, 0)",
     config: { tension: 240, friction: 26 },
   }));
 
@@ -57,8 +57,8 @@ export default function Navbar({ activeSection = "hero", onNavigate }: NavbarPro
   useEffect(() => {
     const transparent = isHeroSection && !hasScrolled;
     navApi.start({
-      backgroundColor: transparent ? "rgba(42, 47, 53, 0)" : "rgba(42, 47, 53, 1)",
-      boxShadow: transparent ? "0px 0px 0px rgba(26, 29, 33, 0)" : "0px 8px 24px rgba(26, 29, 33, 0.35)",
+      backgroundColor: transparent ? "rgba(42, 47, 53, 0)" : "rgba(42, 47, 53, 0.9)",
+      boxShadow: "0px 0px 0px rgba(0, 0, 0, 0)",
     });
   }, [hasScrolled, isHeroSection, navApi]);
 
@@ -66,8 +66,8 @@ export default function Navbar({ activeSection = "hero", onNavigate }: NavbarPro
     <animated.nav
       id="navbar"
       className={`fixed top-0 z-[100] w-full border-b transition duration-300 ${isTransparent
-          ? "border-transparent bg-transparent backdrop-blur-none"
-          : "border-text-secondary/20 bg-mica-light"
+        ? "border-transparent bg-transparent backdrop-blur-none"
+        : "border-text-secondary/20 bg-mica-light/90 backdrop-blur-lg"
         }`}
       style={navSpring}
     >
@@ -101,8 +101,8 @@ export default function Navbar({ activeSection = "hero", onNavigate }: NavbarPro
               <li key={link.label}>
                 <Link
                   className={`nav-link text-sm font-medium transition ${isActive
-                      ? "text-victus-blue nav-link-active"
-                      : "text-text-secondary hover:text-victus-blue"
+                    ? "text-victus-blue nav-link-active"
+                    : "text-text-secondary hover:text-victus-blue"
                     }`}
                   href={path}
                   data-menuanchor={link.anchor}
@@ -142,7 +142,7 @@ export default function Navbar({ activeSection = "hero", onNavigate }: NavbarPro
             <DropdownMenu.Content
               sideOffset={12}
               align="end"
-              className="z-[110] w-52 rounded-2xl border border-white/10 bg-mica-dark/95 p-2 text-sm text-text-secondary shadow-2xl backdrop-blur-md focus:outline-none"
+              className="z-[10000] w-52 rounded-2xl border border-white/10 bg-mica-dark/95 p-2 text-sm text-text-secondary shadow-2xl backdrop-blur-md focus:outline-none"
             >
               {navLinks.map((link) => {
                 const isActive = activeSection === link.anchor;
@@ -150,8 +150,8 @@ export default function Navbar({ activeSection = "hero", onNavigate }: NavbarPro
                   <DropdownMenu.Item
                     key={link.anchor}
                     className={`flex cursor-pointer items-center rounded-xl px-3 py-2 transition ${isActive
-                        ? "bg-victus-blue/20 text-victus-blue"
-                        : "hover:bg-mica-light/30 hover:text-victus-blue"
+                      ? "bg-victus-blue/20 text-victus-blue"
+                      : "hover:bg-mica-light/30 hover:text-victus-blue"
                       }`}
                     onSelect={(event) => {
                       event.preventDefault();
