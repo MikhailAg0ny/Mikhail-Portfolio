@@ -19,11 +19,13 @@ export const metadata: Metadata = {
   description: "Fullstack Developer Portfolio",
   icons: {
     icon: [
-      { url: "/icons/catto-black-maxwell.ico", sizes: "any" },
+      { url: "/icons/hd-bongo-cat-icon.png", sizes: "any" },
+      { url: "/favicon.ico", sizes: "any" },
     ],
-    shortcut: ["/icons/catto-black-maxwell.ico"],
+    shortcut: ["/icons/hd-bongo-cat-icon.png", "/favicon.ico"],
     apple: [
-      { url: "/icons/catto-black-maxwell.ico" },
+      { url: "/icons/hd-bongo-cat-icon.png" },
+      { url: "/favicon.png" },
     ],
   },
 };
@@ -43,9 +45,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link rel="icon" href="/icons/catto-black-maxwell.ico" />
-        <link rel="shortcut icon" href="/icons/catto-black-maxwell.ico" />
-        <link rel="apple-touch-icon" href="/icons/catto-black-maxwell.ico" />
+        {/* Preferred PNG favicon */}
+        <link rel="icon" type="image/png" href="/icons/hd-bongo-cat-icon.png" />
+        <link rel="icon" type="image/png" href="/favicon.png" />
+        {/* Legacy/ICO fallbacks */}
+        <link rel="icon" href="/favicon.ico" />
+        <link rel="shortcut icon" href="/favicon.ico" />
+        <link rel="apple-touch-icon" href="/icons/hd-bongo-cat-icon.png" />
         <meta name="theme-color" content="#000000" />
       </head>
       <body
