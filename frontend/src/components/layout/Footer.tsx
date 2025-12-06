@@ -40,7 +40,7 @@ export default function Footer({ isVisible = false }: FooterProps) {
               <FaGithub className="h-5 w-5" />
             </a>
             <a
-              href="https://www.linkedin.com/in/mikhail-james-navarro-030582356/"
+              href="https://www.linkedin.com/in/mikhailjamesnavarro/"
               className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-victus-blue/20 text-text-secondary transition hover:bg-victus-blue/10 hover:text-victus-blue"
               target="_blank"
               rel="noopener noreferrer"

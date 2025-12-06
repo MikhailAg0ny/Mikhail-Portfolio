@@ -45,6 +45,13 @@ export const certifications: Certificate[] = [
     image: "/Certificates/pictures/KADASIG TRIO CHAMPION - MIKHAIL.jpg",
     link: "/Certificates/pictures/KADASIG%20TRIO%20CHAMPION%20-%20MIKHAIL.jpg",
   },
+  {
+    name: "AWS Cloud Architecting",
+    issuer: "Amazon Web Services",
+    date: "2025",
+    image: "/Certificates/pictures/aws-cloud-architecting-mjpn.png",
+    link: "/Certificates/pdf-files/aws-cloud-architecting-mjpn.pdf",
+  },
 ];
 
 export const getRecentCertifications = (limit = certifications.length): Certificate[] =>

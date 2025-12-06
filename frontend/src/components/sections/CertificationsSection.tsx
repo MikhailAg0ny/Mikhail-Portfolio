@@ -3,6 +3,7 @@
 import { useMemo } from "react";
 import Image from "next/image";
 import { ExternalLink } from "lucide-react";
+import SpotlightCard from "@/components/SpotlightCard";
 import { useSectionPadding, useBreakpoints } from "@/hooks/useBreakpoints";
 import { certifications } from "@/lib/certification";
 import type { Certificate } from "@/types";
@@ -47,7 +48,7 @@ export default function CertificationsSection() {
           className="grid grid-cols-2 gap-4 sm:grid-cols-2 lg:grid-cols-3 [grid-auto-rows:minmax(0,1fr)]"
         >
           {certificateImages.map((certificate) => (
-            <article
+            <SpotlightCard
               key={certificate.name}
               className="group relative mx-auto flex h-full w-full max-w-[280px] flex-col items-center justify-between overflow-hidden rounded-[16px] border border-text-secondary/20 bg-mica-light/60 p-4 text-center transition-all duration-300 hover:-translate-y-1 hover:border-victus-blue/30 hover:bg-mica-light/70 sm:max-w-[300px] sm:p-5"
             >
@@ -80,7 +81,7 @@ export default function CertificationsSection() {
                   <ExternalLink className="h-3.5 w-3.5" strokeWidth={2.2} />
                 </a>
               )}
-            </article>
+            </SpotlightCard>
           ))}
         </div>
       </div>
