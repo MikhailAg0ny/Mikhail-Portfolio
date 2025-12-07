@@ -22,6 +22,7 @@ type NavbarProps = {
 export default function Navbar({ activeSection = "hero", onNavigate }: NavbarProps) {
   const [isHeroSection, setIsHeroSection] = useState(activeSection === "hero");
   const [hasScrolled, setHasScrolled] = useState(false);
+  // Only stay transparent when in hero and at the very top
   const isTransparent = isHeroSection && !hasScrolled;
 
   const [navSpring, navApi] = useSpring(() => ({
@@ -42,8 +43,8 @@ export default function Navbar({ activeSection = "hero", onNavigate }: NavbarPro
 
   useEffect(() => {
     const handleScroll = () => {
-      const scrolled = window.scrollY > 24;
-      setHasScrolled(scrolled);
+      // Treat any scroll away from the top as a cue to show the gray navbar
+      setHasScrolled(window.scrollY > 16);
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -55,12 +56,11 @@ export default function Navbar({ activeSection = "hero", onNavigate }: NavbarPro
   }, []);
 
   useEffect(() => {
-    const transparent = isHeroSection && !hasScrolled;
     navApi.start({
-      backgroundColor: transparent ? "rgba(42, 47, 53, 0)" : "rgba(42, 47, 53, 0.9)",
+      backgroundColor: isTransparent ? "rgba(42, 47, 53, 0)" : "rgba(42, 47, 53, 0.9)",
       boxShadow: "0px 0px 0px rgba(0, 0, 0, 0)",
     });
-  }, [hasScrolled, isHeroSection, navApi]);
+  }, [isTransparent, navApi]);
 
   return (
     <animated.nav

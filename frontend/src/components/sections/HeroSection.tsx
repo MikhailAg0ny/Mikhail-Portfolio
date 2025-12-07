@@ -93,7 +93,7 @@ export default function HeroSection() {
               Full Stack Developer
             </p>
             <p className="max-w-xl text-sm text-text-secondary sm:text-base md:text-lg">
-              Experience full stack over 2+ years. I create interactive and engaging web, game and mobile applications.
+              Experience full stack over 3+ years. I create interactive and engaging web, game and mobile applications.
               Ensuring that the final product is both visually appealing and functional.
             </p>
             <Tooltip.Provider delayDuration={200} skipDelayDuration={400}>

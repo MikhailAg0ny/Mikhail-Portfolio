@@ -241,7 +241,7 @@ export default function ProjectsSection() {
     <section
       ref={sectionRef}
       className={`relative flex w-full items-center justify-center overflow-hidden ${padding} ${isMobile ? '!pt-28' : ''}`}
-      style={{ minHeight }}
+      style={{ minHeight, paddingTop: isMobile ? undefined : "96px" }}
     >
       <div
         className={clsx(
@@ -456,7 +456,8 @@ export default function ProjectsSection() {
                 spaceBetween: 36,
               },
             }}
-            style={{ minHeight: '420px', overflow: 'hidden', paddingBottom: '12px', paddingTop: '12px' }}
+            // Keep swiper tall enough to avoid internal scrolling when cards are active
+            style={{ minHeight: '540px', overflow: 'visible', paddingBottom: '20px', paddingTop: '16px' }}
           >
             {projects.map((project, idx) => {
               const primaryTech = project.primaryTech;
@@ -468,7 +469,7 @@ export default function ProjectsSection() {
               return (
                 <SwiperSlide key={idx} className="flex h-full items-center justify-center px-3">
                   <motion.article
-                    className={`projects-card group relative flex h-auto w-full max-w-[400px] flex-col overflow-hidden rounded-3xl border bg-transparent p-6 shadow-lg backdrop-blur-md transition-all duration-300 lg:max-w-[420px] lg:p-6 ${isActive ? 'min-h-[500px] lg:min-h-[520px]' : 'min-h-[360px] text-text-secondary/90'
+                    className={`projects-card group relative flex h-auto w-full max-w-[470px] flex-col overflow-hidden rounded-3xl border bg-transparent p-6 shadow-lg backdrop-blur-md transition-all duration-300 lg:max-w-[500px] lg:p-6 ${isActive ? 'min-h-[440px] lg:min-h-[460px]' : 'min-h-[340px] text-text-secondary/90'
                       }`}
                     variants={cardVariants}
                     initial="hidden"
