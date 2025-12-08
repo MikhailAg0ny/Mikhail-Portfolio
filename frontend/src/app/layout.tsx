@@ -3,6 +3,7 @@ import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import ClickSpark from "@/components/ClickSpark";
 import CustomCursor from "@/components/layout/CustomCursor";
+import VercelAnalyticsClient from "@/components/layout/VercelAnalyticsClient";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -78,6 +79,7 @@ export default function RootLayout({
             <source src="/videos/video_bg.mp4" type="video/mp4" />
           </video>
           <div className="relative z-0 h-full w-full bg-black/50">{children}</div>
+          <VercelAnalyticsClient />
         </ClickSpark>
       </body>
     </html>
