@@ -52,6 +52,13 @@ export const certifications: Certificate[] = [
     image: "/Certificates/pictures/aws-cloud-architecting-mjpn.png",
     link: "/Certificates/pdf-files/aws-cloud-architecting-mjpn.pdf",
   },
+  {
+    name: "DevFest Cebu 2025 Event Certificate",
+    issuer: "Google Developer Groups",
+    date: "2025",
+    image: "/Certificates/pictures/Devfest 2025 Cert - (Mikhail James Navarro) .png",
+    link: "/Certificates/pdf-files/Devfest 2025 Cert - (Mikhail James Navarro) .pdf",
+  },
 ];
 
 export const getRecentCertifications = (limit = certifications.length): Certificate[] =>
