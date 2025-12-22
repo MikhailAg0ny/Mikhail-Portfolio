@@ -4,6 +4,7 @@ import "./globals.css";
 import ClickSpark from "@/components/ClickSpark";
 import CustomCursor from "@/components/layout/CustomCursor";
 import VercelAnalyticsClient from "@/components/layout/VercelAnalyticsClient";
+import { Toaster } from "sonner";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -81,6 +82,20 @@ export default function RootLayout({
           <div className="relative z-0 h-full w-full bg-black/50">{children}</div>
           <VercelAnalyticsClient />
         </ClickSpark>
+        <Toaster
+          position="top-center"
+          toastOptions={{
+            style: {
+              background: "rgba(15, 23, 42, 0.95)",
+              border: "1px solid rgba(100, 116, 139, 0.2)",
+              color: "#f1f5f9",
+              backdropFilter: "blur(12px)",
+            },
+            className: "shadow-2xl",
+          }}
+          richColors
+          closeButton
+        />
       </body>
     </html>
   );
