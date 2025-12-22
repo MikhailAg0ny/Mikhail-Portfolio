@@ -41,6 +41,8 @@ const INQUIRY_TYPES = [
 ];
 
 const DRAFT_STORAGE_KEY = "contact-form-draft";
+const RATE_LIMIT_KEY = "contact-form-last-submit";
+const RATE_LIMIT_MS = 60000; // 60 seconds between submissions
 
 export default function ContactSection() {
   const { padding, minHeight } = useSectionPadding();
@@ -57,6 +59,7 @@ export default function ContactSection() {
     message: "",
   });
   const [errors, setErrors] = useState<FormErrors>({});
+  const [honeypot, setHoneypot] = useState(""); // Spam prevention - hidden field
 
   // Load draft from localStorage on mount
   useEffect(() => {
@@ -174,6 +177,22 @@ export default function ContactSection() {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
+    // Spam prevention: Honeypot check
+    if (honeypot) {
+      console.log("Bot detected via honeypot");
+      return; // Silently fail for bots
+    }
+
+    // Spam prevention: Rate limiting
+    const lastSubmit = localStorage.getItem(RATE_LIMIT_KEY);
+    if (lastSubmit && Date.now() - parseInt(lastSubmit) < RATE_LIMIT_MS) {
+      const remainingSeconds = Math.ceil((RATE_LIMIT_MS - (Date.now() - parseInt(lastSubmit))) / 1000);
+      toast.error("Please wait before sending another message", {
+        description: `You can submit again in ${remainingSeconds} seconds.`,
+      });
+      return;
+    }
+
     if (!validateForm()) {
       return;
     }
@@ -203,6 +222,7 @@ export default function ContactSection() {
 
       setFormState("success");
       clearDraft();
+      localStorage.setItem(RATE_LIMIT_KEY, Date.now().toString()); // Save submission timestamp
 
       // Give time to see the thank you animation, then close modal
       setTimeout(() => {
@@ -523,6 +543,18 @@ export default function ContactSection() {
                       </p>
                     )}
                   </div>
+
+                  {/* Honeypot - Hidden spam trap */}
+                  <input
+                    type="text"
+                    name="website"
+                    value={honeypot}
+                    onChange={(e) => setHoneypot(e.target.value)}
+                    style={{ position: "absolute", left: "-9999px", opacity: 0 }}
+                    tabIndex={-1}
+                    autoComplete="off"
+                    aria-hidden="true"
+                  />
 
                   {/* Submit Button */}
                   <div className="pt-2">
