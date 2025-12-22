@@ -326,7 +326,7 @@ export default function ContactSection() {
 
             <Dialog.Portal>
               <Dialog.Overlay className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0" />
-              <Dialog.Content className="fixed left-[50%] top-[50%] z-50 w-full max-w-[95vw] sm:max-w-lg translate-x-[-50%] translate-y-[-50%] rounded-2xl border border-text-secondary/20 bg-mica-light/80 p-6 shadow-2xl backdrop-blur-xl duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 sm:p-8">
+              <Dialog.Content className="fixed left-[50%] top-[50%] z-50 w-full max-w-[92vw] sm:max-w-lg max-h-[85vh] sm:max-h-[90vh] overflow-y-auto translate-x-[-50%] translate-y-[-50%] rounded-2xl border border-text-secondary/20 bg-mica-light/80 p-4 sm:p-6 md:p-8 shadow-2xl backdrop-blur-xl duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95">
                 <div className="flex items-center justify-between mb-6">
                   <div>
                     <Dialog.Title className="text-xl font-bold text-text-primary">Send a Message</Dialog.Title>
