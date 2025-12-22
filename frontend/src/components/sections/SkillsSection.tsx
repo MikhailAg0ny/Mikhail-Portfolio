@@ -61,15 +61,16 @@ export default function SkillsSection() {
           isShort && "scale-90 origin-center"
         )}
       >
-        <header className="flex-shrink-0 space-y-0.5 text-center sm:space-y-2 md:space-y-3">
-
-          <p className="text-sm font-semibold uppercase tracking-[0.4em] text-victus-blue">
+        <header className="relative flex-shrink-0 space-y-0.5 text-center sm:space-y-2 md:space-y-3">
+          {/* Subtle glow behind header */}
+          <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-24 w-48 rounded-full bg-victus-blue/10 blur-3xl" />
+          <p className="relative text-sm font-semibold uppercase tracking-[0.4em] text-victus-blue">
             Skills
           </p>
-          <h2 className="text-3xl font-semibold text-text-primary md:text-4xl">
+          <h2 className="relative text-3xl font-semibold text-text-primary md:text-4xl">
             My Skills
           </h2>
-          <p className="mx-auto max-w-3xl text-sm text-text-secondary md:text-base">
+          <p className="relative mx-auto max-w-3xl text-sm text-text-secondary md:text-base">
             Technologies and tools I work with.
           </p>
         </header>

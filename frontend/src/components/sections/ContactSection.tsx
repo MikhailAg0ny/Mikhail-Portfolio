@@ -22,12 +22,14 @@ export default function ContactSection() {
           isShort && "scale-90 origin-center"
         )}
       >
-        <div className="max-w-3xl space-y-3 text-center sm:space-y-4">
-          <p className="text-xs font-semibold uppercase tracking-[0.3em] text-victus-blue/80 sm:text-sm">Get In Touch</p>
-          <h2 className="text-3xl font-bold tracking-tight text-text-primary sm:text-4xl md:text-5xl">
+        <div className="relative max-w-3xl space-y-3 text-center sm:space-y-4">
+          {/* Subtle glow behind header */}
+          <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-32 w-72 rounded-full bg-victus-blue/10 blur-3xl" />
+          <p className="relative text-xs font-semibold uppercase tracking-[0.3em] text-victus-blue/80 sm:text-sm">Get In Touch</p>
+          <h2 className="relative text-3xl font-bold tracking-tight text-text-primary sm:text-4xl md:text-5xl">
             Let&apos;s Work Together
           </h2>
-          <p className="text-sm leading-relaxed text-text-secondary/80 sm:text-base md:text-lg">
+          <p className="relative text-sm leading-relaxed text-text-secondary/80 sm:text-base md:text-lg">
             I&apos;m always open to discussing new projects, creative ideas, or opportunities to be part of your vision.
           </p>
         </div>
@@ -38,7 +40,7 @@ export default function ContactSection() {
               <Tooltip.Trigger asChild>
                 <a
                   href={`mailto:${EMAIL_ADDRESS}`}
-                  className="inline-flex items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-victus-blue to-cyan-400 px-6 py-3 text-sm font-bold text-white transition-all hover:scale-105 hover:shadow-lg hover:shadow-victus-blue/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300 sm:px-8 sm:py-4 sm:text-base"
+                  className="btn-shine inline-flex items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-victus-blue to-cyan-400 px-6 py-3 text-sm font-bold text-white transition-all hover:scale-105 hover:shadow-lg hover:shadow-victus-blue/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300 sm:px-8 sm:py-4 sm:text-base"
                 >
                   Send Me An Email
                   <FiArrowUpRight className="h-4 w-4" />
@@ -58,12 +60,12 @@ export default function ContactSection() {
           </div>
         </Tooltip.Provider>
 
-        <div className="mt-8 w-full max-w-3xl border-t border-text-secondary/10 pt-8">
+        <div className="mt-8 w-full max-w-3xl rounded-2xl border border-text-secondary/20 bg-mica-light/40 p-6 backdrop-blur-xl">
           <Tooltip.Provider delayDuration={0} skipDelayDuration={400}>
             <div className="grid grid-cols-1 gap-4 text-center sm:grid-cols-3">
               <Tooltip.Root>
                 <Tooltip.Trigger asChild>
-                  <div className="space-y-1">
+                  <div className="glass-card-hover rounded-xl p-4 space-y-1">
                     <p className="text-xs font-semibold text-victus-blue sm:text-sm">Email</p>
                     <p className="break-all text-xs text-text-secondary/80 sm:text-sm">{EMAIL_ADDRESS}</p>
                   </div>
@@ -81,7 +83,7 @@ export default function ContactSection() {
 
               <Tooltip.Root>
                 <Tooltip.Trigger asChild>
-                  <div className="space-y-1">
+                  <div className="glass-card-hover rounded-xl p-4 space-y-1">
                     <p className="text-xs font-semibold text-victus-blue sm:text-sm">Phone</p>
                     <p className="text-xs text-text-secondary/80 sm:text-sm">0927 720 4496</p>
                   </div>
@@ -99,7 +101,7 @@ export default function ContactSection() {
 
               <Tooltip.Root>
                 <Tooltip.Trigger asChild>
-                  <div className="space-y-1">
+                  <div className="glass-card-hover rounded-xl p-4 space-y-1">
                     <p className="text-xs font-semibold text-victus-blue sm:text-sm">Location</p>
                     <p className="text-xs text-text-secondary/80 sm:text-sm">Philippines</p>
                   </div>

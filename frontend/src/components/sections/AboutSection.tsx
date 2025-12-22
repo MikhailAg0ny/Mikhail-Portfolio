@@ -97,10 +97,12 @@ export default function AboutSection() {
           !isShort ? "max-w-6xl justify-center" : "max-w-[90%] scale-90 origin-center" // Scale down on short screens
         )}
       >
-        <header className="mb-8 space-y-2.5 text-center sm:mb-12 sm:space-y-3">
-          <p className="text-xs uppercase tracking-[0.45em] text-victus-blue sm:text-sm">Get to know me</p>
-          <h2 className="text-2xl font-semibold text-text-primary sm:text-3xl md:text-4xl">About Me</h2>
-          <p className="mx-auto max-w-3xl text-sm text-text-secondary md:text-base">
+        <header className="relative mb-8 space-y-2.5 text-center sm:mb-12 sm:space-y-3">
+          {/* Subtle glow behind header */}
+          <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-32 w-64 rounded-full bg-victus-blue/10 blur-3xl" />
+          <p className="relative text-xs uppercase tracking-[0.45em] text-victus-blue sm:text-sm">Get to know me</p>
+          <h2 className="relative text-2xl font-semibold text-text-primary sm:text-3xl md:text-4xl">About Me</h2>
+          <p className="relative mx-auto max-w-3xl text-sm text-text-secondary md:text-base">
             Introduction
           </p>
         </header>
@@ -243,10 +245,10 @@ export default function AboutSection() {
                 )}>
                   <p className="text-xs uppercase tracking-[0.2em] text-victus-blue">Interests</p>
                   <div className="flex flex-wrap gap-2">
-                    <span className="rounded-full border border-victus-blue/30 bg-mica-dark/40 px-3 py-1 text-xs text-victus-blue">Game Development</span>
-                    <span className="rounded-full border border-victus-blue/30 bg-mica-dark/40 px-3 py-1 text-xs text-victus-blue">Mobile Development</span>
-                    <span className="rounded-full border border-victus-blue/30 bg-mica-dark/40 px-3 py-1 text-xs text-victus-blue">Web Development</span>
-                    <span className="rounded-full border border-victus-blue/30 bg-mica-dark/40 px-3 py-1 text-xs text-victus-blue">UI/UX Design</span>
+                    <span className="rounded-full border border-victus-blue/30 bg-mica-dark/40 px-3 py-1 text-xs text-victus-blue transition-all duration-300 hover:bg-victus-blue/20 hover:border-victus-blue/50 hover:scale-105">Game Development</span>
+                    <span className="rounded-full border border-victus-blue/30 bg-mica-dark/40 px-3 py-1 text-xs text-victus-blue transition-all duration-300 hover:bg-victus-blue/20 hover:border-victus-blue/50 hover:scale-105">Mobile Development</span>
+                    <span className="rounded-full border border-victus-blue/30 bg-mica-dark/40 px-3 py-1 text-xs text-victus-blue transition-all duration-300 hover:bg-victus-blue/20 hover:border-victus-blue/50 hover:scale-105">Web Development</span>
+                    <span className="rounded-full border border-victus-blue/30 bg-mica-dark/40 px-3 py-1 text-xs text-victus-blue transition-all duration-300 hover:bg-victus-blue/20 hover:border-victus-blue/50 hover:scale-105">UI/UX Design</span>
                   </div>
                 </div>
 

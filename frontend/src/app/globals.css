@@ -197,6 +197,16 @@ body {
   width: 14px;
   height: 14px;
   box-shadow: 0 0 12px rgba(0, 207, 232, 0.5);
+  animation: navDotPulse 2s ease-in-out infinite;
+}
+
+@keyframes navDotPulse {
+  0%, 100% {
+    box-shadow: 0 0 12px rgba(0, 207, 232, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(0, 207, 232, 0.8), 0 0 30px rgba(0, 207, 232, 0.4);
+  }
 }
 
 #fp-nav ul li a:hover span {
@@ -333,6 +343,233 @@ body {
 .animate-bounce-horizontal-right {
   animation: bounceHorizontalRight 1.5s ease-in-out infinite;
 }
+
+/* ========================================
+   PHASE 1: Premium Animation Utilities
+   ======================================== */
+
+/* Animated Gradient Text */
+@keyframes gradientShift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.gradient-text-animated {
+  background: linear-gradient(
+    90deg,
+    var(--victus-blue) 0%,
+    #67e8f9 25%,
+    #a5f3fc 50%,
+    #67e8f9 75%,
+    var(--victus-blue) 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradientShift 4s ease-in-out infinite;
+}
+
+/* Button Shine/Shimmer Effect */
+@keyframes buttonShine {
+  0% {
+    left: -100%;
+  }
+  50%, 100% {
+    left: 100%;
+  }
+}
+
+.btn-shine {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-shine::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.25),
+    transparent
+  );
+  transform: skewX(-25deg);
+  transition: none;
+}
+
+.btn-shine:hover::before {
+  animation: buttonShine 1.2s ease-in-out;
+}
+
+/* Scroll Reveal Animation */
+@keyframes scrollReveal {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.scroll-reveal {
+  animation: scrollReveal 0.8s ease-out forwards;
+}
+
+.scroll-reveal-delay-1 {
+  animation: scrollReveal 0.8s ease-out 0.1s forwards;
+  opacity: 0;
+}
+
+.scroll-reveal-delay-2 {
+  animation: scrollReveal 0.8s ease-out 0.2s forwards;
+  opacity: 0;
+}
+
+.scroll-reveal-delay-3 {
+  animation: scrollReveal 0.8s ease-out 0.3s forwards;
+  opacity: 0;
+}
+
+/* Float Animation */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+@keyframes floatSubtle {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-6px) rotate(2deg);
+  }
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+.animate-float-subtle {
+  animation: floatSubtle 5s ease-in-out infinite;
+}
+
+.animate-float-delay-1 {
+  animation: float 4s ease-in-out 0.5s infinite;
+}
+
+.animate-float-delay-2 {
+  animation: float 4s ease-in-out 1s infinite;
+}
+
+/* Pulse Glow Effect */
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(0, 207, 232, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(0, 207, 232, 0.6), 0 0 60px rgba(0, 207, 232, 0.3);
+  }
+}
+
+@keyframes pulseGlowText {
+  0%, 100% {
+    text-shadow: 0 0 10px rgba(0, 207, 232, 0.3);
+  }
+  50% {
+    text-shadow: 0 0 20px rgba(0, 207, 232, 0.6), 0 0 30px rgba(0, 207, 232, 0.3);
+  }
+}
+
+.pulse-glow {
+  animation: pulseGlow 3s ease-in-out infinite;
+}
+
+.pulse-glow-text {
+  animation: pulseGlowText 3s ease-in-out infinite;
+}
+
+/* Blinking Cursor */
+@keyframes blink {
+  0%, 50% {
+    opacity: 1;
+  }
+  51%, 100% {
+    opacity: 0;
+  }
+}
+
+.animate-blink {
+  animation: blink 1s step-end infinite;
+}
+
+/* Status Badge Pulse Dot */
+@keyframes statusPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.5);
+    opacity: 0.5;
+  }
+}
+
+.status-pulse {
+  animation: statusPulse 2s ease-in-out infinite;
+}
+
+/* Glass Card Hover Enhancement */
+.glass-card-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-card-hover:hover {
+  background: rgba(42, 47, 53, 0.85);
+  border-color: rgba(0, 207, 232, 0.3);
+  box-shadow: 0 8px 32px rgba(0, 207, 232, 0.15), 0 0 0 1px rgba(0, 207, 232, 0.1);
+  transform: translateY(-2px);
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .gradient-text-animated,
+  .btn-shine::before,
+  .scroll-reveal,
+  .scroll-reveal-delay-1,
+  .scroll-reveal-delay-2,
+  .scroll-reveal-delay-3,
+  .animate-float,
+  .animate-float-subtle,
+  .animate-float-delay-1,
+  .animate-float-delay-2,
+  .pulse-glow,
+  .pulse-glow-text,
+  .animate-blink,
+  .status-pulse {
+    animation: none;
+  }
+  
+  .glass-card-hover:hover {
+    transform: none;
+  }
+}
+
+/* ======================================== */
 
 .dark {
   --background: oklch(0.145 0 0);

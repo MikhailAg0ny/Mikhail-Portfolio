@@ -214,8 +214,8 @@ export default function ProjectsSection() {
       y: 0,
       scale: 1.02,
       backgroundColor: "rgba(18, 24, 36, 0.74)",
-      borderColor: "rgba(56, 189, 248, 0.32)",
-      boxShadow: "0px 18px 32px rgba(37, 99, 235, 0.16)",
+      borderColor: "rgba(56, 189, 248, 0.25)",
+      boxShadow: "0px 16px 28px rgba(0, 0, 0, 0.25), 0 0 15px rgba(0, 207, 232, 0.08)",
       transition: {
         type: "spring",
         stiffness: 260,
@@ -240,24 +240,26 @@ export default function ProjectsSection() {
   return (
     <section
       ref={sectionRef}
-      className={`relative flex w-full items-center justify-center overflow-hidden ${padding} ${isMobile ? '!pt-28' : ''}`}
-      style={{ minHeight, paddingTop: isMobile ? undefined : "96px" }}
+      className={`relative flex w-full items-center justify-center overflow-hidden ${padding}`}
+      style={{ minHeight }}
     >
       <div
         className={clsx(
-          "mx-auto flex w-full max-w-7xl flex-col items-center justify-start gap-5 px-4 sm:gap-8 sm:px-8 lg:px-10 transition-transform duration-300 ease-out",
-          isShort && "scale-90 origin-center"
+          "mx-auto flex w-full max-w-7xl flex-col items-center justify-center gap-4 px-4 sm:gap-6 sm:px-8 lg:px-10 transition-transform duration-300 ease-out",
+          isShort && "scale-[0.85] origin-center"
         )}
       >
         {/* Header */}
-        <div className="flex-shrink-0 w-full space-y-1.5 text-center sm:space-y-3">
-          <p className="text-sm font-semibold uppercase tracking-[0.4em] text-victus-blue">
+        <div className="relative flex-shrink-0 w-full space-y-1.5 text-center sm:space-y-3">
+          {/* Subtle glow behind header */}
+          <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-28 w-56 rounded-full bg-victus-blue/10 blur-3xl" />
+          <p className="relative text-sm font-semibold uppercase tracking-[0.4em] text-victus-blue">
             Projects
           </p>
-          <h2 className="text-3xl font-semibold text-text-primary md:text-4xl">
+          <h2 className="relative text-3xl font-semibold text-text-primary md:text-4xl">
             My Projects
           </h2>
-          <p className="mx-auto max-w-3xl text-sm text-text-secondary md:text-base">
+          <p className="relative mx-auto max-w-3xl text-sm text-text-secondary md:text-base">
             Recent projects or side projects I have worked on.
           </p>
         </div>
@@ -339,7 +341,7 @@ export default function ProjectsSection() {
                             <Tooltip.Root key={techIdx}>
                               <Tooltip.Trigger asChild>
                                 <span
-                                  className="rounded-lg bg-[#2A2F35] px-3 py-1 text-xs font-medium text-text-primary"
+                                  className="rounded-lg bg-[#2A2F35] px-3 py-1 text-xs font-medium text-text-primary transition-all duration-300 hover:bg-victus-blue/20 hover:scale-105"
                                 >
                                   {tech}
                                 </span>
@@ -364,7 +366,7 @@ export default function ProjectsSection() {
                         {showCaseStudyButton && project.caseStudyUrl && (
                           <a
                             href={project.caseStudyUrl}
-                            className="inline-flex items-center justify-center gap-2 rounded-full bg-victus-blue/20 px-4 py-2 text-xs font-semibold text-victus-blue transition-colors hover:bg-victus-blue/30"
+                            className="btn-shine inline-flex items-center justify-center gap-2 rounded-full bg-victus-blue/20 px-4 py-2 text-xs font-semibold text-victus-blue transition-colors hover:bg-victus-blue/30"
                             aria-label={`Open ${project.title} case study`}
                             target="_blank"
                             rel="noreferrer"
@@ -379,7 +381,7 @@ export default function ProjectsSection() {
                         {project.sourceUrl && (
                           <a
                             href={project.sourceUrl}
-                            className="inline-flex items-center justify-center gap-2 rounded-full border border-white/10 px-5 py-2 text-sm font-semibold text-white transition-colors hover:border-victus-blue hover:text-victus-blue"
+                            className="glass-card-hover inline-flex items-center justify-center gap-2 rounded-full border border-white/10 px-5 py-2 text-sm font-semibold text-white"
                             target="_blank"
                             rel="noreferrer"
                           >
@@ -400,7 +402,7 @@ export default function ProjectsSection() {
         </Tooltip.Provider>
 
         {/* Swiper Carousel */}
-        <div className="relative group mx-auto hidden w-full max-w-7xl overflow-visible px-2 sm:block sm:px-4">
+        <div className="relative group mx-auto hidden w-full max-w-7xl overflow-x-hidden px-2 sm:block sm:px-4">
           {/* Desktop Hover Hint */}
           <div
             className={`pointer-events-none absolute inset-x-0 bottom-8 z-10 flex justify-center transition-opacity duration-300 ${showSwipeHint ? 'opacity-100' : 'opacity-0'
@@ -457,7 +459,7 @@ export default function ProjectsSection() {
               },
             }}
             // Keep swiper tall enough to avoid internal scrolling when cards are active
-            style={{ minHeight: '540px', overflow: 'visible', paddingBottom: '20px', paddingTop: '16px' }}
+            style={{ minHeight: '420px', overflow: 'visible', paddingBottom: '16px', paddingTop: '12px' }}
           >
             {projects.map((project, idx) => {
               const primaryTech = project.primaryTech;
@@ -469,8 +471,12 @@ export default function ProjectsSection() {
               return (
                 <SwiperSlide key={idx} className="flex h-full items-center justify-center px-3">
                   <motion.article
-                    className={`projects-card group relative flex h-auto w-full max-w-[470px] flex-col overflow-hidden rounded-3xl border bg-transparent p-6 shadow-lg backdrop-blur-md transition-all duration-300 lg:max-w-[500px] lg:p-6 ${isActive ? 'min-h-[440px] lg:min-h-[460px]' : 'min-h-[340px] text-text-secondary/90'
+                    className={`projects-card group relative flex h-auto w-full max-w-[540px] flex-col overflow-hidden rounded-3xl border bg-transparent p-5 shadow-lg backdrop-blur-md lg:max-w-[580px] lg:p-5 ${isActive ? 'min-h-[380px] lg:min-h-[400px]' : 'min-h-[280px] text-text-secondary/90'
                       }`}
+                    style={{
+                      transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                      transform: isActive ? 'scale(1.08)' : 'scale(0.92)',
+                    }}
                     variants={cardVariants}
                     initial="hidden"
                     animate={isActive ? "active" : "inactive"}
@@ -515,7 +521,7 @@ export default function ProjectsSection() {
                               {secondaryTechs.map((tech, techIdx) => (
                                 <span
                                   key={techIdx}
-                                  className="rounded-lg bg-[#2A2F35] px-2.5 py-1 text-xs font-medium text-text-primary"
+                                  className="rounded-lg bg-[#2A2F35] px-2.5 py-1 text-xs font-medium text-text-primary transition-all duration-300 hover:bg-victus-blue/20 hover:scale-105"
                                 >
                                   {tech}
                                 </span>
@@ -530,7 +536,7 @@ export default function ProjectsSection() {
                           {showCaseStudyButton && project.caseStudyUrl && (
                             <a
                               href={project.caseStudyUrl}
-                              className="inline-flex items-center gap-2 rounded-full bg-victus-blue/20 px-4 py-2 text-xs font-semibold text-victus-blue transition-colors hover:bg-victus-blue/30"
+                              className="btn-shine inline-flex items-center gap-2 rounded-full bg-victus-blue/20 px-4 py-2 text-xs font-semibold text-victus-blue transition-colors hover:bg-victus-blue/30"
                               aria-label={`Open ${project.title} case study`}
                               target="_blank"
                               rel="noreferrer"
@@ -545,7 +551,7 @@ export default function ProjectsSection() {
                           {project.sourceUrl && (
                             <a
                               href={project.sourceUrl}
-                              className="inline-flex items-center gap-2 rounded-full border border-white/10 px-4 py-2 text-xs font-semibold text-white transition-colors hover:border-victus-blue hover:text-victus-blue"
+                              className="glass-card-hover inline-flex items-center gap-2 rounded-full border border-white/10 px-4 py-2 text-xs font-semibold text-white"
                               target="_blank"
                               rel="noreferrer"
                             >
