@@ -7,6 +7,7 @@ import { Listbox, ListboxButton, ListboxOption, ListboxOptions, Transition } fro
 import { FiArrowUpRight, FiX, FiSend, FiCheck, FiAlertCircle, FiChevronDown, FiUsers, FiBriefcase, FiCode, FiHelpCircle, FiMessageSquare, FiTrash2 } from "react-icons/fi";
 import { useSectionPadding, useBreakpoints } from "@/hooks/useBreakpoints";
 import { toast } from "sonner";
+import emailjs from "@emailjs/browser";
 import clsx from "clsx";
 
 const EMAIL_ADDRESS = process.env.NEXT_PUBLIC_EMAIL || "mikhailjpn@gmail.com";
@@ -66,6 +67,13 @@ export default function ContactSection() {
       }
     } catch {
       // Ignore localStorage errors
+    }
+  }, []);
+
+  // Initialize EmailJS
+  useEffect(() => {
+    if (process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY) {
+      emailjs.init(process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY);
     }
   }, []);
 
@@ -172,10 +180,30 @@ export default function ContactSection() {
 
     setFormState("submitting");
 
-    // TODO: Implement EmailJS integration here
-    setTimeout(() => {
+    try {
+      // Check if EmailJS is configured
+      const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
+      const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
+
+      if (!serviceId || !templateId) {
+        // Fallback to simulation if EmailJS is not configured
+        console.warn("EmailJS not configured. Simulating submission.");
+        await new Promise(resolve => setTimeout(resolve, 1500));
+      } else {
+        // Send via EmailJS
+        await emailjs.send(serviceId, templateId, {
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          senderEmail: formData.email,
+          subject: formData.subject,
+          inquiryType: formData.projectType,
+          message: formData.message,
+        });
+      }
+
       setFormState("success");
-      clearDraft(); // Clear draft on successful submission
+      clearDraft();
+
       // Give time to see the thank you animation, then close modal
       setTimeout(() => {
         setIsOpen(false);
@@ -199,7 +227,14 @@ export default function ContactSection() {
           });
         }, 300);
       }, 2500);
-    }, 1500);
+
+    } catch (error) {
+      console.error("EmailJS Error:", error);
+      setFormState("error");
+      toast.error("Failed to send message", {
+        description: "Please try again or email me directly.",
+      });
+    }
   };
 
   const handleInputChange = (field: keyof FormData, value: string) => {
@@ -514,12 +549,9 @@ export default function ContactSection() {
                         </>
                       )}
                       {formState === "success" && (
-                        <div className="flex flex-col items-center gap-1 animate-in fade-in zoom-in-95 duration-300">
-                          <div className="flex items-center gap-2">
-                            <FiCheck className="h-5 w-5 animate-bounce" />
-                            <span className="text-base">Thank You!</span>
-                          </div>
-                          <span className="text-xs font-normal opacity-90">We&apos;ll get back to you soon</span>
+                        <div className="flex items-center gap-2 animate-in fade-in zoom-in-95 duration-300">
+                          <FiCheck className="h-5 w-5 animate-bounce" />
+                          <span className="text-base animate-pulse">Thank You!</span>
                         </div>
                       )}
                       {formState === "error" && (
