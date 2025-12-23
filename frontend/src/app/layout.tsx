@@ -4,6 +4,7 @@ import "./globals.css";
 import ClickSpark from "@/components/ClickSpark";
 import CustomCursor from "@/components/layout/CustomCursor";
 import VercelAnalyticsClient from "@/components/layout/VercelAnalyticsClient";
+import { PersonJsonLd, WebsiteJsonLd } from "@/components/seo/JsonLd";
 import { Toaster } from "sonner";
 
 const inter = Inter({
@@ -19,8 +20,71 @@ const jetBrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Mikhail's Portfolio",
-  description: "Fullstack Developer Portfolio",
+  // Core SEO
+  title: {
+    default: "Mikhail | Fullstack Developer Portfolio",
+    template: "%s | Mikhail Portfolio",
+  },
+  description:
+    "Fullstack Developer from Cebu, Philippines specializing in React, Next.js, TypeScript, and modern web technologies. View my projects, skills, and get in touch for collaboration.",
+
+  // Keywords
+  keywords: [
+    "Mikhail",
+    "Fullstack Developer",
+    "Web Developer",
+    "React Developer",
+    "Next.js Developer",
+    "TypeScript",
+    "JavaScript",
+    "Portfolio",
+    "Philippines",
+    "Cebu Developer",
+    "Cebu Web Developer",
+    "Cebu Fullstack Developer",
+    "Filipino Developer",
+    "Philippines Web Developer",
+    "Freelance Developer",
+    "Hire Developer Cebu",
+    "Software Engineer Philippines",
+  ],
+
+  // Author
+  authors: [{ name: "Mikhail" }],
+  creator: "Mikhail",
+
+  // Open Graph (Facebook, LinkedIn, etc.)
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    siteName: "Mikhail's Portfolio",
+    title: "Mikhail | Fullstack Developer Portfolio",
+    description:
+      "Fullstack Developer from Cebu, Philippines specializing in React, Next.js, TypeScript, and modern web technologies.",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Mikhail - Fullstack Developer Portfolio",
+      },
+    ],
+  },
+
+  // Robots
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+
+  // Icons (keep existing)
   icons: {
     icon: [
       { url: "/icons/hd-bongo-cat-icon.png", sizes: "any" },
@@ -49,6 +113,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        {/* JSON-LD Structured Data */}
+        <PersonJsonLd />
+        <WebsiteJsonLd />
         {/* Preferred PNG favicon */}
         <link rel="icon" type="image/png" href="/icons/hd-bongo-cat-icon.png" />
         <link rel="icon" type="image/png" href="/favicon.png" />
