@@ -614,6 +614,12 @@ body {
     cursor: none;
   }
 
+  /* Restore normal cursor when modal is open */
+  body[data-modal-open="true"],
+  body[data-modal-open="true"] * {
+    cursor: auto !important;
+  }
+
   * {
     @apply border-border outline-ring/50;
   }

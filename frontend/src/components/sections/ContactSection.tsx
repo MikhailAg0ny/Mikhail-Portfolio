@@ -120,17 +120,22 @@ export default function ContactSection() {
     if (isOpen) {
       document.body.style.overflow = "hidden";
       document.documentElement.style.overflow = "hidden";
+      // Set data attribute to disable custom cursor
+      document.body.setAttribute('data-modal-open', 'true');
       // Disable fullpage.js scrolling
       fullpageApi?.setAllowScrolling(false);
     } else {
       document.body.style.overflow = "";
       document.documentElement.style.overflow = "";
+      // Remove data attribute to re-enable custom cursor
+      document.body.removeAttribute('data-modal-open');
       // Re-enable fullpage.js scrolling
       fullpageApi?.setAllowScrolling(true);
     }
     return () => {
       document.body.style.overflow = "";
       document.documentElement.style.overflow = "";
+      document.body.removeAttribute('data-modal-open');
       fullpageApi?.setAllowScrolling(true);
     };
   }, [isOpen]);
@@ -474,9 +479,12 @@ export default function ContactSection() {
                           </ListboxButton>
                           <Transition
                             as={Fragment}
-                            leave="transition ease-in duration-100"
-                            leaveFrom="opacity-100"
-                            leaveTo="opacity-0"
+                            enter="transition ease-out duration-200"
+                            enterFrom="opacity-0 translate-y-[-8px] scale-95"
+                            enterTo="opacity-100 translate-y-0 scale-100"
+                            leave="transition ease-in duration-150"
+                            leaveFrom="opacity-100 translate-y-0 scale-100"
+                            leaveTo="opacity-0 translate-y-[-8px] scale-95"
                           >
                             <ListboxOptions className="absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-lg border border-victus-blue/30 bg-mica-dark/95 py-1 text-sm shadow-xl backdrop-blur-xl ring-1 ring-black/5 focus:outline-none">
                               {INQUIRY_TYPES.map((type) => (
