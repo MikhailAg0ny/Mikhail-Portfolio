@@ -26,6 +26,7 @@ export interface ProjectCaseStudy {
 
   image?: string;
   images?: string[];
+  projectType?: "school" | "client" | "side";
 }
 
 export interface Experience {
@@ -39,7 +40,7 @@ export interface Certificate {
   name: string;
   issuer: string;
   date: string;
-  image: string;
+  image?: string;
   link?: string;
 }
 

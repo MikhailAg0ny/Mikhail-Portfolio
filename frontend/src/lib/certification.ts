@@ -4,11 +4,18 @@ import type { Certificate } from "@/types";
 
 export const certifications: Certificate[] = [
   {
-    name: "CodeChum SQL Certification",
-    issuer: "CodeChum",
+    name: "Intellectual Property Rights for CCS",
+    issuer: "CCS",
     date: "2024",
-    image: "/Certificates/pictures/codechum_sql_mjpn.png",
-    link: "/Certificates/pdf-files/NavarroMikhailJames-15679-CSIT327-IM2-G4_SQL.pdf",
+    image: "/Certificates/pictures/MJPN_INTELLECTUAL_PROPERTY_RIGHTS_2024.png",
+    link: "/Certificates/pdf-files/MJPN_ Intellectual_Rights.pdf",
+  },
+  {
+    name: "Career Syntax: The Code for Resume and Interview Success",
+    issuer: "CCS",
+    date: "2025",
+    image: "/Certificates/pictures/MJPN_CAREER_SYNTAX_2025.png",
+    link: "/Certificates/pdf-files/MJPN_Career_Syntax.pdf",
   },
   {
     name: "UXPH MINI 2025 Event Certificate",
@@ -58,6 +65,13 @@ export const certifications: Certificate[] = [
     date: "2025",
     image: "/Certificates/pictures/Devfest 2025 Cert - (Mikhail James Navarro) .png",
     link: "/Certificates/pdf-files/Devfest 2025 Cert - (Mikhail James Navarro) .pdf",
+  },
+  {
+    name: "CodeChum SQL Certification",
+    issuer: "CodeChum",
+    date: "2024",
+    image: "/Certificates/pictures/codechum_sql_mjpn.png",
+    link: "/Certificates/pdf-files/NavarroMikhailJames-15679-CSIT327-IM2-G4_SQL.pdf",
   },
 ];
 

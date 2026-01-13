@@ -19,10 +19,12 @@ export default function CertificationsSection() {
   const animTimeout = useRef<NodeJS.Timeout | null>(null);
   const certificateImages = useMemo<Certificate[]>(
     () =>
-      certifications.map((certificate) => ({
-        ...certificate,
-        image: encodeURI(certificate.image),
-      })),
+      [...certifications]
+        .sort((a, b) => parseInt(b.date) - parseInt(a.date))
+        .map((certificate) => ({
+          ...certificate,
+          image: certificate.image ? encodeURI(certificate.image) : undefined,
+        })),
     []
   );
 
@@ -90,15 +92,21 @@ export default function CertificationsSection() {
               className="group relative mx-auto flex h-full w-full max-w-[280px] flex-col items-center justify-between overflow-hidden rounded-[16px] border border-text-secondary/20 bg-mica-light/60 p-3 text-center transition-all duration-300 hover:-translate-y-1 hover:border-victus-blue/30 hover:bg-mica-light/70 sm:max-w-[280px] sm:p-3.5"
             >
               <div className="relative aspect-square w-18 sm:w-20 overflow-hidden rounded-[14px] border border-white/15 shadow-inner shadow-black/30">
-                <Image
-                  src={certificate.image}
-                  alt={`${certificate.name} certificate preview`}
-                  fill
-                  className="object-cover transition-transform duration-300 group-hover:scale-105"
-                  sizes="(max-width: 640px) 40vw, 120px"
-                  loading="lazy"
-                  unoptimized
-                />
+                {certificate.image ? (
+                  <Image
+                    src={certificate.image}
+                    alt={`${certificate.name} certificate preview`}
+                    fill
+                    className="object-cover transition-transform duration-300 group-hover:scale-105"
+                    sizes="(max-width: 640px) 40vw, 120px"
+                    loading="lazy"
+                    unoptimized
+                  />
+                ) : (
+                  <div className="flex h-full w-full items-center justify-center bg-victus-blue/10">
+                    <span className="text-2xl">🏆</span>
+                  </div>
+                )}
               </div>
 
               <div className="mt-3.5 space-y-1">

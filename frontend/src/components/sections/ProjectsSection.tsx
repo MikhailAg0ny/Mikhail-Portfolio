@@ -4,7 +4,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import * as Tooltip from "@radix-ui/react-tooltip";
 
-import { myProjects } from "@/lib/projects";
+import { projects as sortedProjects } from "@/lib/projects";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Keyboard } from 'swiper/modules';
 import type { Swiper as SwiperType } from 'swiper';
@@ -20,6 +20,18 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
 const IMAGE_ROTATION_INTERVAL = 4000;
+
+const getProjectTypeBadge = (type?: "school" | "client" | "side") => {
+  if (!type) return null;
+
+  const badges = {
+    school: { label: "School Project", colorClass: "bg-cyan-500/15 text-cyan-400 border-cyan-400/30" },
+    client: { label: "Client Project", colorClass: "bg-green-500/15 text-green-400 border-green-400/30" },
+    side: { label: "Side Project", colorClass: "bg-purple-500/15 text-purple-400 border-purple-400/30" },
+  };
+
+  return badges[type];
+};
 
 const getProjectMediaSources = (project: ProjectCaseStudy): string[] => {
   if (project.images && project.images.length > 0) {
@@ -97,7 +109,7 @@ function ProjectImageCarousel({
 
 export default function ProjectsSection() {
   // Use the dataset as-is (no duplication or looping)
-  const projects = myProjects;
+  const projects = sortedProjects;
   const [activeIndex, setActiveIndex] = useState(0);
   const [showSwipeHint, setShowSwipeHint] = useState(true);
   const projectMediaSources = useMemo(
@@ -312,9 +324,16 @@ export default function ProjectsSection() {
                       animate="active"
                       transition={{ delay: idx * 0.07 }}
                     >
-                      <span className="inline-block w-fit rounded-full bg-victus-blue/15 px-2.5 py-0.5 text-[0.7rem] font-semibold uppercase tracking-wider text-victus-blue">
-                        {project.timeframe}
-                      </span>
+                      <div className="flex flex-wrap items-center gap-2">
+                        <span className="inline-block rounded-full bg-victus-blue/15 px-2.5 py-0.5 text-[0.7rem] font-semibold uppercase tracking-wider text-victus-blue">
+                          {project.timeframe}
+                        </span>
+                        {project.projectType && (
+                          <span className={`inline-block rounded-full border px-2.5 py-0.5 text-[0.7rem] font-semibold uppercase tracking-wider ${getProjectTypeBadge(project.projectType)?.colorClass}`}>
+                            {getProjectTypeBadge(project.projectType)?.label}
+                          </span>
+                        )}
+                      </div>
 
                       {(project.images?.length || project.image) && (
                         <div className="relative h-56 overflow-hidden rounded-xl">
@@ -486,9 +505,16 @@ export default function ProjectsSection() {
                     {isActive ? (
                       <>
                         <div className="flex flex-col gap-4">
-                          <span className="inline-block w-fit rounded-full bg-victus-blue/15 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-victus-blue">
-                            {project.timeframe}
-                          </span>
+                          <div className="flex flex-wrap items-center gap-2">
+                            <span className="inline-block rounded-full bg-victus-blue/15 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-victus-blue">
+                              {project.timeframe}
+                            </span>
+                            {project.projectType && (
+                              <span className={`inline-block rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-wider ${getProjectTypeBadge(project.projectType)?.colorClass}`}>
+                                {getProjectTypeBadge(project.projectType)?.label}
+                              </span>
+                            )}
+                          </div>
 
                           {(project.images?.length || project.image) && (
                             <div
@@ -571,9 +597,16 @@ export default function ProjectsSection() {
                             style={{ aspectRatio: "4 / 3" }}
                           >
                             {project.timeframe && (
-                              <span className="absolute left-3 top-3 z-10 inline-flex items-center rounded-full bg-victus-blue/20 px-3 py-1 text-[0.7rem] font-semibold uppercase tracking-wide text-victus-blue shadow-sm">
-                                {project.timeframe}
-                              </span>
+                              <div className="absolute left-3 top-3 z-10 flex flex-wrap items-center gap-2">
+                                <span className="inline-flex items-center rounded-full bg-victus-blue/20 px-3 py-1 text-[0.7rem] font-semibold uppercase tracking-wide text-victus-blue shadow-sm">
+                                  {project.timeframe}
+                                </span>
+                                {project.projectType && (
+                                  <span className={`inline-flex items-center rounded-full border px-3 py-1 text-[0.7rem] font-semibold uppercase tracking-wide shadow-sm ${getProjectTypeBadge(project.projectType)?.colorClass}`}>
+                                    {getProjectTypeBadge(project.projectType)?.label}
+                                  </span>
+                                )}
+                              </div>
                             )}
                             <ProjectImageCarousel
                               images={project.images}
