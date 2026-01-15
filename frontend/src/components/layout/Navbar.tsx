@@ -12,6 +12,7 @@ const navLinks = [
   { label: "Achievements", anchor: "achievements" },
   { label: "Certifications", anchor: "certifications" },
   { label: "Contact", anchor: "contact" },
+  { label: "Resume", anchor: "resume", isHighlighted: true, externalPath: "/resume/Navarro_Resume_1-15-2026.pdf" },
 ];
 
 type NavbarProps = {
@@ -96,7 +97,24 @@ export default function Navbar({ activeSection = "hero", onNavigate }: NavbarPro
         <ul id="navbar-menu" className="hidden gap-6 md:flex">
           {navLinks.map((link) => {
             const isActive = activeSection === link.anchor;
-            const path = link.anchor === "hero" ? "/" : `/${link.anchor}`;
+            const path = link.externalPath || (link.anchor === "hero" ? "/" : `/${link.anchor}`);
+
+            // Special styling for highlighted links (Resume)
+            if (link.isHighlighted) {
+              return (
+                <li key={link.label}>
+                  <a
+                    className="nav-link text-sm font-semibold px-4 py-2 rounded-lg bg-victus-blue/90 text-white shadow-md shadow-victus-blue/30 transition-all hover:bg-victus-blue hover:shadow-lg hover:shadow-victus-blue/40 hover:scale-105"
+                    href={path}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              );
+            }
+
             return (
               <li key={link.label}>
                 <Link
@@ -146,6 +164,26 @@ export default function Navbar({ activeSection = "hero", onNavigate }: NavbarPro
             >
               {navLinks.map((link) => {
                 const isActive = activeSection === link.anchor;
+
+                // Special styling for highlighted links (Resume) in mobile
+                if (link.isHighlighted) {
+                  return (
+                    <DropdownMenu.Item
+                      key={link.anchor}
+                      className="flex cursor-pointer items-center rounded-xl px-3 py-2 transition bg-victus-blue/90 text-white font-semibold shadow-sm shadow-victus-blue/30 hover:bg-victus-blue hover:shadow-md"
+                      asChild
+                    >
+                      <a
+                        href={link.externalPath}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {link.label}
+                      </a>
+                    </DropdownMenu.Item>
+                  );
+                }
+
                 return (
                   <DropdownMenu.Item
                     key={link.anchor}
