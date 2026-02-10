@@ -104,7 +104,7 @@ export const myProjects: ProjectCaseStudy[] = [
     description:
       "TimEd is a time management platform that helps schools and universities streamline event organization, real-time attendance, and department management.",
     caseStudyUrl: "https://timedsystem.netlify.app/",
-    sourceUrl: "https://github.com/cabadany/TimEd",
+    sourceUrl: "https://github.com/MikhailAg0ny/Timed-Project",
     showCaseStudyButton: true,
     images: [
       "/Pictures/TimEd/1_timed.png",
