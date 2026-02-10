@@ -110,23 +110,7 @@ export const myProjects: ProjectCaseStudy[] = [
       "/Pictures/TimEd/1_timed.png",
     ],
   },
-  {
-    timeframe: "2025",
-    image: "/Pictures/Identity_Fragments_Of_Me/1_identity.png",
-    title: "Identity: Fragments of Me",
-    primaryTech: "Side Project Game",
-    featuredTechs: ["Godot Engine", "GDScript"],
-    projectType: "side",
 
-    description:
-      "A psychological turn-based horror RPG in Godot, blending strategic combat and exploration as players reconstruct a fractured psyche in a shifting reality.",
-    caseStudyUrl: "#",
-    sourceUrl: "https://github.com/danrave1234/Godot-Project",
-    showCaseStudyButton: false,
-    images: [
-      "/Pictures/Identity_Fragments_Of_Me/1_identity.png",
-    ],
-  },
 ];
 
 const projectTypePriority: Record<string, number> = {

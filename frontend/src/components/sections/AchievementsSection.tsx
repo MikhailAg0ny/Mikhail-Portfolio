@@ -178,7 +178,7 @@ export default function AchievementsSection() {
                     src={heroImage.src}
                     alt={heroImage.alt}
                     fill
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
                     sizes="(max-width: 768px) 90vw, 45vw"
                     loading="lazy"
                     unoptimized

@@ -109,7 +109,7 @@ export default function HeroSection() {
                     <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-400 status-pulse" />
                     <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
                   </span>
-                  Available for Work
+                  On Job Training
                 </div>
               ) : (
                 <div className="inline-flex items-center gap-2 rounded-full border border-red-500/30 bg-red-500/10 px-3 py-1.5 text-xs font-medium text-red-400 backdrop-blur-sm sm:px-4 sm:py-2 sm:text-sm">
