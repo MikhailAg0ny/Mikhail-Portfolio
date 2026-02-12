@@ -89,7 +89,7 @@ export default function HeroSection() {
             <div className="relative animate-float-subtle">
               <div className="h-48 w-48 overflow-hidden rounded-full border-4 border-victus-blue shadow-2xl shadow-victus-blue/20 pulse-glow sm:h-64 sm:w-64 lg:h-80 lg:w-80">
                 <ImageWithFallback
-                  src="/images/profile.png?v=new"
+                  src="/images/profile_hd.png"
                   alt="Mikhail James P. Navarro"
                   width={320}
                   height={320}
