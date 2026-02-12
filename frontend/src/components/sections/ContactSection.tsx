@@ -44,6 +44,14 @@ const DRAFT_STORAGE_KEY = "contact-form-draft";
 const RATE_LIMIT_KEY = "contact-form-last-submit";
 const RATE_LIMIT_MS = 60000; // 60 seconds between submissions
 
+// Security (4.3): Sanitize inputs before sending to prevent HTML/script injection
+const sanitize = (input: string): string =>
+  input
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#x27;");
+
 export default function ContactSection() {
   const { padding, minHeight } = useSectionPadding();
   const { isShort } = useBreakpoints();
@@ -215,13 +223,14 @@ export default function ContactSection() {
         await new Promise(resolve => setTimeout(resolve, 1500));
       } else {
         // Send via EmailJS
+        // Security (4.3): Sanitize all user inputs before sending
         await emailjs.send(serviceId, templateId, {
-          firstName: formData.firstName,
-          lastName: formData.lastName,
-          senderEmail: formData.email,
-          subject: formData.subject,
-          inquiryType: formData.projectType,
-          message: formData.message,
+          firstName: sanitize(formData.firstName),
+          lastName: sanitize(formData.lastName),
+          senderEmail: formData.email, // Already validated by regex
+          subject: sanitize(formData.subject),
+          inquiryType: formData.projectType, // Controlled select value
+          message: sanitize(formData.message),
         });
       }
 
@@ -361,6 +370,7 @@ export default function ContactSection() {
                         value={formData.firstName}
                         onChange={(e) => handleInputChange("firstName", e.target.value)}
                         placeholder="First Name"
+                        maxLength={50}
                         disabled={formState === "submitting"}
                         className={inputClasses(!!errors.firstName)}
                       />
@@ -383,6 +393,7 @@ export default function ContactSection() {
                         value={formData.lastName}
                         onChange={(e) => handleInputChange("lastName", e.target.value)}
                         placeholder="Last Name"
+                        maxLength={50}
                         disabled={formState === "submitting"}
                         className={inputClasses(!!errors.lastName)}
                       />
@@ -407,6 +418,7 @@ export default function ContactSection() {
                       value={formData.email}
                       onChange={(e) => handleInputChange("email", e.target.value)}
                       placeholder="your.email@example.com"
+                      maxLength={254}
                       disabled={formState === "submitting"}
                       className={inputClasses(!!errors.email)}
                     />
@@ -541,6 +553,7 @@ export default function ContactSection() {
                       onChange={(e) => handleInputChange("message", e.target.value)}
                       placeholder="Tell me about your project..."
                       rows={4}
+                      maxLength={2000}
                       disabled={formState === "submitting"}
                       className={clsx(inputClasses(!!errors.message), "resize-none")}
                     />
