@@ -8,9 +8,10 @@ import { FiArrowUpRight, FiX, FiSend, FiCheck, FiAlertCircle, FiChevronDown, FiU
 import { useSectionPadding, useBreakpoints } from "@/hooks/useBreakpoints";
 import { toast } from "sonner";
 import emailjs from "@emailjs/browser";
-import clsx from "clsx";
+import { cn } from "@/lib/utils";
+import { profile } from "@/lib/profile";
 
-const EMAIL_ADDRESS = process.env.NEXT_PUBLIC_EMAIL || "mikhailjpn@gmail.com";
+const EMAIL_ADDRESS = profile.socials.email;
 
 type FormState = "idle" | "submitting" | "success" | "error";
 
@@ -279,7 +280,7 @@ export default function ContactSection() {
   };
 
   const inputClasses = (hasError: boolean) =>
-    clsx(
+    cn(
       "w-full rounded-lg border bg-mica-dark/30 px-4 py-3 text-sm text-text-primary placeholder:text-text-secondary/50 transition-all focus:outline-none focus:ring-2",
       hasError
         ? "border-red-400/50 focus:ring-red-400/50"
@@ -290,12 +291,12 @@ export default function ContactSection() {
   return (
     <>
       <section
-        className={`flex w-full items-center justify-center overflow-hidden ${padding}`}
+        className={cn("flex w-full items-center justify-center overflow-hidden", padding)}
         style={{ minHeight }}
       >
         <div
-          className={clsx(
-            "flex w-full max-w-6xl flex-col items-center justify-center gap-12 px-4 sm:gap-16 sm:px-10 transition-transform duration-300 ease-out",
+          className={cn(
+            "flex w-full max-w-6xl flex-col items-center justify-center gap-12 px-4 sm:gap-16 sm:px-10 transition-transform duration-300 ease-out responsive-short-scale",
             isShort && "scale-90 origin-center"
           )}
         >
@@ -305,7 +306,7 @@ export default function ContactSection() {
             <p className="relative text-xs font-semibold uppercase tracking-[0.3em] text-victus-blue/80 sm:text-sm">
               Get In Touch
             </p>
-            <h2 className="relative text-3xl font-bold tracking-tight text-text-primary sm:text-4xl md:text-5xl">
+            <h2 className="relative fluid-heading-section font-bold tracking-tight text-text-primary">
               Let&apos;s Work Together
             </h2>
             <p className="relative text-sm leading-relaxed text-text-secondary/80 sm:text-base md:text-lg">
@@ -362,7 +363,7 @@ export default function ContactSection() {
                     <div className="space-y-1.5">
                       <label htmlFor="firstName" className="text-xs font-semibold text-victus-blue ml-1 flex items-center gap-1">
                         First Name
-                        <span className={clsx("text-red-400 transition-all duration-300 transform origin-left", formData.firstName ? "opacity-0 scale-0 w-0" : "opacity-100 scale-100 w-auto")}>*</span>
+                        <span className={cn("text-red-400 transition-all duration-300 transform origin-left", formData.firstName ? "opacity-0 scale-0 w-0" : "opacity-100 scale-100 w-auto")}>*</span>
                       </label>
                       <input
                         id="firstName"
@@ -385,7 +386,7 @@ export default function ContactSection() {
                     <div className="space-y-1.5">
                       <label htmlFor="lastName" className="text-xs font-semibold text-victus-blue ml-1 flex items-center gap-1">
                         Last Name
-                        <span className={clsx("text-red-400 transition-all duration-300 transform origin-left", formData.lastName ? "opacity-0 scale-0 w-0" : "opacity-100 scale-100 w-auto")}>*</span>
+                        <span className={cn("text-red-400 transition-all duration-300 transform origin-left", formData.lastName ? "opacity-0 scale-0 w-0" : "opacity-100 scale-100 w-auto")}>*</span>
                       </label>
                       <input
                         id="lastName"
@@ -410,7 +411,7 @@ export default function ContactSection() {
                   <div className="space-y-1.5">
                     <label htmlFor="email" className="text-xs font-semibold text-victus-blue ml-1 flex items-center gap-1">
                       Email Address
-                      <span className={clsx("text-red-400 transition-all duration-300 transform origin-left", formData.email ? "opacity-0 scale-0 w-0" : "opacity-100 scale-100 w-auto")}>*</span>
+                      <span className={cn("text-red-400 transition-all duration-300 transform origin-left", formData.email ? "opacity-0 scale-0 w-0" : "opacity-100 scale-100 w-auto")}>*</span>
                     </label>
                     <input
                       id="email"
@@ -435,7 +436,7 @@ export default function ContactSection() {
                     <div className="space-y-1.5">
                       <label htmlFor="subject" className="text-xs font-semibold text-victus-blue ml-1 flex items-center gap-1">
                         Subject
-                        <span className={clsx("text-red-400 transition-all duration-300 transform origin-left", formData.subject ? "opacity-0 scale-0 w-0" : "opacity-100 scale-100 w-auto")}>*</span>
+                        <span className={cn("text-red-400 transition-all duration-300 transform origin-left", formData.subject ? "opacity-0 scale-0 w-0" : "opacity-100 scale-100 w-auto")}>*</span>
                       </label>
                       <input
                         id="subject"
@@ -458,12 +459,12 @@ export default function ContactSection() {
                     <div className="space-y-1.5">
                       <label htmlFor="projectType" className="text-xs font-semibold text-victus-blue ml-1 flex items-center gap-1">
                         Inquiry Type
-                        <span className={clsx("text-red-400 transition-all duration-300 transform origin-left", formData.projectType ? "opacity-0 scale-0 w-0" : "opacity-100 scale-100 w-auto")}>*</span>
+                        <span className={cn("text-red-400 transition-all duration-300 transform origin-left", formData.projectType ? "opacity-0 scale-0 w-0" : "opacity-100 scale-100 w-auto")}>*</span>
                       </label>
                       <div className="relative">
                         <Listbox value={formData.projectType || ""} onChange={(value) => handleInputChange("projectType", value)}>
                           <ListboxButton
-                            className={clsx(
+                            className={cn(
                               inputClasses(!!errors.projectType),
                               "flex items-center justify-between text-left",
                               !formData.projectType && "text-text-secondary/50"
@@ -504,7 +505,7 @@ export default function ContactSection() {
                                   key={type.value}
                                   value={type.value}
                                   className={({ active, selected }) =>
-                                    clsx(
+                                    cn(
                                       "relative cursor-pointer select-none py-2.5 pl-3 pr-4 transition-colors",
                                       active ? "bg-victus-blue/20 text-cyan-400" : "text-text-primary",
                                       selected && "font-medium text-cyan-400"
@@ -513,10 +514,10 @@ export default function ContactSection() {
                                 >
                                   {({ selected, active }) => (
                                     <div className="flex items-center gap-2.5">
-                                      <span className={clsx("flex items-center justify-center rounded-md p-1 transition-colors", active ? "bg-victus-blue/20" : "bg-mica-light/10 text-text-secondary")}>
+                                      <span className={cn("flex items-center justify-center rounded-md p-1 transition-colors", active ? "bg-victus-blue/20" : "bg-mica-light/10 text-text-secondary")}>
                                         <type.icon className="h-4 w-4" aria-hidden="true" />
                                       </span>
-                                      <span className={clsx("block truncate", selected ? "font-medium" : "font-normal")}>
+                                      <span className={cn("block truncate", selected ? "font-medium" : "font-normal")}>
                                         {type.label}
                                       </span>
                                       {selected ? (
@@ -545,7 +546,7 @@ export default function ContactSection() {
                   <div className="space-y-1.5">
                     <label htmlFor="message" className="text-xs font-semibold text-victus-blue ml-1 flex items-center gap-1">
                       Message
-                      <span className={clsx("text-red-400 transition-all duration-300 transform origin-left", formData.message ? "opacity-0 scale-0 w-0" : "opacity-100 scale-100 w-auto")}>*</span>
+                      <span className={cn("text-red-400 transition-all duration-300 transform origin-left", formData.message ? "opacity-0 scale-0 w-0" : "opacity-100 scale-100 w-auto")}>*</span>
                     </label>
                     <textarea
                       id="message"
@@ -555,7 +556,7 @@ export default function ContactSection() {
                       rows={4}
                       maxLength={2000}
                       disabled={formState === "submitting"}
-                      className={clsx(inputClasses(!!errors.message), "resize-none")}
+                      className={cn(inputClasses(!!errors.message), "resize-none")}
                     />
                     {errors.message && (
                       <p className="ml-1 flex items-center gap-1 text-xs text-red-400">
@@ -582,7 +583,7 @@ export default function ContactSection() {
                     <button
                       type="submit"
                       disabled={formState === "submitting" || formState === "success"}
-                      className={clsx(
+                      className={cn(
                         "btn-shine inline-flex w-full items-center justify-center gap-2 rounded-lg px-6 py-3 text-sm font-bold text-white transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300",
                         formState === "success"
                           ? "bg-green-500 hover:bg-green-600"

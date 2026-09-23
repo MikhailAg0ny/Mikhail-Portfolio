@@ -1,6 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // Security: Prevent technology fingerprinting
+  poweredByHeader: false,
   // Security (4.6): Disable source maps in production
   productionBrowserSourceMaps: false,
   devIndicators: false,

@@ -1,7 +1,8 @@
 'use client';
 
 import { MouseEvent, useState } from "react";
-import clsx from "clsx";
+import { cn } from "@/lib/utils";
+import { profile } from "@/lib/profile";
 
 import ImageWithFallback from "@/components/ui/ImageWithFallback";
 import { AnimatePresence, motion } from "framer-motion";
@@ -84,7 +85,7 @@ export default function AboutSection() {
 
   return (
     <section
-      className={clsx(
+      className={cn(
         "flex w-full",
         padding,
         "items-center justify-center" // Always center since we are scaling to fit
@@ -92,8 +93,8 @@ export default function AboutSection() {
       style={{ minHeight }}
     >
       <div
-        className={clsx(
-          "mx-auto flex w-full flex-col px-4 sm:px-10 transition-transform duration-300 ease-out",
+        className={cn(
+          "mx-auto flex w-full flex-col px-4 sm:px-10 transition-transform duration-300 ease-out responsive-short-scale",
           !isShort ? "max-w-6xl justify-center" : "max-w-[90%] scale-90 origin-center" // Scale down on short screens
         )}
       >
@@ -101,14 +102,14 @@ export default function AboutSection() {
           {/* Subtle glow behind header */}
           <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-32 w-64 rounded-full bg-victus-blue/10 blur-3xl" />
           <p className="relative text-xs uppercase tracking-[0.45em] text-victus-blue sm:text-sm">Get to know me</p>
-          <h2 className="relative text-2xl font-semibold text-text-primary sm:text-3xl md:text-4xl">About Me</h2>
+          <h2 className="relative fluid-heading-section font-semibold text-text-primary">About Me</h2>
           <p className="relative mx-auto max-w-3xl text-sm text-text-secondary md:text-base">
             Introduction
           </p>
         </header>
 
         <div
-          className={clsx(
+          className={cn(
             "flex w-full flex-col gap-6 sm:gap-8",
             "lg:flex-row lg:gap-12", // Always allow side-by-side on large screens
             !isShort ? "max-w-6xl h-full lg:items-stretch" : "items-start" // Only constrain height/width if NOT short
@@ -128,11 +129,11 @@ export default function AboutSection() {
               className={`w-full h-full rounded-3xl ${!profileCardHovered ? 'eb-hidden' : ''}`}
               style={{}}
             >
-              <div className={clsx(
+              <div className={cn(
                 "relative flex h-full flex-col rounded-3xl border border-text-secondary/20 bg-mica-light/60",
                 isShort ? "gap-4 p-5" : "gap-6 p-8"
               )}>
-                <div className={clsx(
+                <div className={cn(
                   "flex flex-col lg:flex-row lg:items-start",
                   isShort ? "gap-4 lg:gap-6" : "gap-6 lg:gap-10"
                 )}>
@@ -145,7 +146,7 @@ export default function AboutSection() {
                   </div>
 
                   <motion.div
-                    className={clsx(
+                    className={cn(
                       "mx-auto flex w-full aspect-[3/4] flex-shrink-0 items-center justify-center overflow-visible rounded-[36px] cursor-pointer lg:flex-[0.7] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-victus-blue/60",
                       isShort ? "max-w-[10rem]" : "max-w-[14rem]"
                     )}
@@ -239,7 +240,7 @@ export default function AboutSection() {
                   </motion.div>
                 </div>
 
-                <div className={clsx(
+                <div className={cn(
                   "border-t border-text-secondary/20",
                   isShort ? "space-y-2 pt-4" : "space-y-3 pt-6"
                 )}>
@@ -258,6 +259,35 @@ export default function AboutSection() {
 
           {/* Right Side - Content Sections */}
           <div className="flex h-full w-full flex-col justify-center gap-4 sm:gap-5 lg:justify-between">
+            {/* Mobile Profile Banner (Visible on < lg screens) */}
+            <div className="flex w-full flex-col gap-3.5 rounded-2xl border border-text-secondary/20 bg-mica-light/60 p-4 sm:p-5 lg:hidden">
+              <div className="flex items-center gap-3.5">
+                <div className="relative h-18 w-18 sm:h-20 sm:w-20 flex-shrink-0 overflow-hidden rounded-2xl border-2 border-victus-blue/40 shadow-md">
+                  <ImageWithFallback
+                    src={profileImage.src}
+                    alt={profileImage.alt}
+                    width={80}
+                    height={80}
+                    className="h-full w-full object-cover"
+                  />
+                </div>
+                <div className="space-y-1 text-left">
+                  <h3 className="text-lg sm:text-xl font-bold text-text-primary">{profile.shortName}</h3>
+                  <p className="text-xs text-victus-blue font-semibold">{profile.title}</p>
+                  <p className="text-xs text-text-secondary line-clamp-2">
+                    BSIT Graduate from Cebu Institute of Technology - University.
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex flex-wrap gap-1.5 pt-2 border-t border-text-secondary/15">
+                <span className="rounded-full border border-victus-blue/30 bg-mica-dark/40 px-2.5 py-0.5 text-[0.7rem] text-victus-blue font-medium">Game Dev</span>
+                <span className="rounded-full border border-victus-blue/30 bg-mica-dark/40 px-2.5 py-0.5 text-[0.7rem] text-victus-blue font-medium">Mobile Dev</span>
+                <span className="rounded-full border border-victus-blue/30 bg-mica-dark/40 px-2.5 py-0.5 text-[0.7rem] text-victus-blue font-medium">Web Dev</span>
+                <span className="rounded-full border border-victus-blue/30 bg-mica-dark/40 px-2.5 py-0.5 text-[0.7rem] text-victus-blue font-medium">UI/UX Design</span>
+              </div>
+            </div>
+
             {infoCards.map((item) => (
               <InfoCard key={item.id} {...item} />
             ))}

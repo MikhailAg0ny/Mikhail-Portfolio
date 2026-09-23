@@ -2,7 +2,6 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
-import * as Tooltip from "@radix-ui/react-tooltip";
 
 import { projects as sortedProjects } from "@/lib/projects";
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -12,7 +11,7 @@ import { useSectionPadding, useBreakpoints } from "@/hooks/useBreakpoints";
 import { ArrowLeftRight, MousePointerClick } from "lucide-react";
 import { motion, useMotionValue, useSpring, useTransform, type Variants } from "framer-motion";
 import type { ProjectCaseStudy } from "@/types";
-import clsx from "clsx";
+import { cn } from "@/lib/utils";
 
 // Import Swiper styles
 import 'swiper/css';
@@ -110,7 +109,17 @@ function ProjectImageCarousel({
 // ----------------------------------------------------------------------
 // 3D Parallax Tilt Card Wrapper
 // ----------------------------------------------------------------------
-function TiltCardWrapper({ children, isActive, idx, cardVariants, className, style }: any) {
+interface TiltCardWrapperProps {
+  children: React.ReactNode;
+  isActive: boolean;
+  idx: number;
+  cardVariants?: Variants;
+  className?: string;
+  style?: React.CSSProperties;
+  disabled?: boolean;
+}
+
+function TiltCardWrapper({ children, isActive, idx, cardVariants, className, style, disabled }: TiltCardWrapperProps) {
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
@@ -128,7 +137,7 @@ function TiltCardWrapper({ children, isActive, idx, cardVariants, className, sty
   );
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    if (!isActive) return;
+    if (!isActive || disabled) return;
     const rect = e.currentTarget.getBoundingClientRect();
     const width = rect.width;
     const height = rect.height;
@@ -153,20 +162,20 @@ function TiltCardWrapper({ children, isActive, idx, cardVariants, className, sty
       className={className}
       style={{
         ...style,
-        rotateX: isActive ? rotateX : 0,
-        rotateY: isActive ? rotateY : 0,
+        rotateX: isActive && !disabled ? rotateX : 0,
+        rotateY: isActive && !disabled ? rotateY : 0,
         transformStyle: "preserve-3d",
       }}
       variants={cardVariants}
       initial="hidden"
       animate={isActive ? "active" : "inactive"}
-      whileHover="hover"
+      whileHover={disabled ? undefined : "hover"}
       transition={{ delay: idx * 0.08 }}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
     >
       {/* Dynamic Glare Overlay */}
-      {isActive && (
+      {isActive && !disabled && (
         <motion.div
           className="pointer-events-none absolute inset-0 z-[100] rounded-3xl"
           style={{ background: glareBackground }}
@@ -283,7 +292,7 @@ export default function ProjectsSection() {
     inactive: {
       opacity: 0.88,
       y: 0,
-      scale: 0.92,
+      scale: isMobile ? 0.95 : 0.92,
       backgroundColor: "rgba(27, 36, 52, 0.45)",
       borderColor: "rgba(59, 130, 246, 0.12)",
       boxShadow: "0px 18px 30px rgba(12, 20, 33, 0.18)",
@@ -298,7 +307,7 @@ export default function ProjectsSection() {
     active: {
       opacity: 1,
       y: 0,
-      scale: 1.08,
+      scale: isMobile ? 1.0 : 1.08,
       backgroundColor: "rgba(18, 24, 36, 0.74)",
       borderColor: "rgba(56, 189, 248, 0.25)",
       boxShadow: "0px 16px 28px rgba(0, 0, 0, 0.25), 0 0 15px rgba(0, 207, 232, 0.08)",
@@ -312,7 +321,7 @@ export default function ProjectsSection() {
       },
     },
     hover: {
-      scale: 1.10,
+      scale: isMobile ? 1.0 : 1.10,
       boxShadow: "0px 20px 44px rgba(56, 189, 248, 0.18)",
       transition: {
         type: "spring",
@@ -330,8 +339,8 @@ export default function ProjectsSection() {
       style={{ minHeight }}
     >
       <div
-        className={clsx(
-          "mx-auto flex w-full max-w-7xl flex-col items-center justify-center gap-4 px-4 sm:gap-6 sm:px-8 lg:px-10 transition-transform duration-300 ease-out",
+        className={cn(
+          "mx-auto flex w-full max-w-7xl flex-col items-center justify-center gap-4 px-4 sm:gap-6 sm:px-8 lg:px-10 transition-transform duration-300 ease-out responsive-short-scale",
           isShort && "scale-[0.85] origin-center"
         )}
       >
@@ -342,7 +351,7 @@ export default function ProjectsSection() {
           <p className="relative text-sm font-semibold uppercase tracking-[0.4em] text-victus-blue">
             Projects
           </p>
-          <h2 className="relative text-3xl font-semibold text-text-primary md:text-4xl">
+          <h2 className="relative fluid-heading-section font-semibold text-text-primary">
             My Projects
           </h2>
           <p className="relative mx-auto max-w-3xl text-sm text-text-secondary md:text-base">
@@ -350,161 +359,24 @@ export default function ProjectsSection() {
           </p>
         </div>
 
-        {/* Mobile Swiper */}
-        <Tooltip.Provider delayDuration={200} skipDelayDuration={400}>
-          <div className="relative w-full sm:hidden mt-6">
-            {/* Mobile Swipe Hint */}
-            {showSwipeHint && (
-              <div className="pointer-events-none mb-4 flex justify-center sm:hidden">
-                <div className="z-10 flex items-center justify-center gap-2.5 rounded-full border border-text-secondary/25 bg-mica-light/60 px-3.5 py-1.5 text-[0.7rem] font-semibold text-text-primary shadow-lg shadow-victus-blue/20 backdrop-blur-xl animate-pulse">
-                  <ArrowLeftRight className="h-3.5 w-3.5 text-victus-blue" strokeWidth={2.2} />
-                  <span className="tracking-wide text-text-secondary/90">Swipe or drag to explore</span>
-                  <MousePointerClick className="h-3.5 w-3.5 text-victus-blue" strokeWidth={2.2} />
-                </div>
-              </div>
-            )}
 
-            <Swiper
-              modules={[Pagination, Keyboard]}
-              className="projects-swiper-mobile"
-              slidesPerView={1.05}
-              spaceBetween={18}
-              centeredSlides
-              grabCursor
-              keyboard={{ enabled: true }}
-              pagination={{ clickable: true, el: '.projects-swiper-mobile-pagination' }}
-              onSlideChange={(swiper: SwiperType) => {
-                setActiveIndex(swiper.realIndex);
-                hideSwipeHint();
-              }}
-              onTouchStart={hideSwipeHint}
-            >
-              {projects.map((project, idx) => {
-                const primaryTech = project.primaryTech;
-                const secondaryTechs = project.featuredTechs || [];
-                const showCaseStudyButton =
-                  project.showCaseStudyButton ?? Boolean(project.caseStudyUrl);
-
-                return (
-                  <SwiperSlide
-                    key={`mobile-${idx}`}
-                    className="flex h-full pb-6"
-                  >
-                    {/* Mobile project card layout */}
-                    <motion.article
-                      className="projects-card flex w-full flex-col gap-3.5 rounded-3xl border border-text-secondary/20 bg-mica-light/60 p-5 shadow-lg shadow-victus-blue/10 backdrop-blur-md"
-                      variants={cardVariants}
-                      initial="hidden"
-                      animate="active"
-                      transition={{ delay: idx * 0.07 }}
-                    >
-                      <div className="flex flex-wrap items-center gap-2">
-                        <span className="inline-block rounded-full bg-victus-blue/15 px-2.5 py-0.5 text-[0.7rem] font-semibold uppercase tracking-wider text-victus-blue">
-                          {project.timeframe}
-                        </span>
-                        {project.projectType && (
-                          <span className={`inline-block rounded-full border px-2.5 py-0.5 text-[0.7rem] font-semibold uppercase tracking-wider ${getProjectTypeBadge(project.projectType)?.colorClass}`}>
-                            {getProjectTypeBadge(project.projectType)?.label}
-                          </span>
-                        )}
-                      </div>
-
-                      {(project.images?.length || project.image) && (
-                        <div className="relative h-56 overflow-hidden rounded-xl">
-                          <ProjectImageCarousel
-                            images={project.images}
-                            fallbackImage={project.image}
-                            alt={project.title}
-                            sizes="(max-width: 640px) 100vw, 33vw"
-                            activeIndex={imageIndexes[idx] ?? 0}
-                          />
-                        </div>
-                      )}
-
-                      <div className="space-y-1.5 text-left">
-                        <h3 className="text-lg font-bold leading-tight text-white">{project.title}</h3>
-                        {primaryTech && <p className="text-xs font-semibold text-victus-blue/90">{primaryTech}</p>}
-                      </div>
-
-                      <p className="text-sm leading-relaxed text-text-secondary/90">{project.description}</p>
-
-                      {secondaryTechs.length > 0 && (
-                        <div className="flex flex-wrap gap-2">
-                          {secondaryTechs.map((tech, techIdx) => (
-                            <Tooltip.Root key={techIdx}>
-                              <Tooltip.Trigger asChild>
-                                <span
-                                  className="rounded-lg bg-[#2A2F35] px-3 py-1 text-xs font-medium text-text-primary transition-all duration-300 hover:bg-victus-blue/20 hover:scale-105"
-                                >
-                                  {tech}
-                                </span>
-                              </Tooltip.Trigger>
-                              <Tooltip.Portal>
-                                <Tooltip.Content
-                                  sideOffset={8}
-                                  className="rounded-xl border border-victus-blue/30 bg-mica-dark/95 px-2.5 py-1.5 text-[10px] font-medium text-text-secondary shadow-lg backdrop-blur-xl"
-                                >
-                                  Part of the {project.title} stack
-                                  <Tooltip.Arrow className="fill-mica-dark/95" />
-                                </Tooltip.Content>
-                              </Tooltip.Portal>
-                            </Tooltip.Root>
-                          ))}
-                        </div>
-                      )}
-
-
-
-                      <div className="flex flex-col gap-3 pt-2">
-                        {showCaseStudyButton && project.caseStudyUrl && (
-                          <a
-                            href={project.caseStudyUrl}
-                            className="btn-shine inline-flex items-center justify-center gap-2 rounded-full bg-victus-blue/20 px-4 py-2 text-xs font-semibold text-victus-blue transition-colors hover:bg-victus-blue/30"
-                            aria-label={`Open ${project.title} case study`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            View Project
-                            <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                            </svg>
-                          </a>
-                        )}
-
-                        {project.sourceUrl && (
-                          <a
-                            href={project.sourceUrl}
-                            className="glass-card-hover inline-flex items-center justify-center gap-2 rounded-full border border-white/10 px-5 py-2 text-sm font-semibold text-white"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            View Source
-                            <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
-                              <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
-                            </svg>
-                          </a>
-                        )}
-                      </div>
-                    </motion.article>
-                  </SwiperSlide>
-                );
-              })}
-            </Swiper>
-            <div className="projects-swiper-mobile-pagination mt-4 flex justify-center"></div>
-          </div>
-        </Tooltip.Provider>
 
         {/* Swiper Carousel */}
-        <div className="relative group mx-auto hidden w-full max-w-7xl overflow-x-hidden px-2 sm:block sm:px-4 mt-8 lg:mt-12">
-          {/* Desktop Hover Hint */}
+        <div className="relative group mx-auto w-full max-w-7xl overflow-x-hidden px-2 sm:px-4 mt-6 sm:mt-8 lg:mt-12">
+          {/* Responsive Swipe / Drag Hint */}
           <div
-            className={`pointer-events-none absolute inset-x-0 bottom-8 z-10 flex justify-center transition-opacity duration-300 ${showSwipeHint ? 'opacity-100' : 'opacity-0'
-              }`}
+            className={cn(
+              "pointer-events-none mb-3 sm:mb-4 flex justify-center transition-opacity duration-300",
+              showSwipeHint ? "opacity-100" : "opacity-0"
+            )}
           >
-            <div className="flex items-center gap-3 rounded-full border border-text-secondary/25 bg-mica-light/60 px-5 py-2.5 text-xs font-semibold text-text-primary shadow-lg shadow-victus-blue/20 backdrop-blur-xl animate-pulse">
-              <ArrowLeftRight className="h-4 w-4 text-victus-blue" strokeWidth={2.2} />
-              <span className="tracking-wide text-text-secondary/90">Click, drag, or use arrows</span>
-              <MousePointerClick className="h-4 w-4 text-victus-blue" strokeWidth={2.2} />
+            <div className="z-10 flex items-center justify-center gap-2 sm:gap-2.5 rounded-full border border-text-secondary/25 bg-mica-light/60 px-3.5 py-1.5 sm:px-5 sm:py-2.5 text-[0.7rem] sm:text-xs font-semibold text-text-primary shadow-lg shadow-victus-blue/20 backdrop-blur-xl animate-pulse">
+              <ArrowLeftRight className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-victus-blue" strokeWidth={2.2} />
+              <span className="tracking-wide text-text-secondary/90">
+                <span className="sm:hidden">Swipe or drag to explore</span>
+                <span className="hidden sm:inline">Click, drag, or use arrows</span>
+              </span>
+              <MousePointerClick className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-victus-blue" strokeWidth={2.2} />
             </div>
           </div>
 
@@ -512,8 +384,8 @@ export default function ProjectsSection() {
             modules={[Navigation, Pagination, Keyboard]}
             grabCursor={true}
             centeredSlides={true}
-            slidesPerView={3}
-            spaceBetween={36}
+            slidesPerView={1.08}
+            spaceBetween={16}
             loop={false}
             autoHeight={true}
             observer={true}
@@ -539,8 +411,12 @@ export default function ProjectsSection() {
             className="projects-swiper"
             breakpoints={{
               0: {
-                slidesPerView: 1,
+                slidesPerView: 1.08,
                 spaceBetween: 16,
+              },
+              640: {
+                slidesPerView: 1.6,
+                spaceBetween: 20,
               },
               768: {
                 slidesPerView: 2,
@@ -562,13 +438,18 @@ export default function ProjectsSection() {
               const isActive = idx === activeIndex;
 
               return (
-                <SwiperSlide key={idx} className="flex h-full items-center justify-center px-3 [perspective:1000px]">
+                <SwiperSlide key={idx} className="flex h-full items-center justify-center px-1.5 sm:px-3 [perspective:1000px]">
                   <TiltCardWrapper
                     idx={idx}
                     isActive={isActive}
+                    disabled={isMobile}
                     cardVariants={cardVariants}
-                    className={`projects-card group relative flex w-full max-w-[540px] flex-col rounded-3xl border bg-transparent p-5 shadow-lg backdrop-blur-md lg:max-w-[580px] lg:p-5 ${isActive ? 'h-auto min-h-[460px] lg:min-h-[480px]' : 'h-auto min-h-[280px] overflow-hidden text-text-secondary/90'
-                      }`}
+                    className={cn(
+                      "projects-card group relative flex w-full max-w-[540px] flex-col rounded-3xl border bg-transparent p-4 sm:p-5 shadow-lg backdrop-blur-md lg:max-w-[580px] lg:p-5",
+                      isActive
+                        ? "h-auto min-h-[440px] sm:min-h-[460px] lg:min-h-[480px]"
+                        : "h-auto min-h-[260px] sm:min-h-[280px] overflow-hidden text-text-secondary/90"
+                    )}
                   >
                     {isActive ? (
                       <>
@@ -593,7 +474,7 @@ export default function ProjectsSection() {
                                 images={project.images}
                                 fallbackImage={project.image}
                                 alt={project.title}
-                                sizes="(max-width: 1024px) 60vw, 28vw"
+                                sizes="(max-width: 640px) 90vw, (max-width: 1024px) 60vw, 28vw"
                                 activeIndex={imageIndexes[idx] ?? 0}
                               />
                             </div>
@@ -626,11 +507,11 @@ export default function ProjectsSection() {
 
                         </div>
 
-                        <div className="mt-auto flex flex-col items-center gap-2 pt-4 sm:flex-row sm:justify-center">
+                        <div className="mt-auto flex flex-col sm:flex-row items-center gap-2 pt-4 sm:justify-center">
                           {showCaseStudyButton && project.caseStudyUrl && (
                             <a
                               href={project.caseStudyUrl}
-                              className="btn-shine inline-flex items-center gap-2 rounded-full bg-victus-blue/20 px-4 py-2 text-xs font-semibold text-victus-blue transition-colors hover:bg-victus-blue/30"
+                              className="btn-shine inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-full bg-victus-blue/20 px-4 py-2 text-xs font-semibold text-victus-blue transition-colors hover:bg-victus-blue/30"
                               aria-label={`Open ${project.title} case study`}
                               target="_blank"
                               rel="noopener noreferrer"
@@ -645,7 +526,7 @@ export default function ProjectsSection() {
                           {project.sourceUrl && (
                             <a
                               href={project.sourceUrl}
-                              className="glass-card-hover inline-flex items-center gap-2 rounded-full border border-white/10 px-4 py-2 text-xs font-semibold text-white"
+                              className="glass-card-hover inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-full border border-white/10 px-4 py-2 text-xs font-semibold text-white"
                               target="_blank"
                               rel="noopener noreferrer"
                             >
@@ -680,7 +561,7 @@ export default function ProjectsSection() {
                               images={project.images}
                               fallbackImage={project.image}
                               alt={project.title}
-                              sizes="(max-width: 1024px) 60vw, 25vw"
+                              sizes="(max-width: 640px) 70vw, (max-width: 1024px) 60vw, 25vw"
                               imageClassName="object-cover object-center transition-transform duration-500 group-hover:scale-[1.06]"
                               activeIndex={imageIndexes[idx] ?? 0}
                             />

@@ -60,6 +60,13 @@ export default function HomePage({ initialSection = 'hero' }: HomePageProps) {
   }, []);
 
   useEffect(() => {
+    if (typeof document !== 'undefined') {
+      const progress = activeIndex / Math.max(1, SECTION_ORDER.length - 1);
+      document.documentElement.style.setProperty('--scroll-progress', String(progress));
+    }
+  }, [activeIndex]);
+
+  useEffect(() => {
     if (isPagePilingActive) {
       if (observerRef.current) {
         observerRef.current.disconnect();

@@ -1,11 +1,13 @@
+import { profile } from "@/lib/profile";
+
 export function PersonJsonLd() {
     const jsonLd = {
         "@context": "https://schema.org",
         "@type": "Person",
-        name: "Mikhail James Navarro",
+        name: profile.name,
         url: "https://mikhailjamesnavarro.dev",
-        jobTitle: "Fullstack Developer",
-        description: "Fullstack Developer from Cebu, Philippines specializing in React, Next.js, and TypeScript",
+        jobTitle: profile.title,
+        description: profile.bio.hero,
         knowsAbout: [
             "React",
             "Next.js",
@@ -18,9 +20,9 @@ export function PersonJsonLd() {
             "Game Development",
         ],
         sameAs: [
-            "https://github.com/MikhailAg0ny",
-            "https://www.linkedin.com/in/mikhailjamesnavarro/",
-            "https://www.facebook.com/M1kh4ilAg0ny",
+            profile.socials.github,
+            profile.socials.linkedin,
+            profile.socials.facebook,
         ],
     };
 
@@ -36,9 +38,9 @@ export function WebsiteJsonLd() {
     const jsonLd = {
         "@context": "https://schema.org",
         "@type": "WebSite",
-        name: "Mikhail James Navarro - Portfolio",
+        name: `${profile.name} - Portfolio`,
         url: "https://mikhailjamesnavarro.dev",
-        description: "Fullstack Developer Portfolio showcasing projects and skills",
+        description: `${profile.title} Portfolio showcasing projects and skills`,
     };
 
     return (

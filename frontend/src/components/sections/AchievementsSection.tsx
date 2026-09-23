@@ -9,7 +9,7 @@ import { Link as LinkIcon, Globe, Newspaper, Play, Trophy, MousePointerClick, Ga
 
 import { achievements } from "@/lib/achievements";
 import { useSectionPadding, useBreakpoints } from "@/hooks/useBreakpoints";
-import clsx from "clsx";
+import { cn } from "@/lib/utils";
 
 const collageImages = [
   // Feature photo covering the main recognition moment
@@ -124,12 +124,12 @@ export default function AchievementsSection() {
   return (
     <section
       ref={sectionRef}
-      className={`flex w-full justify-center ${padding}`}
+      className={cn("flex w-full justify-center", padding)}
       style={{ minHeight }}
     >
       <div
-        className={clsx(
-          "mx-auto w-full max-w-6xl px-4 sm:px-10 transition-transform duration-300 ease-out",
+        className={cn(
+          "mx-auto w-full max-w-6xl px-4 sm:px-10 transition-transform duration-300 ease-out responsive-short-scale",
           isShort && "scale-90 origin-center"
         )}
       >
@@ -137,7 +137,7 @@ export default function AchievementsSection() {
           <p className="text-sm font-semibold uppercase tracking-[0.4em] text-victus-blue">
             Achievements
           </p>
-          <h2 className="text-3xl font-semibold text-text-primary md:text-4xl">
+          <h2 className="fluid-heading-section font-semibold text-text-primary">
             My Achievements
           </h2>
           <p className="mx-auto max-w-3xl text-sm text-text-secondary md:text-base">

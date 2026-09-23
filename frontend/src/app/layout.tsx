@@ -7,6 +7,7 @@ import ScrollProgress from "@/components/layout/ScrollProgress";
 import VercelAnalyticsClient from "@/components/layout/VercelAnalyticsClient";
 import { PersonJsonLd, WebsiteJsonLd } from "@/components/seo/JsonLd";
 import { Toaster } from "sonner";
+import { profile } from "@/lib/profile";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -23,16 +24,17 @@ const jetBrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   // Core SEO
   title: {
-    default: "Mikhail | Fullstack Developer Portfolio",
-    template: "%s | Mikhail Portfolio",
+    default: `${profile.shortName} | ${profile.title}`,
+    template: `%s | ${profile.shortName} Portfolio`,
   },
-  description:
-    "Fullstack Developer from Cebu, Philippines specializing in React, Next.js, TypeScript, and modern web technologies. View my projects, skills, and get in touch for collaboration.",
+  description: profile.bio.hero,
 
   // Keywords
   keywords: [
-    "Mikhail",
+    profile.shortName,
+    profile.name,
     "Fullstack Developer",
+    "Game Developer",
     "Web Developer",
     "React Developer",
     "Next.js Developer",
@@ -51,17 +53,16 @@ export const metadata: Metadata = {
   ],
 
   // Author
-  authors: [{ name: "Mikhail" }],
-  creator: "Mikhail",
+  authors: [{ name: profile.name }],
+  creator: profile.name,
 
   // Open Graph (Facebook, LinkedIn, etc.)
   openGraph: {
     type: "website",
     locale: "en_US",
-    siteName: "Mikhail's Portfolio",
-    title: "Mikhail | Fullstack Developer Portfolio",
-    description:
-      "Fullstack Developer from Cebu, Philippines specializing in React, Next.js, TypeScript, and modern web technologies.",
+    siteName: `${profile.name}'s Portfolio`,
+    title: `${profile.shortName} | ${profile.title}`,
+    description: profile.bio.hero,
     images: [
       {
         url: "/og-image.png",

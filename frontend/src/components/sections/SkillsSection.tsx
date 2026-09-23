@@ -10,7 +10,7 @@ import { getSkillsByCategory, ITEMS_PER_PAGE, SKILL_CATEGORIES } from "@/lib/ski
 import type { SkillCategory } from "@/lib/skills";
 import SkillCard from "@/components/ui/SkillCard";
 import { useBreakpoints, useSectionPadding } from "@/hooks/useBreakpoints";
-import clsx from "clsx";
+import { cn } from "@/lib/utils";
 
 export default function SkillsSection() {
   const [activeTab, setActiveTab] = useState<SkillCategory>("languages");
@@ -53,11 +53,14 @@ export default function SkillsSection() {
 
   return (
     <section
-      className={`flex w-full items-center justify-center overflow-hidden px-2 sm:px-4 lg:px-6 ${padding}`}
+      className={cn(
+        "flex w-full items-center justify-center overflow-hidden px-2 sm:px-4 lg:px-6",
+        padding
+      )}
     >
       <div
-        className={clsx(
-          "flex w-full max-w-5xl flex-col justify-center gap-2.5 sm:gap-4 md:gap-6 transition-transform duration-300 ease-out",
+        className={cn(
+          "flex w-full max-w-5xl flex-col justify-center gap-2.5 sm:gap-4 md:gap-6 transition-transform duration-300 ease-out responsive-short-scale",
           isShort && "scale-90 origin-center"
         )}
       >
@@ -67,7 +70,7 @@ export default function SkillsSection() {
           <p className="relative text-sm font-semibold uppercase tracking-[0.4em] text-victus-blue">
             Skills
           </p>
-          <h2 className="relative text-3xl font-semibold text-text-primary md:text-4xl">
+          <h2 className="relative fluid-heading-section font-semibold text-text-primary">
             My Skills
           </h2>
           <p className="relative mx-auto max-w-3xl text-sm text-text-secondary md:text-base">
@@ -75,15 +78,15 @@ export default function SkillsSection() {
           </p>
         </header>
 
-        <div className="flex w/full min-h-[380px] max-w-5xl flex-col space-y-4 overflow-hidden rounded-[24px] border border-text-secondary/20 bg-mica-light/60 p-4 sm:min-h-[500px] sm:space-y-5 sm:p-6 md:min-h-[540px] md:space-y-6 md:p-6 lg:min-w-[700px] shadow-lg shadow-victus-blue/10 backdrop-blur-xl">
+        <div className="flex w-full min-h-[380px] max-w-5xl flex-col space-y-4 overflow-hidden rounded-[24px] border border-text-secondary/20 bg-mica-light/60 p-4 sm:min-h-[500px] sm:space-y-5 sm:p-6 md:min-h-[540px] md:space-y-6 md:p-6 lg:min-w-[700px] shadow-lg shadow-victus-blue/10 backdrop-blur-xl">
           <Tooltip.Provider delayDuration={150} skipDelayDuration={400}>
-            <div className="flex h-8 flex-shrink-0 justify-center gap-1 overflow-hidden rounded-full bg-mica-dark/80 p-1 shadow-inner shadow-black/20 sm:h-10 sm:gap-1.5">
+            <div className="flex flex-shrink-0 items-center justify-center gap-1 rounded-full bg-mica-dark/80 p-1 shadow-inner shadow-black/20 sm:gap-1.5">
               {SKILL_CATEGORIES.map((category) => (
                 <Tooltip.Root key={category.key}>
                   <Tooltip.Trigger asChild>
                     <button
                       onClick={() => handleTabChange(category.key)}
-                      className={`relative flex-1 min-h-[44px] rounded-full px-1.5 py-2 text-[0.65rem] sm:min-h-0 sm:px-2.5 sm:py-1.5 sm:text-xs md:text-sm font-semibold transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 ${activeTab === category.key
+                      className={`relative flex flex-1 min-h-[44px] items-center justify-center rounded-full px-2 py-1.5 text-[0.68rem] sm:px-3 sm:py-2 sm:text-xs md:text-sm font-semibold transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 ${activeTab === category.key
                         ? "bg-gradient-to-r from-victus-blue to-cyan-400 text-white shadow-lg shadow-victus-blue/40 scale-105"
                         : "bg-mica-light/20 text-text-secondary shadow-inner shadow-black/10 hover:bg-mica-light/30 hover:text-white"
                         }`}

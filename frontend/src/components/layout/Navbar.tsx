@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import { animated, useSpring } from "@react-spring/web";
+import { profile } from "@/lib/profile";
 
 const navLinks = [
   { label: "Home", anchor: "hero" },
@@ -12,7 +13,7 @@ const navLinks = [
   { label: "Achievements", anchor: "achievements" },
   { label: "Certifications", anchor: "certifications" },
   { label: "Contact", anchor: "contact" },
-  { label: "Resume", anchor: "resume", isHighlighted: true, externalPath: "/resume/Navarro_Resume_1-15-2026.pdf" },
+  { label: "Resume", anchor: "resume", isHighlighted: true, externalPath: profile.resume.url },
 ];
 
 type NavbarProps = {
@@ -191,8 +192,7 @@ export default function Navbar({ activeSection = "hero", onNavigate }: NavbarPro
                       ? "bg-victus-blue/20 text-victus-blue"
                       : "hover:bg-mica-light/30 hover:text-victus-blue"
                       }`}
-                    onSelect={(event) => {
-                      event.preventDefault();
+                    onSelect={() => {
                       handleNavClick(link.anchor);
                     }}
                   >

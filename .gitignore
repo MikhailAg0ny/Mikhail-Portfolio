@@ -5,3 +5,31 @@ project-task.md
 dos-and-dont-web-portfolio.md
 .copilot/
 prompteng/
+
+# ── Security & Environment Quarantine ──
+# Prevents accidental staging of secrets, credentials, or payment keys via GitHub Desktop or Git
+.env
+.env*
+.env.local
+.env.*.local
+*.env
+*.pem
+*.key
+*.cert
+*.pfx
+*.pkcs12
+
+# Dependencies & Build output
+node_modules/
+.next/
+out/
+build/
+dist/
+*.tsbuildinfo
+
+# Operating system & IDE artifacts
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/

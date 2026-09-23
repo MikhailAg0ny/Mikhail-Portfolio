@@ -1,21 +1,13 @@
-export interface ProgrammingLanguage {
-  name: string;
-  level: "S" | "A" | "B" | "C" | "D" | "E" | "F";
-}
-
-export interface Highlight {
-  label: string;
-  value: string;
-}
-
 export interface NavLink {
   label: string;
-  href: string;
+  href?: string;
+  anchor?: string;
+  isHighlighted?: boolean;
+  externalPath?: string;
 }
 
 export interface ProjectCaseStudy {
   title: string;
-
   timeframe: string;
   primaryTech: string;
   featuredTechs: string[];
@@ -23,17 +15,9 @@ export interface ProjectCaseStudy {
   caseStudyUrl?: string;
   sourceUrl?: string;
   showCaseStudyButton?: boolean;
-
   image?: string;
   images?: string[];
   projectType?: "school" | "client" | "side";
-}
-
-export interface Experience {
-  role: string;
-  company: string;
-  period: string;
-  summary: string;
 }
 
 export interface Certificate {

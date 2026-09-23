@@ -6,12 +6,23 @@ import { useState } from "react";
 type Props = Omit<ImageProps, "src" | "alt"> & {
   src: string;
   alt: string;
+  fallbackType?: "avatar" | "none";
 };
 
-export default function ImageWithFallback({ src, alt, className, ...rest }: Props & { className?: string }) {
+export default function ImageWithFallback({
+  src,
+  alt,
+  className,
+  fallbackType = "avatar",
+  ...rest
+}: Props & { className?: string }) {
   const [hasError, setHasError] = useState(false);
 
   if (hasError) {
+    if (fallbackType === "none") {
+      return null;
+    }
+
     // Simple inline SVG fallback avatar (keeps UI consistent when profile is missing)
     return (
       <div
