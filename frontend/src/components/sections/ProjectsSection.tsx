@@ -10,7 +10,7 @@ import { Navigation, Pagination, Keyboard } from 'swiper/modules';
 import type { Swiper as SwiperType } from 'swiper';
 import { useSectionPadding, useBreakpoints } from "@/hooks/useBreakpoints";
 import { ArrowLeftRight, MousePointerClick } from "lucide-react";
-import { motion, type Variants } from "framer-motion";
+import { motion, useMotionValue, useSpring, useTransform, type Variants } from "framer-motion";
 import type { ProjectCaseStudy } from "@/types";
 import clsx from "clsx";
 
@@ -104,6 +104,80 @@ function ProjectImageCarousel({
         </motion.div>
       ))}
     </>
+  );
+}
+
+// ----------------------------------------------------------------------
+// 3D Parallax Tilt Card Wrapper
+// ----------------------------------------------------------------------
+function TiltCardWrapper({ children, isActive, idx, cardVariants, className, style }: any) {
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+
+  // Smooth out the raw mouse movement
+  const mouseXSpring = useSpring(x, { stiffness: 300, damping: 30 });
+  const mouseYSpring = useSpring(y, { stiffness: 300, damping: 30 });
+
+  // Map mouse position to rotation values. Max rotation is 10 degrees.
+  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["10deg", "-10deg"]);
+  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-10deg", "10deg"]);
+
+  // Dynamic glare uses useTransform, which is a hook, so it must be called at the top level.
+  const glareBackground = useTransform(
+    () => `radial-gradient(circle at ${(x.get() + 0.5) * 100}% ${(y.get() + 0.5) * 100}%, rgba(255,255,255,0.08) 0%, transparent 60%)`
+  );
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    if (!isActive) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    const width = rect.width;
+    const height = rect.height;
+
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
+
+    const xPct = mouseX / width - 0.5;
+    const yPct = mouseY / height - 0.5;
+
+    x.set(xPct);
+    y.set(yPct);
+  };
+
+  const handleMouseLeave = () => {
+    x.set(0);
+    y.set(0);
+  };
+
+  return (
+    <motion.article
+      className={className}
+      style={{
+        ...style,
+        rotateX: isActive ? rotateX : 0,
+        rotateY: isActive ? rotateY : 0,
+        transformStyle: "preserve-3d",
+      }}
+      variants={cardVariants}
+      initial="hidden"
+      animate={isActive ? "active" : "inactive"}
+      whileHover="hover"
+      transition={{ delay: idx * 0.08 }}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+    >
+      {/* Dynamic Glare Overlay */}
+      {isActive && (
+        <motion.div
+          className="pointer-events-none absolute inset-0 z-[100] rounded-3xl"
+          style={{ background: glareBackground }}
+        />
+      )}
+
+      {/* Children Container (No translateZ to prevent text overlapping borders) */}
+      <div className="flex h-full flex-col z-10 relative">
+        {children}
+      </div>
+    </motion.article>
   );
 }
 
@@ -209,7 +283,7 @@ export default function ProjectsSection() {
     inactive: {
       opacity: 0.88,
       y: 0,
-      scale: 0.95,
+      scale: 0.92,
       backgroundColor: "rgba(27, 36, 52, 0.45)",
       borderColor: "rgba(59, 130, 246, 0.12)",
       boxShadow: "0px 18px 30px rgba(12, 20, 33, 0.18)",
@@ -224,7 +298,7 @@ export default function ProjectsSection() {
     active: {
       opacity: 1,
       y: 0,
-      scale: 1.02,
+      scale: 1.08,
       backgroundColor: "rgba(18, 24, 36, 0.74)",
       borderColor: "rgba(56, 189, 248, 0.25)",
       boxShadow: "0px 16px 28px rgba(0, 0, 0, 0.25), 0 0 15px rgba(0, 207, 232, 0.08)",
@@ -238,7 +312,7 @@ export default function ProjectsSection() {
       },
     },
     hover: {
-      scale: 1.03,
+      scale: 1.10,
       boxShadow: "0px 20px 44px rgba(56, 189, 248, 0.18)",
       transition: {
         type: "spring",
@@ -278,7 +352,7 @@ export default function ProjectsSection() {
 
         {/* Mobile Swiper */}
         <Tooltip.Provider delayDuration={200} skipDelayDuration={400}>
-          <div className="relative w-full sm:hidden">
+          <div className="relative w-full sm:hidden mt-6">
             {/* Mobile Swipe Hint */}
             {showSwipeHint && (
               <div className="pointer-events-none mb-4 flex justify-center sm:hidden">
@@ -421,7 +495,7 @@ export default function ProjectsSection() {
         </Tooltip.Provider>
 
         {/* Swiper Carousel */}
-        <div className="relative group mx-auto hidden w-full max-w-7xl overflow-x-hidden px-2 sm:block sm:px-4">
+        <div className="relative group mx-auto hidden w-full max-w-7xl overflow-x-hidden px-2 sm:block sm:px-4 mt-8 lg:mt-12">
           {/* Desktop Hover Hint */}
           <div
             className={`pointer-events-none absolute inset-x-0 bottom-8 z-10 flex justify-center transition-opacity duration-300 ${showSwipeHint ? 'opacity-100' : 'opacity-0'
@@ -488,23 +562,17 @@ export default function ProjectsSection() {
               const isActive = idx === activeIndex;
 
               return (
-                <SwiperSlide key={idx} className="flex h-full items-center justify-center px-3">
-                  <motion.article
-                    className={`projects-card group relative flex h-auto w-full max-w-[540px] flex-col overflow-hidden rounded-3xl border bg-transparent p-5 shadow-lg backdrop-blur-md lg:max-w-[580px] lg:p-5 ${isActive ? 'min-h-[380px] lg:min-h-[400px]' : 'min-h-[280px] text-text-secondary/90'
+                <SwiperSlide key={idx} className="flex h-full items-center justify-center px-3 [perspective:1000px]">
+                  <TiltCardWrapper
+                    idx={idx}
+                    isActive={isActive}
+                    cardVariants={cardVariants}
+                    className={`projects-card group relative flex w-full max-w-[540px] flex-col rounded-3xl border bg-transparent p-5 shadow-lg backdrop-blur-md lg:max-w-[580px] lg:p-5 ${isActive ? 'h-auto min-h-[460px] lg:min-h-[480px]' : 'h-auto min-h-[280px] overflow-hidden text-text-secondary/90'
                       }`}
-                    style={{
-                      transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-                      transform: isActive ? 'scale(1.08)' : 'scale(0.92)',
-                    }}
-                    variants={cardVariants}
-                    initial="hidden"
-                    animate={isActive ? "active" : "inactive"}
-                    whileHover="hover"
-                    transition={{ delay: idx * 0.08 }}
                   >
                     {isActive ? (
                       <>
-                        <div className="flex flex-col gap-4">
+                        <div className="flex flex-col gap-4 flex-1">
                           <div className="flex flex-wrap items-center gap-2">
                             <span className="inline-block rounded-full bg-victus-blue/15 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-victus-blue">
                               {project.timeframe}
@@ -635,7 +703,7 @@ export default function ProjectsSection() {
                         )}
                       </div>
                     )}
-                  </motion.article>
+                  </TiltCardWrapper>
                 </SwiperSlide>
               );
             })}

@@ -83,7 +83,7 @@ export default function SkillsSection() {
                   <Tooltip.Trigger asChild>
                     <button
                       onClick={() => handleTabChange(category.key)}
-                      className={`relative flex-1 rounded-full px-1.5 py-0.5 text-[0.65rem] sm:px-2.5 sm:py-1.5 sm:text-xs md:text-sm font-semibold transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 ${activeTab === category.key
+                      className={`relative flex-1 min-h-[44px] rounded-full px-1.5 py-2 text-[0.65rem] sm:min-h-0 sm:px-2.5 sm:py-1.5 sm:text-xs md:text-sm font-semibold transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 ${activeTab === category.key
                         ? "bg-gradient-to-r from-victus-blue to-cyan-400 text-white shadow-lg shadow-victus-blue/40 scale-105"
                         : "bg-mica-light/20 text-text-secondary shadow-inner shadow-black/10 hover:bg-mica-light/30 hover:text-white"
                         }`}

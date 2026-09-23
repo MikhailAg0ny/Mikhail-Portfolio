@@ -3,6 +3,7 @@ import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import ClickSpark from "@/components/ClickSpark";
 import CustomCursor from "@/components/layout/CustomCursor";
+import ScrollProgress from "@/components/layout/ScrollProgress";
 import VercelAnalyticsClient from "@/components/layout/VercelAnalyticsClient";
 import { PersonJsonLd, WebsiteJsonLd } from "@/components/seo/JsonLd";
 import { Toaster } from "sonner";
@@ -129,6 +130,7 @@ export default function RootLayout({
         className={`${inter.variable} ${jetBrainsMono.variable} antialiased min-h-[100svh] overflow-x-hidden bg-black text-slate-100`}
       >
         <CustomCursor />
+        <ScrollProgress />
         <ClickSpark
           sparkColor="#fff"
           sparkSize={10}

@@ -4,13 +4,14 @@ import { useCallback } from "react";
 import ImageWithFallback from "@/components/ui/ImageWithFallback";
 import * as Tooltip from "@radix-ui/react-tooltip";
 import { useSectionPadding, useBreakpoints } from "@/hooks/useBreakpoints";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import type { FullPageApi } from "fullpage.js";
 import clsx from "clsx";
 
 export default function HeroSection() {
   const { padding, minHeight } = useSectionPadding();
   const { isShort } = useBreakpoints();
+  const shouldReduceMotion = useReducedMotion();
 
   const handleNavigate = useCallback((section: string) => {
     if (typeof window === "undefined") return;
@@ -130,11 +131,11 @@ export default function HeroSection() {
               initial="hidden"
               animate="visible"
               variants={{
-                hidden: { opacity: 1 },
+                hidden: { opacity: shouldReduceMotion ? 1 : 1 },
                 visible: {
                   opacity: 1,
                   transition: {
-                    staggerChildren: 0.06,
+                    staggerChildren: shouldReduceMotion ? 0 : 0.06,
                   },
                 },
               }}
@@ -143,7 +144,7 @@ export default function HeroSection() {
                 <motion.span
                   key={index}
                   variants={{
-                    hidden: { opacity: 0, y: 10 },
+                    hidden: { opacity: shouldReduceMotion ? 1 : 0, y: shouldReduceMotion ? 0 : 10 },
                     visible: { opacity: 1, y: 0 },
                   }}
                 >
@@ -173,7 +174,7 @@ export default function HeroSection() {
                     <button
                       type="button"
                       onClick={() => handleNavigate("projects")}
-                      className="btn-shine inline-flex items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-victus-blue to-cyan-400 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-victus-blue/20 transition-transform duration-300 hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/80 sm:px-6 sm:py-3"
+                      className="btn-shine inline-flex items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-victus-blue to-cyan-400 px-5 py-3 min-h-[44px] text-sm font-semibold text-white shadow-lg shadow-victus-blue/20 transition-transform duration-300 hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/80 sm:px-6"
                     >
                       View My Work
                     </button>
@@ -194,7 +195,7 @@ export default function HeroSection() {
                     <button
                       type="button"
                       onClick={() => handleNavigate("contact")}
-                      className="glass-card-hover inline-flex items-center justify-center gap-2 rounded-lg border border-white/10 bg-white/5 px-5 py-2.5 text-sm font-semibold text-white transition-transform duration-300 hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50 sm:px-6 sm:py-3"
+                      className="glass-card-hover inline-flex items-center justify-center gap-2 rounded-lg border border-white/10 bg-white/5 px-5 py-3 min-h-[44px] text-sm font-semibold text-white transition-transform duration-300 hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50 sm:px-6"
                     >
                       Get In Touch
                     </button>
