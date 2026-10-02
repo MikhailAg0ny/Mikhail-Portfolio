@@ -12,7 +12,7 @@ import { cn } from "@/lib/utils";
 export default function CertificationsSection() {
   const { padding, minHeight } = useSectionPadding();
   const { isShort, isMobile } = useBreakpoints();
-  const adjustedMinHeight = isShort ? minHeight : "calc(100vh - 80px)"; // account for navbar without forcing overflow
+  const adjustedMinHeight = isMobile ? "auto" : minHeight;
   const pageSize = isMobile ? 4 : 6;
   const [page, setPage] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
@@ -62,12 +62,7 @@ export default function CertificationsSection() {
       className={cn("flex w-full justify-center", padding)}
       style={{ minHeight: adjustedMinHeight }}
     >
-      <div
-        className={cn(
-          "mx-auto flex w-full max-w-6xl flex-col gap-2 sm:gap-2 px-4 sm:px-4 transition-transform duration-300 ease-out responsive-short-scale",
-          isShort && "scale-90 origin-center"
-        )}
-      >
+      <div className="mx-auto flex w-full max-w-6xl flex-col gap-4 sm:gap-6 px-4">
         <header className="space-y-2 sm:space-y-3 text-center">
           <p className="text-sm font-semibold uppercase tracking-[0.4em] text-victus-blue">
             Certifications

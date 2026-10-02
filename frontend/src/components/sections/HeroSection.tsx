@@ -5,27 +5,19 @@ import ImageWithFallback from "@/components/ui/ImageWithFallback";
 import * as Tooltip from "@radix-ui/react-tooltip";
 import { useSectionPadding, useBreakpoints } from "@/hooks/useBreakpoints";
 import { motion, useReducedMotion } from "framer-motion";
-import type { FullPageApi } from "fullpage.js";
 import { cn } from "@/lib/utils";
 import { profile } from "@/lib/profile";
 
 export default function HeroSection() {
   const { padding, minHeight } = useSectionPadding();
-  const { isShort } = useBreakpoints();
+  const { isShort, isMobile } = useBreakpoints();
   const shouldReduceMotion = useReducedMotion();
 
   const handleNavigate = useCallback((section: string) => {
     if (typeof window === "undefined") return;
 
     const targetSection = section.toLowerCase();
-    const fullpage = (window as typeof window & { fullpage_api?: FullPageApi }).fullpage_api;
-
-    if (fullpage && typeof fullpage.moveTo === "function") {
-      fullpage.moveTo(targetSection);
-      return;
-    }
-
-    const element = document.querySelector(`[data-section="${targetSection}"]`);
+    const element = document.getElementById(targetSection) || document.querySelector(`[data-section="${targetSection}"]`);
     if (element instanceof HTMLElement) {
       element.scrollIntoView({ behavior: "smooth", block: "start" });
     } else {
@@ -42,15 +34,10 @@ export default function HeroSection() {
         "relative flex w-full items-center justify-center overflow-hidden",
         padding
       )}
-      style={{ minHeight }}
+      style={{ minHeight: "100svh" }}
     >
 
-      <div
-        className={cn(
-          "relative mx-auto w-full max-w-6xl px-4 sm:px-8 lg:px-12 transition-transform duration-300 ease-out responsive-short-scale",
-          isShort && "scale-90 origin-center"
-        )}
-      >
+      <div className="relative mx-auto w-full max-w-6xl px-4 sm:px-8 lg:px-12">
         <div className="grid gap-8 sm:gap-10 lg:grid-cols-[1fr_1.2fr] lg:items-center">
           {/* Profile Image with Float Animation */}
           <div className="flex justify-center lg:justify-start">

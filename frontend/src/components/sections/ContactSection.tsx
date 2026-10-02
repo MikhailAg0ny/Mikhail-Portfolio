@@ -122,30 +122,23 @@ export default function ContactSection() {
     clearDraft();
   };
 
-  // Lock body scroll and fullpage.js when modal is open
+  // Lock body scroll when modal is open
   useEffect(() => {
-    const fullpageApi = (window as unknown as { fullpage_api?: { setAllowScrolling: (allow: boolean) => void } }).fullpage_api;
-
     if (isOpen) {
       document.body.style.overflow = "hidden";
       document.documentElement.style.overflow = "hidden";
       // Set data attribute to disable custom cursor
       document.body.setAttribute('data-modal-open', 'true');
-      // Disable fullpage.js scrolling
-      fullpageApi?.setAllowScrolling(false);
     } else {
       document.body.style.overflow = "";
       document.documentElement.style.overflow = "";
       // Remove data attribute to re-enable custom cursor
       document.body.removeAttribute('data-modal-open');
-      // Re-enable fullpage.js scrolling
-      fullpageApi?.setAllowScrolling(true);
     }
     return () => {
       document.body.style.overflow = "";
       document.documentElement.style.overflow = "";
       document.body.removeAttribute('data-modal-open');
-      fullpageApi?.setAllowScrolling(true);
     };
   }, [isOpen]);
 
@@ -290,17 +283,14 @@ export default function ContactSection() {
 
   return (
     <>
-      <section
-        className={cn("flex w-full items-center justify-center overflow-hidden", padding)}
-        style={{ minHeight }}
+      <div
+        className={cn(
+          "flex-1 flex w-full flex-col items-center justify-center px-4 sm:px-8 xl:pr-28 xl:pl-14",
+          isShort ? "pt-16 pb-6" : "pt-20 sm:pt-24 pb-8"
+        )}
       >
-        <div
-          className={cn(
-            "flex w-full max-w-6xl flex-col items-center justify-center gap-12 px-4 sm:gap-16 sm:px-10 transition-transform duration-300 ease-out responsive-short-scale",
-            isShort && "scale-90 origin-center"
-          )}
-        >
-          <div className="relative max-w-3xl space-y-4 text-center sm:space-y-6">
+        <div className="flex w-full max-w-5xl flex-col items-center justify-center gap-8 sm:gap-10 px-2 sm:px-4">
+          <div className="relative max-w-3xl space-y-3 text-center sm:space-y-4">
             {/* Subtle glow behind header */}
             <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-32 w-72 rounded-full bg-victus-blue/10 blur-3xl" />
             <p className="relative text-xs font-semibold uppercase tracking-[0.3em] text-victus-blue/80 sm:text-sm">
@@ -341,7 +331,7 @@ export default function ContactSection() {
 
             <Dialog.Portal>
               <Dialog.Overlay className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0" />
-              <Dialog.Content className="fixed left-[50%] top-[50%] z-50 w-full max-w-[92vw] sm:max-w-lg max-h-[85vh] sm:max-h-[90vh] overflow-y-auto translate-x-[-50%] translate-y-[-50%] rounded-2xl border border-text-secondary/20 bg-mica-light/80 p-4 sm:p-6 md:p-8 shadow-2xl backdrop-blur-xl duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95">
+              <Dialog.Content className="fixed left-[50%] top-[50%] z-50 w-full max-w-[92vw] sm:max-w-lg max-h-[85dvh] sm:max-h-[90dvh] overflow-y-auto translate-x-[-50%] translate-y-[-50%] rounded-2xl border border-text-secondary/20 bg-mica-light/80 p-4 sm:p-6 md:p-8 shadow-2xl backdrop-blur-xl duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95">
                 <div className="flex items-center justify-between mb-6">
                   <div>
                     <Dialog.Title className="text-xl font-bold text-text-primary">Send a Message</Dialog.Title>
@@ -640,14 +630,14 @@ export default function ContactSection() {
             </Dialog.Portal>
           </Dialog.Root>
 
-          <div className="w-full max-w-4xl rounded-2xl border border-text-secondary/20 bg-mica-light/40 p-8 backdrop-blur-xl">
+          <div className="w-full max-w-4xl rounded-2xl border border-text-secondary/20 bg-mica-light/40 p-5 sm:p-6 backdrop-blur-xl">
             <Tooltip.Provider delayDuration={0} skipDelayDuration={400}>
-              <div className="grid grid-cols-1 gap-6 text-center sm:grid-cols-3 sm:gap-4">
+              <div className="grid grid-cols-1 gap-4 text-center sm:grid-cols-3 sm:gap-4">
                 <Tooltip.Root>
                   <Tooltip.Trigger asChild>
-                    <div className="glass-card-hover group flex flex-col items-center justify-center rounded-xl p-4 transition-all hover:-translate-y-1">
-                      <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-victus-blue transition-colors group-hover:text-cyan-400">Email</p>
-                      <p className="break-all text-sm font-medium text-text-secondary group-hover:text-text-primary sm:text-base">{EMAIL_ADDRESS}</p>
+                    <div className="glass-card-hover group flex flex-col items-center justify-center rounded-xl p-3 sm:p-4 transition-all hover:-translate-y-1">
+                      <p className="mb-1 text-xs font-semibold uppercase tracking-wider text-victus-blue transition-colors group-hover:text-cyan-400">Email</p>
+                      <p className="break-all text-xs font-medium text-text-secondary group-hover:text-text-primary sm:text-sm">{EMAIL_ADDRESS}</p>
                     </div>
                   </Tooltip.Trigger>
                   <Tooltip.Portal>
@@ -663,9 +653,9 @@ export default function ContactSection() {
 
                 <Tooltip.Root>
                   <Tooltip.Trigger asChild>
-                    <div className="glass-card-hover group flex flex-col items-center justify-center rounded-xl p-4 transition-all hover:-translate-y-1">
-                      <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-victus-blue transition-colors group-hover:text-cyan-400">Phone</p>
-                      <p className="text-sm font-medium text-text-secondary group-hover:text-text-primary sm:text-base">0927 720 4496</p>
+                    <div className="glass-card-hover group flex flex-col items-center justify-center rounded-xl p-3 sm:p-4 transition-all hover:-translate-y-1">
+                      <p className="mb-1 text-xs font-semibold uppercase tracking-wider text-victus-blue transition-colors group-hover:text-cyan-400">Phone</p>
+                      <p className="text-xs font-medium text-text-secondary group-hover:text-text-primary sm:text-sm">0927 720 4496</p>
                     </div>
                   </Tooltip.Trigger>
                   <Tooltip.Portal>
@@ -681,9 +671,9 @@ export default function ContactSection() {
 
                 <Tooltip.Root>
                   <Tooltip.Trigger asChild>
-                    <div className="glass-card-hover group flex flex-col items-center justify-center rounded-xl p-4 transition-all hover:-translate-y-1">
-                      <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-victus-blue transition-colors group-hover:text-cyan-400">Location</p>
-                      <p className="text-sm font-medium text-text-secondary group-hover:text-text-primary sm:text-base">Philippines</p>
+                    <div className="glass-card-hover group flex flex-col items-center justify-center rounded-xl p-3 sm:p-4 transition-all hover:-translate-y-1">
+                      <p className="mb-1 text-xs font-semibold uppercase tracking-wider text-victus-blue transition-colors group-hover:text-cyan-400">Location</p>
+                      <p className="text-xs font-medium text-text-secondary group-hover:text-text-primary sm:text-sm">Philippines</p>
                     </div>
                   </Tooltip.Trigger>
                   <Tooltip.Portal>
@@ -700,7 +690,7 @@ export default function ContactSection() {
             </Tooltip.Provider>
           </div>
         </div>
-      </section>
+      </div>
     </>
   );
 }

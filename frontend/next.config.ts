@@ -50,12 +50,21 @@ const nextConfig: NextConfig = {
             value: "max-age=63072000; includeSubDomains; preload",
           },
 
+          // Prevent cross-origin window reference leaks
+          { key: "Cross-Origin-Opener-Policy", value: "same-origin" },
+
+          // Protect resources from unauthorized cross-origin embedding
+          { key: "Cross-Origin-Resource-Policy", value: "same-origin" },
+
+          // DNS prefetching control
+          { key: "X-DNS-Prefetch-Control", value: "on" },
+
           // Content Security Policy
           {
             key: "Content-Security-Policy",
             value: [
               "default-src 'self'",
-              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net",
+              "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
               "font-src 'self' https://fonts.gstatic.com",
               "img-src 'self' data: blob: https:",

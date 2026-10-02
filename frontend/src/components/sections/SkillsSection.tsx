@@ -15,7 +15,7 @@ import { cn } from "@/lib/utils";
 export default function SkillsSection() {
   const [activeTab, setActiveTab] = useState<SkillCategory>("languages");
   const [currentPage, setCurrentPage] = useState(0);
-  const { padding } = useSectionPadding();
+  const { padding, minHeight } = useSectionPadding();
   const { isMobile, isShort } = useBreakpoints();
   const swiperRef = useRef<SwiperType | null>(null);
 
@@ -54,16 +54,12 @@ export default function SkillsSection() {
   return (
     <section
       className={cn(
-        "flex w-full items-center justify-center overflow-hidden px-2 sm:px-4 lg:px-6",
+        "flex w-full items-center justify-center px-2 sm:px-4 lg:px-6",
         padding
       )}
+      style={{ minHeight: isMobile ? "auto" : minHeight }}
     >
-      <div
-        className={cn(
-          "flex w-full max-w-5xl flex-col justify-center gap-2.5 sm:gap-4 md:gap-6 transition-transform duration-300 ease-out responsive-short-scale",
-          isShort && "scale-90 origin-center"
-        )}
-      >
+      <div className="flex w-full max-w-5xl flex-col justify-center gap-3 sm:gap-4 md:gap-6">
         <header className="relative flex-shrink-0 space-y-0.5 text-center sm:space-y-2 md:space-y-3">
           {/* Subtle glow behind header */}
           <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-24 w-48 rounded-full bg-victus-blue/10 blur-3xl" />
@@ -78,9 +74,9 @@ export default function SkillsSection() {
           </p>
         </header>
 
-        <div className="flex w-full min-h-[380px] max-w-5xl flex-col space-y-4 overflow-hidden rounded-[24px] border border-text-secondary/20 bg-mica-light/60 p-4 sm:min-h-[500px] sm:space-y-5 sm:p-6 md:min-h-[540px] md:space-y-6 md:p-6 lg:min-w-[700px] shadow-lg shadow-victus-blue/10 backdrop-blur-xl">
+        <div className="flex w-full max-w-5xl flex-col space-y-4 rounded-[24px] border border-text-secondary/20 bg-mica-light/60 p-4 sm:space-y-5 sm:p-6 md:space-y-6 md:p-8 shadow-lg shadow-victus-blue/10 backdrop-blur-xl">
           <Tooltip.Provider delayDuration={150} skipDelayDuration={400}>
-            <div className="flex flex-shrink-0 items-center justify-center gap-1 rounded-full bg-mica-dark/80 p-1 shadow-inner shadow-black/20 sm:gap-1.5">
+            <div className="flex flex-shrink-0 items-center justify-center gap-1 rounded-full bg-mica-dark/80 p-1 shadow-inner shadow-black/20 sm:gap-1.5 overflow-x-auto no-scrollbar">
               {SKILL_CATEGORIES.map((category) => (
                 <Tooltip.Root key={category.key}>
                   <Tooltip.Trigger asChild>

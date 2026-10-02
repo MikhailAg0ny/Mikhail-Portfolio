@@ -38,7 +38,7 @@ export default function AchievementsSection() {
   const [heroImage, ...supportImages] = collageImages;
   const primaryAchievement = achievements[0];
   const { padding, minHeight } = useSectionPadding();
-  const { isShort } = useBreakpoints();
+  const { isShort, isMobile } = useBreakpoints();
   const [hoveredImage, setHoveredImage] = useState<(typeof collageImages)[number] | null>(null);
   const sectionRef = useRef<HTMLElement | null>(null);
   const hintTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -127,12 +127,7 @@ export default function AchievementsSection() {
       className={cn("flex w-full justify-center", padding)}
       style={{ minHeight }}
     >
-      <div
-        className={cn(
-          "mx-auto w-full max-w-6xl px-4 sm:px-10 transition-transform duration-300 ease-out responsive-short-scale",
-          isShort && "scale-90 origin-center"
-        )}
-      >
+      <div className="mx-auto w-full max-w-6xl px-4 sm:px-10">
         <header className="space-y-2.5 text-left md:text-center">
           <p className="text-sm font-semibold uppercase tracking-[0.4em] text-victus-blue">
             Achievements

@@ -335,15 +335,10 @@ export default function ProjectsSection() {
   return (
     <section
       ref={sectionRef}
-      className={`relative flex w-full items-center justify-center overflow-hidden ${padding}`}
+      className={cn("relative flex w-full items-center justify-center", padding)}
       style={{ minHeight }}
     >
-      <div
-        className={cn(
-          "mx-auto flex w-full max-w-7xl flex-col items-center justify-center gap-4 px-4 sm:gap-6 sm:px-8 lg:px-10 transition-transform duration-300 ease-out responsive-short-scale",
-          isShort && "scale-[0.85] origin-center"
-        )}
-      >
+      <div className="mx-auto flex w-full max-w-7xl flex-col items-center justify-center gap-4 px-4 sm:gap-6 sm:px-8 lg:px-10">
         {/* Header */}
         <div className="relative flex-shrink-0 w-full space-y-1.5 text-center sm:space-y-3">
           {/* Subtle glow behind header */}

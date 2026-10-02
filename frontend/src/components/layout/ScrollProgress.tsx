@@ -1,44 +1,20 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { motion, useScroll, useSpring } from "framer-motion";
 
 export default function ScrollProgress() {
   const { scrollYProgress } = useScroll();
-  const [activeProgress, setActiveProgress] = useState<number | null>(null);
-
-  useEffect(() => {
-    const updateProgress = () => {
-      if (typeof document === "undefined") return;
-      const progressVal = document.documentElement.style.getPropertyValue("--scroll-progress");
-      if (progressVal) {
-        const parsed = parseFloat(progressVal);
-        if (!isNaN(parsed)) {
-          setActiveProgress(parsed);
-        }
-      }
-    };
-
-    updateProgress();
-    const observer = new MutationObserver(updateProgress);
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ["style"],
-    });
-
-    return () => observer.disconnect();
-  }, []);
-
-  const rawProgress = activeProgress !== null ? activeProgress : scrollYProgress;
-  const scaleX = useSpring(rawProgress, {
-    stiffness: 140,
-    damping: 26,
+  
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 120,
+    damping: 24,
     restDelta: 0.001,
   });
 
   return (
     <motion.div
-      className="fixed top-0 left-0 right-0 h-1 z-[9999] origin-left bg-gradient-to-r from-victus-blue via-cyan-400 to-victus-blue"
+      aria-hidden="true"
+      className="fixed top-0 left-0 right-0 h-[3px] z-[9999] origin-left bg-gradient-to-r from-victus-blue via-cyan-400 to-victus-blue shadow-[0_0_8px_rgba(0,207,232,0.6)]"
       style={{ scaleX }}
     />
   );

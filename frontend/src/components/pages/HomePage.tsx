@@ -1,30 +1,19 @@
-'use client';
+"use client";
 
-import { useEffect, useState, useCallback, useRef, type ReactNode } from 'react';
-import dynamic from 'next/dynamic';
-import Navbar from '@/components/layout/Navbar';
-import HeroSection from '@/components/sections/HeroSection';
-import AboutSection from '@/components/sections/AboutSection';
-import SkillsSection from '@/components/sections/SkillsSection';
-import ProjectsSection from '@/components/sections/ProjectsSection';
-import AchievementsSection from '@/components/sections/AchievementsSection';
-import CertificationsSection from '@/components/sections/CertificationsSection';
-import ContactSection from '@/components/sections/ContactSection';
-import Footer from '@/components/layout/Footer';
-import { SECTION_ORDER, type SectionKey } from '@/lib/sections';
-import type { FullPageApi } from 'fullpage.js';
-
-type PagePilingWrapperProps = {
-  children: ReactNode;
-  onSectionChange: (index: number) => void;
-  initialAnchor?: string;
-  enableAtWidth?: number;
-  onModeChange?: (isPagePilingActive: boolean) => void;
-};
-
-const PagePilingWrapper = dynamic<PagePilingWrapperProps>(() => import('@/components/layout/PagePilingWrapper'), {
-  ssr: false,
-});
+import { useEffect, useCallback, type ReactNode } from "react";
+import Navbar from "@/components/layout/Navbar";
+import SectionRail from "@/components/layout/SectionRail";
+import HeroSection from "@/components/sections/HeroSection";
+import AboutSection from "@/components/sections/AboutSection";
+import SkillsSection from "@/components/sections/SkillsSection";
+import ProjectsSection from "@/components/sections/ProjectsSection";
+import AchievementsSection from "@/components/sections/AchievementsSection";
+import CertificationsSection from "@/components/sections/CertificationsSection";
+import ContactSection from "@/components/sections/ContactSection";
+import Footer from "@/components/layout/Footer";
+import { SECTION_ORDER, type SectionKey } from "@/lib/sections";
+import { useActiveSection } from "@/hooks/useActiveSection";
+import { cn } from "@/lib/utils";
 
 type HomePageProps = {
   initialSection?: SectionKey;
@@ -40,100 +29,50 @@ const SECTION_COMPONENTS: Record<SectionKey, ReactNode> = {
   contact: <ContactSection />,
 };
 
-export default function HomePage({ initialSection = 'hero' }: HomePageProps) {
-  const [activeIndex, setActiveIndex] = useState(() => {
-    const initialIndex = SECTION_ORDER.indexOf(initialSection);
-    return initialIndex >= 0 ? initialIndex : 0;
-  });
-  const [isPagePilingActive, setIsPagePilingActive] = useState(true);
-  const observerRef = useRef<IntersectionObserver | null>(null);
-
-  useEffect(() => {
-    const currentIndex = SECTION_ORDER.indexOf(initialSection);
-    if (currentIndex >= 0) {
-      setActiveIndex(currentIndex);
-    }
-  }, [initialSection]);
-
-  const handleSectionChange = useCallback((index: number) => {
-    setActiveIndex(index);
-  }, []);
-
-  useEffect(() => {
-    if (typeof document !== 'undefined') {
-      const progress = activeIndex / Math.max(1, SECTION_ORDER.length - 1);
-      document.documentElement.style.setProperty('--scroll-progress', String(progress));
-    }
-  }, [activeIndex]);
-
-  useEffect(() => {
-    if (isPagePilingActive) {
-      if (observerRef.current) {
-        observerRef.current.disconnect();
-        observerRef.current = null;
-      }
-      return;
-    }
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visibleEntry = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-
-        if (visibleEntry) {
-          const section = visibleEntry.target.getAttribute('data-section');
-          if (section && SECTION_ORDER.includes(section as SectionKey)) {
-            setActiveIndex(SECTION_ORDER.indexOf(section as SectionKey));
-          }
-        }
-      },
-      {
-        root: null,
-        threshold: [0.25, 0.5, 0.75],
-      }
-    );
-
-    const sectionElements = document.querySelectorAll('[data-section]');
-    sectionElements.forEach((el) => observer.observe(el));
-    observerRef.current = observer;
-
-    return () => {
-      observer.disconnect();
-      observerRef.current = null;
-    };
-  }, [isPagePilingActive]);
+export default function HomePage({ initialSection = "hero" }: HomePageProps) {
+  const activeSection = useActiveSection(initialSection);
 
   const handleNavigate = useCallback((section: string) => {
     if (!SECTION_ORDER.includes(section as SectionKey)) return;
-    const typedSection = section as SectionKey;
-    const instance = (window as typeof window & { fullpage_api?: FullPageApi }).fullpage_api;
-    if (isPagePilingActive && instance && typeof instance.moveTo === 'function') {
-      instance.moveTo(typedSection);
-    } else {
-      const element = document.querySelector(`[data-section="${typedSection}"]`);
-      if (element instanceof HTMLElement) {
-        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        setActiveIndex(SECTION_ORDER.indexOf(typedSection));
-      }
+    const targetElement = document.getElementById(section);
+    if (targetElement) {
+      targetElement.scrollIntoView({ behavior: "smooth", block: "start" });
     }
-  }, [isPagePilingActive]);
+  }, []);
+
+  // Handle initial deep-linking if navigated to with a specific section
+  useEffect(() => {
+    if (initialSection && initialSection !== "hero") {
+      const timer = setTimeout(() => {
+        handleNavigate(initialSection);
+      }, 100);
+      return () => clearTimeout(timer);
+    }
+  }, [initialSection, handleNavigate]);
 
   return (
     <>
-      <Navbar activeSection={SECTION_ORDER[activeIndex]} onNavigate={handleNavigate} />
-      <PagePilingWrapper
-        onSectionChange={handleSectionChange}
-        initialAnchor={initialSection}
-        onModeChange={setIsPagePilingActive}
-      >
+      <Navbar activeSection={activeSection} onNavigate={handleNavigate} />
+      <SectionRail activeSection={activeSection} onNavigate={handleNavigate} />
+
+      <main className="relative flex flex-col w-full overflow-x-hidden no-scrollbar">
         {SECTION_ORDER.map((anchor) => (
-          <div key={anchor} data-section={anchor}>
+          <section
+            key={anchor}
+            id={anchor}
+            data-section={anchor}
+            className={cn(
+              "relative w-full snap-start flex flex-col items-center",
+              anchor === "contact"
+                ? "min-h-[100svh] justify-between"
+                : "min-h-[100svh] justify-center"
+            )}
+          >
             {SECTION_COMPONENTS[anchor]}
-          </div>
+            {anchor === "contact" && <Footer />}
+          </section>
         ))}
-      </PagePilingWrapper>
-      <Footer isVisible={activeIndex === SECTION_ORDER.length - 1} />
+      </main>
     </>
   );
 }

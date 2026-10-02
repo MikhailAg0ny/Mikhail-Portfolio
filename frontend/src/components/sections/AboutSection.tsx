@@ -11,7 +11,7 @@ import ElectricBorder from "@/components/ElectricBorder";
 
 export default function AboutSection() {
   const { padding, minHeight } = useSectionPadding();
-  const { isShort } = useBreakpoints();
+  const { isShort, isMobile } = useBreakpoints();
   const [showPreview, setShowPreview] = useState(false);
   const [profileCardHovered, setProfileCardHovered] = useState(false);
   const [cardTilt, setCardTilt] = useState<{ rotateX: number; rotateY: number }>({ rotateX: 0, rotateY: 0 });
@@ -90,14 +90,9 @@ export default function AboutSection() {
         padding,
         "items-center justify-center" // Always center since we are scaling to fit
       )}
-      style={{ minHeight }}
+      style={{ minHeight: isMobile ? "auto" : minHeight }}
     >
-      <div
-        className={cn(
-          "mx-auto flex w-full flex-col px-4 sm:px-10 transition-transform duration-300 ease-out responsive-short-scale",
-          !isShort ? "max-w-6xl justify-center" : "max-w-[90%] scale-90 origin-center" // Scale down on short screens
-        )}
-      >
+      <div className="mx-auto flex w-full max-w-6xl flex-col px-4 sm:px-10 justify-center">
         <header className="relative mb-8 space-y-2.5 text-center sm:mb-12 sm:space-y-3">
           {/* Subtle glow behind header */}
           <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-32 w-64 rounded-full bg-victus-blue/10 blur-3xl" />
@@ -108,13 +103,7 @@ export default function AboutSection() {
           </p>
         </header>
 
-        <div
-          className={cn(
-            "flex w-full flex-col gap-6 sm:gap-8",
-            "lg:flex-row lg:gap-12", // Always allow side-by-side on large screens
-            !isShort ? "max-w-6xl h-full lg:items-stretch" : "items-start" // Only constrain height/width if NOT short
-          )}
-        >
+        <div className="flex w-full flex-col gap-6 sm:gap-8 lg:flex-row lg:gap-12 max-w-6xl lg:items-stretch">
           {/* Left Side - Profile Card */}
           <div
             className="hidden w-full max-w-md flex-col lg:flex"

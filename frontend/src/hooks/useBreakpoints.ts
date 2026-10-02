@@ -35,21 +35,21 @@ export function useSectionPadding(): SectionSpacing {
 
   if (isDesktop) {
     return {
-      padding: isShort ? "pt-24 pb-12" : "pt-32 pb-20",
-      minHeight: "calc(100svh - 13rem)",
+      padding: isShort ? "pt-20 pb-12 px-6 xl:pr-24 xl:pl-12" : "pt-24 pb-20 px-8 xl:pr-28 xl:pl-14",
+      minHeight: "100svh",
     };
   }
 
   if (isTablet) {
     return {
-      padding: isShort ? "pt-24 pb-12" : "pt-32 pb-20",
-      minHeight: "calc(100svh - 13rem)",
+      padding: isShort ? "pt-20 pb-12 px-6" : "pt-24 pb-16 px-6",
+      minHeight: "100svh",
     };
   }
 
-  // Mobile fallback — more vertical breathing room below fixed navbar
+  // Mobile fallback — natural flow without artificial height clipping
   return {
-    padding: isShort ? "pt-16 pb-8" : "pt-20 pb-12",
-    minHeight: "calc(100svh - 5rem)",
+    padding: isShort ? "pt-16 pb-12 px-4" : "pt-20 pb-16 px-4",
+    minHeight: "auto",
   };
 }
