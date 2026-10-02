@@ -111,7 +111,7 @@ export default function HeroSection() {
                     <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-400 status-pulse" />
                     <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
                   </span>
-                  On Job Training
+                  {profile.status.badgeText}
                 </div>
               ) : (
                 <div className="inline-flex items-center gap-2 rounded-full border border-red-500/30 bg-red-500/10 px-3 py-1.5 text-xs font-medium text-red-400 backdrop-blur-sm sm:px-4 sm:py-2 sm:text-sm">
@@ -162,10 +162,10 @@ export default function HeroSection() {
             </motion.h1>
 
             <p className="text-lg font-semibold text-victus-blue sm:text-xl md:text-2xl gradient-text-animated">
-              Full Stack Developer
+              {profile.title}
             </p>
             <p className="max-w-xl text-sm text-text-secondary sm:text-base md:text-lg">
-              Experience full stack over 3+ years. I create interactive and engaging web, game and mobile applications.
+              Fresh graduate software developer (May 2026). I create interactive and engaging web, game and mobile applications.
               Ensuring that the final product is both visually appealing and functional.
             </p>
             <Tooltip.Provider delayDuration={200} skipDelayDuration={400}>

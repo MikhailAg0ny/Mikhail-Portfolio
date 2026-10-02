@@ -67,7 +67,7 @@ export default function AboutSection() {
       id: "who",
       heading: "Who I Am",
       summary:
-        "Aspiring developer with a passion for innovative web design, focused on building scalable systems and solid project management. Curious and eager to learn, I am keen to contribute to forward-thinking web solutions.",
+        "Software developer with a passion for innovative web design, focused on building scalable systems and solid project management. Curious and eager to learn, I am keen to contribute to forward-thinking web solutions.",
     },
     {
       id: "what",
@@ -140,7 +140,7 @@ export default function AboutSection() {
                   <div className="space-y-4 lg:flex-[0.8] lg:pr-1 ">
                     <h3 className="text-2xl font-semibold text-text-primary">Mikhail</h3>
                     <p className="text-sm leading-relaxed text-text-secondary">
-                      Graduate of the Bachelor of Science in Information Technology program at Cebu Institute of Technology - University, with experience in web, game, and mobile development.
+                      Graduate of the Bachelor of Science in Information Technology program at Cebu Institute of Technology - University (May 2026), with experience in web, game, and mobile development.
                       Currently broadening skills in backend and frontend design.
                     </p>
                   </div>
@@ -275,16 +275,16 @@ export default function AboutSection() {
                   <h3 className="text-lg sm:text-xl font-bold text-text-primary">{profile.shortName}</h3>
                   <p className="text-xs text-victus-blue font-semibold">{profile.title}</p>
                   <p className="text-xs text-text-secondary line-clamp-2">
-                    BSIT Graduate from Cebu Institute of Technology - University.
+                    Fresh BSIT Graduate (May 2026) from Cebu Institute of Technology - University.
                   </p>
                 </div>
               </div>
 
               <div className="flex flex-wrap gap-1.5 pt-2 border-t border-text-secondary/15">
+                <span className="rounded-full border border-victus-blue/30 bg-mica-dark/40 px-2.5 py-0.5 text-[0.7rem] text-victus-blue font-medium">Software Dev</span>
+                <span className="rounded-full border border-victus-blue/30 bg-mica-dark/40 px-2.5 py-0.5 text-[0.7rem] text-victus-blue font-medium">Web Dev</span>
                 <span className="rounded-full border border-victus-blue/30 bg-mica-dark/40 px-2.5 py-0.5 text-[0.7rem] text-victus-blue font-medium">Game Dev</span>
                 <span className="rounded-full border border-victus-blue/30 bg-mica-dark/40 px-2.5 py-0.5 text-[0.7rem] text-victus-blue font-medium">Mobile Dev</span>
-                <span className="rounded-full border border-victus-blue/30 bg-mica-dark/40 px-2.5 py-0.5 text-[0.7rem] text-victus-blue font-medium">Web Dev</span>
-                <span className="rounded-full border border-victus-blue/30 bg-mica-dark/40 px-2.5 py-0.5 text-[0.7rem] text-victus-blue font-medium">UI/UX Design</span>
               </div>
             </div>
 

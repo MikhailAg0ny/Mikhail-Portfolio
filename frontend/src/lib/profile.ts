@@ -1,14 +1,14 @@
 export const profile = {
   name: "Mikhail James P. Navarro",
   shortName: "Mikhail",
-  title: "Fullstack Developer | Game Developer",
+  title: "Software Developer",
   status: {
     isAvailable: true,
-    badgeText: "On Job Training / Available",
+    badgeText: "Actively Job Hunting",
   },
   bio: {
-    hero: "An Information Technology graduate with experience in web, game, and mobile development. Passionate about building interactive, scalable systems with modern design.",
-    aboutShort: "Graduate of the Bachelor of Science in Information Technology program at Cebu Institute of Technology - University, with experience in web, game, and mobile development. Currently broadening skills in backend and frontend design.",
+    hero: "An Information Technology graduate (May 2026) with experience in web, game, and mobile development. Passionate about building interactive, scalable systems with modern design.",
+    aboutShort: "Graduate of the Bachelor of Science in Information Technology program at Cebu Institute of Technology - University (May 2026), with experience in web, game, and mobile development. Currently broadening skills in backend and frontend design.",
   },
   socials: {
     github: "https://github.com/MikhailAg0ny",
