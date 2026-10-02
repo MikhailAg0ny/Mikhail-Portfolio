@@ -1,20 +1,27 @@
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 
 export function useBreakpoints() {
-  const isDesktop = useMediaQuery({ minWidth: 1024 });
-  const isTablet = useMediaQuery({ minWidth: 768, maxWidth: 1023 });
-  const isMobile = useMediaQuery({ maxWidth: 767 });
-  const isShort = useMediaQuery({ maxHeight: 900 });
+  const [hasMounted, setHasMounted] = useState(false);
+
+  // defaultMatches prevents SSR/client hydration mismatch
+  const isDesktop = useMediaQuery({ minWidth: 1024 }, undefined, () => {});
+  const isTablet = useMediaQuery({ minWidth: 768, maxWidth: 1023 }, undefined, () => {});
+  const isMobile = useMediaQuery({ maxWidth: 767 }, undefined, () => {});
+  const isShort = useMediaQuery({ maxHeight: 900 }, undefined, () => {});
+
+  useEffect(() => {
+    setHasMounted(true);
+  }, []);
 
   return useMemo(
     () => ({
-      isDesktop,
-      isTablet,
-      isMobile,
-      isShort,
+      isDesktop: hasMounted ? isDesktop : false,
+      isTablet: hasMounted ? isTablet : false,
+      isMobile: hasMounted ? isMobile : false,
+      isShort: hasMounted ? isShort : false,
     }),
-    [isDesktop, isTablet, isMobile, isShort]
+    [hasMounted, isDesktop, isTablet, isMobile, isShort]
   );
 }
 
@@ -40,8 +47,9 @@ export function useSectionPadding(): SectionSpacing {
     };
   }
 
+  // Mobile fallback — more vertical breathing room below fixed navbar
   return {
-    padding: "pt-14 pb-10",
-    minHeight: "calc(100svh - 7.5rem)",
+    padding: isShort ? "pt-16 pb-8" : "pt-20 pb-12",
+    minHeight: "calc(100svh - 5rem)",
   };
 }

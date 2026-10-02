@@ -328,11 +328,12 @@ export default function PagePilingWrapper({ children, onSectionChange, initialAn
     <div
       id="fullpage"
       ref={fullpageRef}
+      className="w-full overflow-x-hidden"
       style={{ visibility: isEnabled && !isReady ? "hidden" : "visible" }}
       aria-hidden={isEnabled && !isReady}
     >
       {React.Children.map(children, (child) => (
-        <div className={isEnabled ? "section" : "min-h-screen"}>{child}</div>
+        <div className={isEnabled ? "section" : "min-h-screen w-full overflow-x-hidden"}>{child}</div>
       ))}
     </div>
   );

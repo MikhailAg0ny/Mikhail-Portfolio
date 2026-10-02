@@ -44,40 +44,6 @@ export default function HeroSection() {
       )}
       style={{ minHeight }}
     >
-      {/* Floating Decorative Elements */}
-      <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        {/* Decorative Float Images */}
-
-        {/* Far Left */}
-        <div className="absolute left-[-4%] bottom-[15%] w-20 h-20 opacity-80 animate-float sm:w-32 sm:h-32 lg:w-40 lg:h-40 z-10">
-          <ImageWithFallback src="/images/decorate-float/maxwell-cat.png" alt="" width={128} height={128} fallbackType="none" className="w-full h-full object-contain" />
-        </div>
-
-        {/* Top Left (Above Profile/Name gap) */}
-        <div className="absolute left-[30%] top-[10%] hidden sm:block w-14 h-14 opacity-80 animate-float-delay-1 sm:w-20 sm:h-20">
-          <ImageWithFallback src="/images/decorate-float/shocked-cat.png" alt="" width={80} height={80} fallbackType="none" className="w-full h-full object-contain" />
-        </div>
-
-        {/* Top Right (Above Name) */}
-        <div className="absolute right-[30%] top-[10%] hidden sm:block w-16 h-16 opacity-80 animate-float sm:w-24 sm:h-24">
-          <ImageWithFallback src="/images/decorate-float/bongo-cat-happy.png" alt="" width={96} height={96} fallbackType="none" className="w-full h-full object-contain" />
-        </div>
-
-        {/* Far Right */}
-        <div className="absolute right-[5%] top-[50%] hidden sm:block w-14 h-14 opacity-80 animate-float-delay-2 sm:w-20 sm:h-20">
-          <ImageWithFallback src="/images/decorate-float/popcat-pop.png" alt="" width={80} height={80} fallbackType="none" className="w-full h-full object-contain" />
-        </div>
-
-        {/* Bottom Left (Below Profile) */}
-        <div className="absolute left-[25%] bottom-[5%] hidden sm:block w-14 h-14 opacity-80 animate-float-delay-1 sm:w-20 sm:h-20">
-          <ImageWithFallback src="/images/decorate-float/grumpy-cat.png" alt="" width={80} height={80} fallbackType="none" className="w-full h-full object-contain" />
-        </div>
-
-        {/* Bottom Center (Below Buttons) */}
-        <div className="absolute left-[60%] bottom-[2%] hidden sm:block w-14 h-14 opacity-80 animate-float sm:w-20 sm:h-20">
-          <ImageWithFallback src="/images/decorate-float/polite-cat.png" alt="" width={80} height={80} fallbackType="none" className="w-full h-full object-contain" />
-        </div>
-      </div>
 
       <div
         className={cn(
@@ -165,8 +131,7 @@ export default function HeroSection() {
               {profile.title}
             </p>
             <p className="max-w-xl text-sm text-text-secondary sm:text-base md:text-lg">
-              Fresh graduate software developer (May 2026). I create interactive and engaging web, game and mobile applications.
-              Ensuring that the final product is both visually appealing and functional.
+              {profile.bio.hero}
             </p>
             <Tooltip.Provider delayDuration={200} skipDelayDuration={400}>
               <div className="flex flex-col gap-3 sm:flex-row sm:justify-center lg:justify-start lg:gap-4">

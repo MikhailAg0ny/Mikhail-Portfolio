@@ -262,7 +262,7 @@ export default function AboutSection() {
             {/* Mobile Profile Banner (Visible on < lg screens) */}
             <div className="flex w-full flex-col gap-3.5 rounded-2xl border border-text-secondary/20 bg-mica-light/60 p-4 sm:p-5 lg:hidden">
               <div className="flex items-center gap-3.5">
-                <div className="relative h-18 w-18 sm:h-20 sm:w-20 flex-shrink-0 overflow-hidden rounded-2xl border-2 border-victus-blue/40 shadow-md">
+                <div className="relative h-[4.5rem] w-[4.5rem] sm:h-20 sm:w-20 flex-shrink-0 overflow-hidden rounded-2xl border-2 border-victus-blue/40 shadow-md">
                   <ImageWithFallback
                     src={profileImage.src}
                     alt={profileImage.alt}

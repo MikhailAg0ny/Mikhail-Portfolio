@@ -91,7 +91,7 @@ export default function CertificationsSection() {
               key={certificate.name}
               className="group relative mx-auto flex h-full w-full max-w-[280px] flex-col items-center justify-between overflow-hidden rounded-[16px] border border-text-secondary/20 bg-mica-light/60 p-3 text-center transition-all duration-300 hover:-translate-y-1 hover:border-victus-blue/30 hover:bg-mica-light/70 sm:max-w-[280px] sm:p-3.5"
             >
-              <div className="relative aspect-square w-18 sm:w-20 overflow-hidden rounded-[14px] border border-white/15 shadow-inner shadow-black/30">
+              <div className="relative aspect-square w-[4.5rem] sm:w-20 overflow-hidden rounded-[14px] border border-white/15 shadow-inner shadow-black/30">
                 {certificate.image ? (
                   <Image
                     src={certificate.image}
@@ -135,7 +135,7 @@ export default function CertificationsSection() {
                 key={`placeholder-${currentPage}-${idx}`}
                 className="group relative mx-auto flex h-full w-full max-w-[280px] flex-col items-center justify-center overflow-hidden rounded-[16px] border border-dashed border-text-secondary/30 bg-mica-light/40 p-3 text-center text-text-secondary/70 sm:max-w-[280px] sm:p-3.5"
               >
-                <div className="relative aspect-square w-18 sm:w-20 overflow-hidden rounded-[14px] border border-white/10 bg-black/20 shadow-inner shadow-black/20" />
+                <div className="relative aspect-square w-[4.5rem] sm:w-20 overflow-hidden rounded-[14px] border border-white/10 bg-black/20 shadow-inner shadow-black/20" />
                 <div className="mt-3.5 space-y-1">
                   <h3 className="text-sm font-semibold text-text-secondary sm:text-base">Coming Soon</h3>
                   <p className="text-[0.7rem] uppercase tracking-[0.22em] text-text-secondary/60">Certification</p>
