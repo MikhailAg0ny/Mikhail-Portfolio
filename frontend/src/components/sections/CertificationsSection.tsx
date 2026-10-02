@@ -7,13 +7,13 @@ import SpotlightCard from "@/components/SpotlightCard";
 import { useSectionPadding, useBreakpoints } from "@/hooks/useBreakpoints";
 import { certifications } from "@/lib/certification";
 import type { Certificate } from "@/types";
-import clsx from "clsx";
+import { cn } from "@/lib/utils";
 
 export default function CertificationsSection() {
   const { padding, minHeight } = useSectionPadding();
-  const { isShort } = useBreakpoints();
-  const adjustedMinHeight = isShort ? minHeight : "calc(100vh - 80px)"; // account for navbar without forcing overflow
-  const pageSize = 6;
+  const { isShort, isMobile } = useBreakpoints();
+  const adjustedMinHeight = isMobile ? "auto" : minHeight;
+  const pageSize = isMobile ? 4 : 6;
   const [page, setPage] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
   const animTimeout = useRef<NodeJS.Timeout | null>(null);
@@ -59,20 +59,15 @@ export default function CertificationsSection() {
 
   return (
     <section
-      className={`flex w-full justify-center ${padding}`}
+      className={cn("flex w-full justify-center", padding)}
       style={{ minHeight: adjustedMinHeight }}
     >
-      <div
-        className={clsx(
-          "mx-auto flex w-full max-w-6xl flex-col gap-2 sm:gap-2 px-4 sm:px-4 transition-transform duration-300 ease-out",
-          isShort && "scale-90 origin-center"
-        )}
-      >
+      <div className="mx-auto flex w-full max-w-6xl flex-col gap-4 sm:gap-6 px-4">
         <header className="space-y-2 sm:space-y-3 text-center">
           <p className="text-sm font-semibold uppercase tracking-[0.4em] text-victus-blue">
             Certifications
           </p>
-          <h2 className="text-3xl font-semibold text-text-primary md:text-4xl">
+          <h2 className="fluid-heading-section font-semibold text-text-primary">
             My Certifications and Event Participations
           </h2>
           <p className="mx-auto max-w-3xl text-sm text-text-secondary md:text-base">
@@ -81,7 +76,7 @@ export default function CertificationsSection() {
         </header>
 
         <div
-          className={clsx(
+          className={cn(
             "grid grid-cols-2 gap-2.5 sm:gap-3.5 lg:grid-cols-3 [grid-auto-rows:minmax(0,1fr)] justify-items-center transition-all duration-200",
             isAnimating ? "opacity-0 translate-y-2" : "opacity-100 translate-y-0"
           )}
@@ -91,7 +86,7 @@ export default function CertificationsSection() {
               key={certificate.name}
               className="group relative mx-auto flex h-full w-full max-w-[280px] flex-col items-center justify-between overflow-hidden rounded-[16px] border border-text-secondary/20 bg-mica-light/60 p-3 text-center transition-all duration-300 hover:-translate-y-1 hover:border-victus-blue/30 hover:bg-mica-light/70 sm:max-w-[280px] sm:p-3.5"
             >
-              <div className="relative aspect-square w-18 sm:w-20 overflow-hidden rounded-[14px] border border-white/15 shadow-inner shadow-black/30">
+              <div className="relative aspect-square w-[4.5rem] sm:w-20 overflow-hidden rounded-[14px] border border-white/15 shadow-inner shadow-black/30">
                 {certificate.image ? (
                   <Image
                     src={certificate.image}
@@ -120,10 +115,10 @@ export default function CertificationsSection() {
                   href={certificate.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-3 inline-flex items-center gap-2 rounded-full border border-victus-blue/40 bg-gradient-to-r from-victus-blue/15 via-victus-blue/5 to-transparent px-3.5 py-1.5 text-[0.7rem] font-semibold uppercase tracking-[0.22em] text-victus-blue transition-all hover:-translate-y-0.5 hover:border-victus-blue/60 hover:shadow-lg hover:shadow-victus-blue/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-victus-blue/60"
+                  className="mt-3 inline-flex items-center gap-1.5 sm:gap-2 rounded-full border border-victus-blue/40 bg-gradient-to-r from-victus-blue/15 via-victus-blue/5 to-transparent px-2.5 sm:px-3.5 py-1 sm:py-1.5 text-[0.62rem] sm:text-[0.7rem] font-semibold uppercase tracking-[0.14em] sm:tracking-[0.22em] text-victus-blue transition-all hover:-translate-y-0.5 hover:border-victus-blue/60 hover:shadow-lg hover:shadow-victus-blue/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-victus-blue/60 whitespace-nowrap"
                 >
                   View Proof
-                  <ExternalLink className="h-3.5 w-3.5" strokeWidth={2.2} />
+                  <ExternalLink className="h-3 w-3 sm:h-3.5 sm:w-3.5" strokeWidth={2.2} />
                 </a>
               )}
             </SpotlightCard>
@@ -135,7 +130,7 @@ export default function CertificationsSection() {
                 key={`placeholder-${currentPage}-${idx}`}
                 className="group relative mx-auto flex h-full w-full max-w-[280px] flex-col items-center justify-center overflow-hidden rounded-[16px] border border-dashed border-text-secondary/30 bg-mica-light/40 p-3 text-center text-text-secondary/70 sm:max-w-[280px] sm:p-3.5"
               >
-                <div className="relative aspect-square w-18 sm:w-20 overflow-hidden rounded-[14px] border border-white/10 bg-black/20 shadow-inner shadow-black/20" />
+                <div className="relative aspect-square w-[4.5rem] sm:w-20 overflow-hidden rounded-[14px] border border-white/10 bg-black/20 shadow-inner shadow-black/20" />
                 <div className="mt-3.5 space-y-1">
                   <h3 className="text-sm font-semibold text-text-secondary sm:text-base">Coming Soon</h3>
                   <p className="text-[0.7rem] uppercase tracking-[0.22em] text-text-secondary/60">Certification</p>

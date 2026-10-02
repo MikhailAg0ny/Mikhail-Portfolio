@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import { animated, useSpring } from "@react-spring/web";
+import { profile } from "@/lib/profile";
 
 const navLinks = [
   { label: "Home", anchor: "hero" },
@@ -12,7 +13,7 @@ const navLinks = [
   { label: "Achievements", anchor: "achievements" },
   { label: "Certifications", anchor: "certifications" },
   { label: "Contact", anchor: "contact" },
-  { label: "Resume", anchor: "resume", isHighlighted: true, externalPath: "/resume/Navarro_Resume_1-15-2026.pdf" },
+  { label: "Resume", anchor: "resume", isHighlighted: true, externalPath: profile.resume.url },
 ];
 
 type NavbarProps = {
@@ -142,7 +143,7 @@ export default function Navbar({ activeSection = "hero", onNavigate }: NavbarPro
         <DropdownMenu.Root>
           <DropdownMenu.Trigger asChild>
             <button
-              className="md:hidden flex h-10 w-10 items-center justify-center rounded-lg bg-mica-light/20 text-victus-blue transition-all hover:bg-mica-light/30"
+              className="md:hidden flex h-11 w-11 items-center justify-center rounded-lg bg-mica-light/20 text-victus-blue transition-all hover:bg-mica-light/30 active:scale-95"
               aria-label="Open navigation menu"
             >
               <svg
@@ -170,7 +171,7 @@ export default function Navbar({ activeSection = "hero", onNavigate }: NavbarPro
                   return (
                     <DropdownMenu.Item
                       key={link.anchor}
-                      className="flex cursor-pointer items-center rounded-xl px-3 py-2 transition bg-victus-blue/90 text-white font-semibold shadow-sm shadow-victus-blue/30 hover:bg-victus-blue hover:shadow-md"
+                      className="flex min-h-[44px] cursor-pointer items-center rounded-xl px-3.5 py-2.5 transition bg-victus-blue/90 text-white font-semibold shadow-sm shadow-victus-blue/30 hover:bg-victus-blue hover:shadow-md"
                       asChild
                     >
                       <a
@@ -187,12 +188,11 @@ export default function Navbar({ activeSection = "hero", onNavigate }: NavbarPro
                 return (
                   <DropdownMenu.Item
                     key={link.anchor}
-                    className={`flex cursor-pointer items-center rounded-xl px-3 py-2 transition ${isActive
+                    className={`flex min-h-[44px] cursor-pointer items-center rounded-xl px-3.5 py-2.5 transition ${isActive
                       ? "bg-victus-blue/20 text-victus-blue"
                       : "hover:bg-mica-light/30 hover:text-victus-blue"
                       }`}
-                    onSelect={(event) => {
-                      event.preventDefault();
+                    onSelect={() => {
                       handleNavClick(link.anchor);
                     }}
                   >

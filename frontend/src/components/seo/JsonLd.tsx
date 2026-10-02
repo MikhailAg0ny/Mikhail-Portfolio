@@ -1,33 +1,60 @@
+import { profile } from "@/lib/profile";
+
 export function PersonJsonLd() {
     const jsonLd = {
         "@context": "https://schema.org",
         "@type": "Person",
-        name: "Mikhail James Navarro",
+        name: profile.name,
         url: "https://mikhailjamesnavarro.dev",
-        jobTitle: "Fullstack Developer",
-        description: "Fullstack Developer from Cebu, Philippines specializing in React, Next.js, and TypeScript",
+        jobTitle: profile.title,
+        description: profile.bio.hero,
         knowsAbout: [
-            "React",
-            "Next.js",
-            "TypeScript",
-            "JavaScript",
-            "Node.js",
+            "Software Development",
+            "Full Stack Development",
             "Web Development",
             "Frontend Development",
             "Backend Development",
             "Game Development",
+            "Mobile Application Development",
+            "C#",
+            "PHP",
+            "React",
+            "JavaScript",
+            "Node.js",
+            "SQL",
+            "MySQL",
+            "Lua",
+            "Godot Engine",
         ],
+        hasOccupation: [
+            {
+                "@type": "Occupation",
+                name: "Software Developer",
+            },
+            {
+                "@type": "Occupation",
+                name: "Full Stack Developer",
+            },
+            {
+                "@type": "Occupation",
+                name: "Web Developer",
+            },
+        ],
+        alumniOf: {
+            "@type": "EducationalOrganization",
+            name: "Cebu Institute of Technology - University",
+        },
         sameAs: [
-            "https://github.com/MikhailAg0ny",
-            "https://www.linkedin.com/in/mikhailjamesnavarro/",
-            "https://www.facebook.com/M1kh4ilAg0ny",
+            profile.socials.github,
+            profile.socials.linkedin,
+            profile.socials.facebook,
         ],
     };
 
     return (
         <script
             type="application/ld+json"
-            dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
         />
     );
 }
@@ -36,15 +63,15 @@ export function WebsiteJsonLd() {
     const jsonLd = {
         "@context": "https://schema.org",
         "@type": "WebSite",
-        name: "Mikhail James Navarro - Portfolio",
+        name: `${profile.name} - Portfolio`,
         url: "https://mikhailjamesnavarro.dev",
-        description: "Fullstack Developer Portfolio showcasing projects and skills",
+        description: `${profile.title} & Full Stack Web Developer Portfolio showcasing projects and skills`,
     };
 
     return (
         <script
             type="application/ld+json"
-            dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
         />
     );
 }

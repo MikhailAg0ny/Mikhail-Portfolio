@@ -8,6 +8,15 @@ export default function CustomCursor() {
     const [isPointer, setIsPointer] = useState(false);
     const [isVisible, setIsVisible] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isMounted, setIsMounted] = useState(false);
+    const [isTouchDevice, setIsTouchDevice] = useState(false);
+
+    useEffect(() => {
+        setIsMounted(true);
+        if (typeof window !== "undefined") {
+            setIsTouchDevice(window.matchMedia("(pointer: coarse)").matches);
+        }
+    }, []);
 
     // Use Framer Motion values for performance
     const mouseX = useMotionValue(0);
@@ -69,8 +78,8 @@ export default function CustomCursor() {
         };
     }, [mouseX, mouseY, isVisible]);
 
-    // If touch device or not visible, don't render
-    if (typeof window !== "undefined" && window.matchMedia("(pointer: coarse)").matches) {
+    // If not mounted yet (SSR) or touch device, don't render
+    if (!isMounted || isTouchDevice) {
         return null;
     }
 

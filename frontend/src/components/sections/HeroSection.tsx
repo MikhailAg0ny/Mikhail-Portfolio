@@ -5,26 +5,19 @@ import ImageWithFallback from "@/components/ui/ImageWithFallback";
 import * as Tooltip from "@radix-ui/react-tooltip";
 import { useSectionPadding, useBreakpoints } from "@/hooks/useBreakpoints";
 import { motion, useReducedMotion } from "framer-motion";
-import type { FullPageApi } from "fullpage.js";
-import clsx from "clsx";
+import { cn } from "@/lib/utils";
+import { profile } from "@/lib/profile";
 
 export default function HeroSection() {
   const { padding, minHeight } = useSectionPadding();
-  const { isShort } = useBreakpoints();
+  const { isShort, isMobile } = useBreakpoints();
   const shouldReduceMotion = useReducedMotion();
 
   const handleNavigate = useCallback((section: string) => {
     if (typeof window === "undefined") return;
 
     const targetSection = section.toLowerCase();
-    const fullpage = (window as typeof window & { fullpage_api?: FullPageApi }).fullpage_api;
-
-    if (fullpage && typeof fullpage.moveTo === "function") {
-      fullpage.moveTo(targetSection);
-      return;
-    }
-
-    const element = document.querySelector(`[data-section="${targetSection}"]`);
+    const element = document.getElementById(targetSection) || document.querySelector(`[data-section="${targetSection}"]`);
     if (element instanceof HTMLElement) {
       element.scrollIntoView({ behavior: "smooth", block: "start" });
     } else {
@@ -32,58 +25,19 @@ export default function HeroSection() {
     }
   }, []);
 
-  const nameText = "Mikhail James P. Navarro";
-  const isAvailable = true; // Set to false to show "Busy" status
+  const nameText = profile.name;
+  const isAvailable = profile.status.isAvailable;
 
   return (
     <section
-      className={clsx(
+      className={cn(
         "relative flex w-full items-center justify-center overflow-hidden",
         padding
       )}
-      style={{ minHeight }}
+      style={{ minHeight: "100svh" }}
     >
-      {/* Floating Decorative Elements */}
-      <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        {/* Decorative Float Images */}
 
-        {/* Far Left */}
-        <div className="absolute left-[-4%] bottom-[15%] w-64 h-64 opacity-80 animate-float sm:w-40 sm:h-40 z-10">
-          <ImageWithFallback src="/images/decorate-float/maxwell-cat.png" alt="" width={128} height={128} className="w-full h-full object-contain" />
-        </div>
-
-        {/* Top Left (Above Profile/Name gap) */}
-        <div className="absolute left-[30%] top-[10%] w-14 h-14 opacity-80 animate-float-delay-1 sm:w-20 sm:h-20">
-          <ImageWithFallback src="/images/decorate-float/shocked-cat.png" alt="" width={80} height={80} className="w-full h-full object-contain" />
-        </div>
-
-        {/* Top Right (Above Name) */}
-        <div className="absolute right-[30%] top-[10%] w-16 h-16 opacity-80 animate-float sm:w-24 sm:h-24">
-          <ImageWithFallback src="/images/decorate-float/bongo-cat-happy.png" alt="" width={96} height={96} className="w-full h-full object-contain" />
-        </div>
-
-        {/* Far Right */}
-        <div className="absolute right-[5%] top-[50%] w-14 h-14 opacity-80 animate-float-delay-2 sm:w-20 sm:h-20">
-          <ImageWithFallback src="/images/decorate-float/popcat-pop.png" alt="" width={80} height={80} className="w-full h-full object-contain" />
-        </div>
-
-        {/* Bottom Left (Below Profile) */}
-        <div className="absolute left-[25%] bottom-[5%] w-14 h-14 opacity-80 animate-float-delay-1 sm:w-20 sm:h-20">
-          <ImageWithFallback src="/images/decorate-float/grumpy-cat.png" alt="" width={80} height={80} className="w-full h-full object-contain" />
-        </div>
-
-        {/* Bottom Center (Below Buttons) */}
-        <div className="absolute left-[60%] bottom-[2%] w-14 h-14 opacity-80 animate-float sm:w-20 sm:h-20">
-          <ImageWithFallback src="/images/decorate-float/polite-cat.png" alt="" width={80} height={80} className="w-full h-full object-contain" />
-        </div>
-      </div>
-
-      <div
-        className={clsx(
-          "relative mx-auto w-full max-w-6xl px-4 sm:px-8 lg:px-12 transition-transform duration-300 ease-out",
-          isShort && "scale-90 origin-center"
-        )}
-      >
+      <div className="relative mx-auto w-full max-w-6xl px-4 sm:px-8 lg:px-12">
         <div className="grid gap-8 sm:gap-10 lg:grid-cols-[1fr_1.2fr] lg:items-center">
           {/* Profile Image with Float Animation */}
           <div className="flex justify-center lg:justify-start">
@@ -110,7 +64,7 @@ export default function HeroSection() {
                     <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-400 status-pulse" />
                     <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
                   </span>
-                  On Job Training
+                  {profile.status.badgeText}
                 </div>
               ) : (
                 <div className="inline-flex items-center gap-2 rounded-full border border-red-500/30 bg-red-500/10 px-3 py-1.5 text-xs font-medium text-red-400 backdrop-blur-sm sm:px-4 sm:py-2 sm:text-sm">
@@ -127,7 +81,7 @@ export default function HeroSection() {
 
             {/* Name with Typing Animation + Cursor */}
             <motion.h1
-              className="text-3xl font-bold tracking-tight text-text-primary sm:text-4xl md:text-5xl lg:text-6xl"
+              className="fluid-heading-hero font-bold tracking-tight text-text-primary"
               initial="hidden"
               animate="visible"
               variants={{
@@ -161,11 +115,10 @@ export default function HeroSection() {
             </motion.h1>
 
             <p className="text-lg font-semibold text-victus-blue sm:text-xl md:text-2xl gradient-text-animated">
-              Full Stack Developer
+              {profile.title}
             </p>
             <p className="max-w-xl text-sm text-text-secondary sm:text-base md:text-lg">
-              Experience full stack over 3+ years. I create interactive and engaging web, game and mobile applications.
-              Ensuring that the final product is both visually appealing and functional.
+              {profile.bio.hero}
             </p>
             <Tooltip.Provider delayDuration={200} skipDelayDuration={400}>
               <div className="flex flex-col gap-3 sm:flex-row sm:justify-center lg:justify-start lg:gap-4">
@@ -174,7 +127,7 @@ export default function HeroSection() {
                     <button
                       type="button"
                       onClick={() => handleNavigate("projects")}
-                      className="btn-shine inline-flex items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-victus-blue to-cyan-400 px-5 py-3 min-h-[44px] text-sm font-semibold text-white shadow-lg shadow-victus-blue/20 transition-transform duration-300 hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/80 sm:px-6"
+                      className="btn-shine inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-victus-blue to-cyan-400 px-5 py-3 min-h-[44px] text-sm font-semibold text-white shadow-lg shadow-victus-blue/20 transition-transform duration-300 hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/80 sm:px-6"
                     >
                       View My Work
                     </button>
@@ -195,7 +148,7 @@ export default function HeroSection() {
                     <button
                       type="button"
                       onClick={() => handleNavigate("contact")}
-                      className="glass-card-hover inline-flex items-center justify-center gap-2 rounded-lg border border-white/10 bg-white/5 px-5 py-3 min-h-[44px] text-sm font-semibold text-white transition-transform duration-300 hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50 sm:px-6"
+                      className="glass-card-hover inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-lg border border-white/10 bg-white/5 px-5 py-3 min-h-[44px] text-sm font-semibold text-white transition-transform duration-300 hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50 sm:px-6"
                     >
                       Get In Touch
                     </button>

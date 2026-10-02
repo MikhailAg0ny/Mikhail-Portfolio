@@ -17,11 +17,9 @@ export const tools: Skill[] = [
   { name: "GitHub Copilot", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" },
   { name: "Godot Engine", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/godot/godot-original.svg" },
   { name: "MySQL", icon: "https://www.nicepng.com/png/detail/14-143154_mysql-dolphin-square-mysql-dolphin-logo.png" },
-  { name: "Next.js", icon: "https://www.svgrepo.com/show/354113/nextjs-icon.svg" },
   { name: "Postman", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postman/postman-original.svg" },
   { name: "React.js", icon: "https://www.svgrepo.com/show/355190/reactjs.svg" },
-  { name: "Roblox Studio", icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/Roblox_Studio_logo_-_2022.svg/477px-Roblox_Studio_logo_-_2022.svg.png?20230528063515" },
-  { name: "Tailwind CSS", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg" },
+  { name: "Roblox Studio", icon: "https://images.seeklogo.com/logo-png/40/1/roblox-studio-logo-png_seeklogo-401838.png" },
   { name: "VS Code", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" },
   { name: "Windsurf", icon: "https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/windsurf-icon.png" },
 ];
@@ -37,21 +35,21 @@ export const platforms: Skill[] = [
 // DO NOT TOUCH THE URL
 // Languages & Technologies
 export const languages: Skill[] = [
-  { name: "C++", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" },
+  { name: "C#", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg" },
   { name: "CSS", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" },
   { name: "HTML5", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" },
   { name: "Java", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" },
   { name: "JavaScript", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" },
   { name: "Kotlin", icon: "https://www.svgrepo.com/show/303617/kotlin-1-logo.svg" },
-  { name: "Lua", icon: "https://handwiki.org/wiki/images/thumb/c/cf/Lua-Logo.svg/128px-Lua-Logo.svg.png" },
+  { name: "Lua", icon: "https://icon.icepanel.io/Technology/png/Lua.png" },
+  { name: "PHP", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg" },
   { name: "SQL", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azuresqldatabase/azuresqldatabase-original.svg" },
-  { name: "TypeScript", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" },
 ];
 
 // DO NOT TOUCH THE URL
 // Currently learning
 export const currentlyLearning: Skill[] = [
-  { name: "C++", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" },
+  { name: "C#", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg" },
 ];
 
 // DO NOT TOUCH THE URL

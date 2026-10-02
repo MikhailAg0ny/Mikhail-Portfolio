@@ -8,9 +8,10 @@ import { FiArrowUpRight, FiX, FiSend, FiCheck, FiAlertCircle, FiChevronDown, FiU
 import { useSectionPadding, useBreakpoints } from "@/hooks/useBreakpoints";
 import { toast } from "sonner";
 import emailjs from "@emailjs/browser";
-import clsx from "clsx";
+import { cn } from "@/lib/utils";
+import { profile } from "@/lib/profile";
 
-const EMAIL_ADDRESS = process.env.NEXT_PUBLIC_EMAIL || "mikhailjpn@gmail.com";
+const EMAIL_ADDRESS = profile.socials.email;
 
 type FormState = "idle" | "submitting" | "success" | "error";
 
@@ -121,30 +122,23 @@ export default function ContactSection() {
     clearDraft();
   };
 
-  // Lock body scroll and fullpage.js when modal is open
+  // Lock body scroll when modal is open
   useEffect(() => {
-    const fullpageApi = (window as unknown as { fullpage_api?: { setAllowScrolling: (allow: boolean) => void } }).fullpage_api;
-
     if (isOpen) {
       document.body.style.overflow = "hidden";
       document.documentElement.style.overflow = "hidden";
       // Set data attribute to disable custom cursor
       document.body.setAttribute('data-modal-open', 'true');
-      // Disable fullpage.js scrolling
-      fullpageApi?.setAllowScrolling(false);
     } else {
       document.body.style.overflow = "";
       document.documentElement.style.overflow = "";
       // Remove data attribute to re-enable custom cursor
       document.body.removeAttribute('data-modal-open');
-      // Re-enable fullpage.js scrolling
-      fullpageApi?.setAllowScrolling(true);
     }
     return () => {
       document.body.style.overflow = "";
       document.documentElement.style.overflow = "";
       document.body.removeAttribute('data-modal-open');
-      fullpageApi?.setAllowScrolling(true);
     };
   }, [isOpen]);
 
@@ -279,7 +273,7 @@ export default function ContactSection() {
   };
 
   const inputClasses = (hasError: boolean) =>
-    clsx(
+    cn(
       "w-full rounded-lg border bg-mica-dark/30 px-4 py-3 text-sm text-text-primary placeholder:text-text-secondary/50 transition-all focus:outline-none focus:ring-2",
       hasError
         ? "border-red-400/50 focus:ring-red-400/50"
@@ -289,23 +283,20 @@ export default function ContactSection() {
 
   return (
     <>
-      <section
-        className={`flex w-full items-center justify-center overflow-hidden ${padding}`}
-        style={{ minHeight }}
+      <div
+        className={cn(
+          "flex-1 flex w-full flex-col items-center justify-center px-4 sm:px-8 xl:pr-28 xl:pl-14",
+          isShort ? "pt-16 pb-6" : "pt-20 sm:pt-24 pb-8"
+        )}
       >
-        <div
-          className={clsx(
-            "flex w-full max-w-6xl flex-col items-center justify-center gap-12 px-4 sm:gap-16 sm:px-10 transition-transform duration-300 ease-out",
-            isShort && "scale-90 origin-center"
-          )}
-        >
-          <div className="relative max-w-3xl space-y-4 text-center sm:space-y-6">
+        <div className="flex w-full max-w-5xl flex-col items-center justify-center gap-8 sm:gap-10 px-2 sm:px-4">
+          <div className="relative max-w-3xl space-y-3 text-center sm:space-y-4">
             {/* Subtle glow behind header */}
             <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-32 w-72 rounded-full bg-victus-blue/10 blur-3xl" />
             <p className="relative text-xs font-semibold uppercase tracking-[0.3em] text-victus-blue/80 sm:text-sm">
               Get In Touch
             </p>
-            <h2 className="relative text-3xl font-bold tracking-tight text-text-primary sm:text-4xl md:text-5xl">
+            <h2 className="relative fluid-heading-section font-bold tracking-tight text-text-primary">
               Let&apos;s Work Together
             </h2>
             <p className="relative text-sm leading-relaxed text-text-secondary/80 sm:text-base md:text-lg">
@@ -340,7 +331,7 @@ export default function ContactSection() {
 
             <Dialog.Portal>
               <Dialog.Overlay className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0" />
-              <Dialog.Content className="fixed left-[50%] top-[50%] z-50 w-full max-w-[92vw] sm:max-w-lg max-h-[85vh] sm:max-h-[90vh] overflow-y-auto translate-x-[-50%] translate-y-[-50%] rounded-2xl border border-text-secondary/20 bg-mica-light/80 p-4 sm:p-6 md:p-8 shadow-2xl backdrop-blur-xl duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95">
+              <Dialog.Content className="fixed left-[50%] top-[50%] z-50 w-full max-w-[92vw] sm:max-w-lg max-h-[85dvh] sm:max-h-[90dvh] overflow-y-auto translate-x-[-50%] translate-y-[-50%] rounded-2xl border border-text-secondary/20 bg-mica-light/80 p-4 sm:p-6 md:p-8 shadow-2xl backdrop-blur-xl duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95">
                 <div className="flex items-center justify-between mb-6">
                   <div>
                     <Dialog.Title className="text-xl font-bold text-text-primary">Send a Message</Dialog.Title>
@@ -362,7 +353,7 @@ export default function ContactSection() {
                     <div className="space-y-1.5">
                       <label htmlFor="firstName" className="text-xs font-semibold text-victus-blue ml-1 flex items-center gap-1">
                         First Name
-                        <span className={clsx("text-red-400 transition-all duration-300 transform origin-left", formData.firstName ? "opacity-0 scale-0 w-0" : "opacity-100 scale-100 w-auto")}>*</span>
+                        <span className={cn("text-red-400 transition-all duration-300 transform origin-left", formData.firstName ? "opacity-0 scale-0 w-0" : "opacity-100 scale-100 w-auto")}>*</span>
                       </label>
                       <input
                         id="firstName"
@@ -385,7 +376,7 @@ export default function ContactSection() {
                     <div className="space-y-1.5">
                       <label htmlFor="lastName" className="text-xs font-semibold text-victus-blue ml-1 flex items-center gap-1">
                         Last Name
-                        <span className={clsx("text-red-400 transition-all duration-300 transform origin-left", formData.lastName ? "opacity-0 scale-0 w-0" : "opacity-100 scale-100 w-auto")}>*</span>
+                        <span className={cn("text-red-400 transition-all duration-300 transform origin-left", formData.lastName ? "opacity-0 scale-0 w-0" : "opacity-100 scale-100 w-auto")}>*</span>
                       </label>
                       <input
                         id="lastName"
@@ -410,7 +401,7 @@ export default function ContactSection() {
                   <div className="space-y-1.5">
                     <label htmlFor="email" className="text-xs font-semibold text-victus-blue ml-1 flex items-center gap-1">
                       Email Address
-                      <span className={clsx("text-red-400 transition-all duration-300 transform origin-left", formData.email ? "opacity-0 scale-0 w-0" : "opacity-100 scale-100 w-auto")}>*</span>
+                      <span className={cn("text-red-400 transition-all duration-300 transform origin-left", formData.email ? "opacity-0 scale-0 w-0" : "opacity-100 scale-100 w-auto")}>*</span>
                     </label>
                     <input
                       id="email"
@@ -435,7 +426,7 @@ export default function ContactSection() {
                     <div className="space-y-1.5">
                       <label htmlFor="subject" className="text-xs font-semibold text-victus-blue ml-1 flex items-center gap-1">
                         Subject
-                        <span className={clsx("text-red-400 transition-all duration-300 transform origin-left", formData.subject ? "opacity-0 scale-0 w-0" : "opacity-100 scale-100 w-auto")}>*</span>
+                        <span className={cn("text-red-400 transition-all duration-300 transform origin-left", formData.subject ? "opacity-0 scale-0 w-0" : "opacity-100 scale-100 w-auto")}>*</span>
                       </label>
                       <input
                         id="subject"
@@ -458,12 +449,12 @@ export default function ContactSection() {
                     <div className="space-y-1.5">
                       <label htmlFor="projectType" className="text-xs font-semibold text-victus-blue ml-1 flex items-center gap-1">
                         Inquiry Type
-                        <span className={clsx("text-red-400 transition-all duration-300 transform origin-left", formData.projectType ? "opacity-0 scale-0 w-0" : "opacity-100 scale-100 w-auto")}>*</span>
+                        <span className={cn("text-red-400 transition-all duration-300 transform origin-left", formData.projectType ? "opacity-0 scale-0 w-0" : "opacity-100 scale-100 w-auto")}>*</span>
                       </label>
                       <div className="relative">
                         <Listbox value={formData.projectType || ""} onChange={(value) => handleInputChange("projectType", value)}>
                           <ListboxButton
-                            className={clsx(
+                            className={cn(
                               inputClasses(!!errors.projectType),
                               "flex items-center justify-between text-left",
                               !formData.projectType && "text-text-secondary/50"
@@ -504,7 +495,7 @@ export default function ContactSection() {
                                   key={type.value}
                                   value={type.value}
                                   className={({ active, selected }) =>
-                                    clsx(
+                                    cn(
                                       "relative cursor-pointer select-none py-2.5 pl-3 pr-4 transition-colors",
                                       active ? "bg-victus-blue/20 text-cyan-400" : "text-text-primary",
                                       selected && "font-medium text-cyan-400"
@@ -513,10 +504,10 @@ export default function ContactSection() {
                                 >
                                   {({ selected, active }) => (
                                     <div className="flex items-center gap-2.5">
-                                      <span className={clsx("flex items-center justify-center rounded-md p-1 transition-colors", active ? "bg-victus-blue/20" : "bg-mica-light/10 text-text-secondary")}>
+                                      <span className={cn("flex items-center justify-center rounded-md p-1 transition-colors", active ? "bg-victus-blue/20" : "bg-mica-light/10 text-text-secondary")}>
                                         <type.icon className="h-4 w-4" aria-hidden="true" />
                                       </span>
-                                      <span className={clsx("block truncate", selected ? "font-medium" : "font-normal")}>
+                                      <span className={cn("block truncate", selected ? "font-medium" : "font-normal")}>
                                         {type.label}
                                       </span>
                                       {selected ? (
@@ -545,7 +536,7 @@ export default function ContactSection() {
                   <div className="space-y-1.5">
                     <label htmlFor="message" className="text-xs font-semibold text-victus-blue ml-1 flex items-center gap-1">
                       Message
-                      <span className={clsx("text-red-400 transition-all duration-300 transform origin-left", formData.message ? "opacity-0 scale-0 w-0" : "opacity-100 scale-100 w-auto")}>*</span>
+                      <span className={cn("text-red-400 transition-all duration-300 transform origin-left", formData.message ? "opacity-0 scale-0 w-0" : "opacity-100 scale-100 w-auto")}>*</span>
                     </label>
                     <textarea
                       id="message"
@@ -555,7 +546,7 @@ export default function ContactSection() {
                       rows={4}
                       maxLength={2000}
                       disabled={formState === "submitting"}
-                      className={clsx(inputClasses(!!errors.message), "resize-none")}
+                      className={cn(inputClasses(!!errors.message), "resize-none")}
                     />
                     {errors.message && (
                       <p className="ml-1 flex items-center gap-1 text-xs text-red-400">
@@ -582,7 +573,7 @@ export default function ContactSection() {
                     <button
                       type="submit"
                       disabled={formState === "submitting" || formState === "success"}
-                      className={clsx(
+                      className={cn(
                         "btn-shine inline-flex w-full items-center justify-center gap-2 rounded-lg px-6 py-3 text-sm font-bold text-white transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300",
                         formState === "success"
                           ? "bg-green-500 hover:bg-green-600"
@@ -639,14 +630,14 @@ export default function ContactSection() {
             </Dialog.Portal>
           </Dialog.Root>
 
-          <div className="w-full max-w-4xl rounded-2xl border border-text-secondary/20 bg-mica-light/40 p-8 backdrop-blur-xl">
+          <div className="w-full max-w-4xl rounded-2xl border border-text-secondary/20 bg-mica-light/40 p-5 sm:p-6 backdrop-blur-xl">
             <Tooltip.Provider delayDuration={0} skipDelayDuration={400}>
-              <div className="grid grid-cols-1 gap-6 text-center sm:grid-cols-3 sm:gap-4">
+              <div className="grid grid-cols-1 gap-4 text-center sm:grid-cols-3 sm:gap-4">
                 <Tooltip.Root>
                   <Tooltip.Trigger asChild>
-                    <div className="glass-card-hover group flex flex-col items-center justify-center rounded-xl p-4 transition-all hover:-translate-y-1">
-                      <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-victus-blue transition-colors group-hover:text-cyan-400">Email</p>
-                      <p className="break-all text-sm font-medium text-text-secondary group-hover:text-text-primary sm:text-base">{EMAIL_ADDRESS}</p>
+                    <div className="glass-card-hover group flex flex-col items-center justify-center rounded-xl p-3 sm:p-4 transition-all hover:-translate-y-1">
+                      <p className="mb-1 text-xs font-semibold uppercase tracking-wider text-victus-blue transition-colors group-hover:text-cyan-400">Email</p>
+                      <p className="break-all text-xs font-medium text-text-secondary group-hover:text-text-primary sm:text-sm">{EMAIL_ADDRESS}</p>
                     </div>
                   </Tooltip.Trigger>
                   <Tooltip.Portal>
@@ -662,9 +653,9 @@ export default function ContactSection() {
 
                 <Tooltip.Root>
                   <Tooltip.Trigger asChild>
-                    <div className="glass-card-hover group flex flex-col items-center justify-center rounded-xl p-4 transition-all hover:-translate-y-1">
-                      <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-victus-blue transition-colors group-hover:text-cyan-400">Phone</p>
-                      <p className="text-sm font-medium text-text-secondary group-hover:text-text-primary sm:text-base">0927 720 4496</p>
+                    <div className="glass-card-hover group flex flex-col items-center justify-center rounded-xl p-3 sm:p-4 transition-all hover:-translate-y-1">
+                      <p className="mb-1 text-xs font-semibold uppercase tracking-wider text-victus-blue transition-colors group-hover:text-cyan-400">Phone</p>
+                      <p className="text-xs font-medium text-text-secondary group-hover:text-text-primary sm:text-sm">0927 720 4496</p>
                     </div>
                   </Tooltip.Trigger>
                   <Tooltip.Portal>
@@ -680,9 +671,9 @@ export default function ContactSection() {
 
                 <Tooltip.Root>
                   <Tooltip.Trigger asChild>
-                    <div className="glass-card-hover group flex flex-col items-center justify-center rounded-xl p-4 transition-all hover:-translate-y-1">
-                      <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-victus-blue transition-colors group-hover:text-cyan-400">Location</p>
-                      <p className="text-sm font-medium text-text-secondary group-hover:text-text-primary sm:text-base">Philippines</p>
+                    <div className="glass-card-hover group flex flex-col items-center justify-center rounded-xl p-3 sm:p-4 transition-all hover:-translate-y-1">
+                      <p className="mb-1 text-xs font-semibold uppercase tracking-wider text-victus-blue transition-colors group-hover:text-cyan-400">Location</p>
+                      <p className="text-xs font-medium text-text-secondary group-hover:text-text-primary sm:text-sm">Philippines</p>
                     </div>
                   </Tooltip.Trigger>
                   <Tooltip.Portal>
@@ -699,7 +690,7 @@ export default function ContactSection() {
             </Tooltip.Provider>
           </div>
         </div>
-      </section>
+      </div>
     </>
   );
 }
