@@ -17,7 +17,7 @@ export interface ProjectCaseStudy {
   showCaseStudyButton?: boolean;
   image?: string;
   images?: string[];
-  projectType?: "school" | "client" | "side";
+  projectType?: "school" | "client" | "side" | "hackathon";
 }
 
 export interface Certificate {
@@ -31,14 +31,22 @@ export interface Certificate {
 export interface AchievementLink {
   name: string;
   url: string;
-  icon?: "facebook" | "newspaper" | "globe" | "video" | "trophy" | "game";
+  icon?: "facebook" | "newspaper" | "globe" | "video" | "trophy" | "game" | "github";
+}
+
+export interface AchievementImage {
+  src: string;
+  alt: string;
 }
 
 export interface Achievement {
+  id?: string;
   title: string;
   event: string;
   year: string;
+  badge?: string;
   highlight: string;
+  images?: AchievementImage[];
   links?: AchievementLink[];
 }
 
