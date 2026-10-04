@@ -13,7 +13,7 @@ export const PROJECT_CATEGORIES: { key: ProjectCategory; label: string }[] = [
 
 export const myProjects: ProjectCaseStudy[] = [
   {
-    timeframe: "2026",
+    timeframe: "January 2026",
     image: "/Pictures/GennyFilipinoFood/genny_filipino_food_1.png",
     title: "Mabuhay Meals",
     primaryTech: "Full-Stack Web Development",
@@ -33,7 +33,24 @@ export const myProjects: ProjectCaseStudy[] = [
     ],
   },
   {
-    timeframe: "2024",
+    timeframe: "March 2026",
+    image: "/Pictures/AIXTRACT/AIXTRACT-One4All.png",
+    title: "One4All - Intelligent Document Processing Platform",
+    primaryTech: "Full-Stack AI & OCR Automation",
+    featuredTechs: ["FastAPI", "Next.js", "Ollama", "PaddleOCR", "PostgreSQL", "Docker"],
+    projectType: "hackathon",
+
+    description:
+      "Built in an intensive 7-day hackathon (March 2026), One4All automates logistics document parsing using PaddleOCR and local LLMs via Ollama.",
+    caseStudyUrl: "#",
+    sourceUrl: "https://github.com/MikhailAg0ny/One4All_Hackathon",
+    showCaseStudyButton: false,
+    images: [
+      "/Pictures/AIXTRACT/AIXTRACT-One4All.png",
+    ],
+  },
+  {
+    timeframe: "December 2024",
     image: "/Pictures/JAVA_OOP2_GAME/JAVA OOP2 GROUP.jpg",
     title: "HeroConquest Turn Based RPG",
     primaryTech: "Java OOP2 Game",
@@ -53,7 +70,7 @@ export const myProjects: ProjectCaseStudy[] = [
     ],
   },
   {
-    timeframe: "2024",
+    timeframe: "December 2024",
     image: "/Pictures/Sapatosan/1_sapatosan.png",
     title: "Sapatosan",
     primaryTech: "CSIT321 Applications Development",
@@ -77,7 +94,7 @@ export const myProjects: ProjectCaseStudy[] = [
     ],
   },
   {
-    timeframe: "2025",
+    timeframe: "May 2025",
     image: "/Pictures/Barangay360/1_barangay360.png",
     title: "Barangay360 Web and Mobile",
     primaryTech: "IT342 Systems Integration and Architecture",
@@ -94,7 +111,7 @@ export const myProjects: ProjectCaseStudy[] = [
     ],
   },
   {
-    timeframe: "2025",
+    timeframe: "December 2025",
     image: "/Pictures/TimEd/1_timed.png",
     title: "TimEd - Smart Educational Time Management System",
     primaryTech: "Capstone Project",
@@ -115,18 +132,24 @@ export const myProjects: ProjectCaseStudy[] = [
 
 const projectTypePriority: Record<string, number> = {
   client: 1,
-  side: 2,
-  school: 3,
+  hackathon: 2,
+  side: 3,
+  school: 4,
+};
+
+const extractYear = (timeframe: string): number => {
+  const match = timeframe.match(/\d{4}/);
+  return match ? parseInt(match[0], 10) : 0;
 };
 
 const sortedProjects = [...myProjects].sort((a, b) => {
   // Primary sort: by year (descending - latest first)
-  const yearDiff = parseInt(b.timeframe) - parseInt(a.timeframe);
+  const yearDiff = extractYear(b.timeframe) - extractYear(a.timeframe);
   if (yearDiff !== 0) return yearDiff;
 
-  // Secondary sort: by project type (client > side > school)
-  const aPriority = projectTypePriority[a.projectType || 'school'] || 3;
-  const bPriority = projectTypePriority[b.projectType || 'school'] || 3;
+  // Secondary sort: by project type (client > hackathon > side > school)
+  const aPriority = projectTypePriority[a.projectType || 'school'] || 4;
+  const bPriority = projectTypePriority[b.projectType || 'school'] || 4;
   return aPriority - bPriority;
 });
 

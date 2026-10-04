@@ -20,13 +20,14 @@ import 'swiper/css/pagination';
 
 const IMAGE_ROTATION_INTERVAL = 4000;
 
-const getProjectTypeBadge = (type?: "school" | "client" | "side") => {
+const getProjectTypeBadge = (type?: "school" | "client" | "side" | "hackathon") => {
   if (!type) return null;
 
   const badges = {
     school: { label: "School Project", colorClass: "bg-cyan-500/15 text-cyan-400 border-cyan-400/30" },
     client: { label: "Client Project", colorClass: "bg-green-500/15 text-green-400 border-green-400/30" },
     side: { label: "Side Project", colorClass: "bg-purple-500/15 text-purple-400 border-purple-400/30" },
+    hackathon: { label: "Hackathon Project", colorClass: "bg-amber-500/15 text-amber-400 border-amber-400/30" },
   };
 
   return badges[type];
